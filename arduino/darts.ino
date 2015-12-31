@@ -1,8 +1,12 @@
+#include <UIPEthernet.h>
+
+
 const int count = 8;
-int outputs[] = {39, 41, 43, 45, 47, 49, 51, 53};
-int inputs[] = {22, 24, 26, 28, 30, 32, 34, 36};
+int outputs[] = {23, 25, 27, 29, 31, 33, 35, 37};
+int inputs[] = {34, 36, 38, 40, 42, 44, 46, 48};
 const int debounceTime = 500;
 
+EthernetClient client;
 
 char keymap[count][count][4] = {
   {"13s", "1s", "18s", "4s", "10s", "15s", "6s", "2s"},
@@ -20,10 +24,53 @@ void setup() {
     pinMode(outputs[i], OUTPUT);
   }
   Serial.begin(9600);
+  
+  
+  uint8_t mac[6] = {0x00,0x01,0x02,0x03,0x04,0x05};
+  Ethernet.begin(mac);
+
+  Serial.print("localIP: ");
+  Serial.println(Ethernet.localIP());
+  Serial.print("subnetMask: ");
+  Serial.println(Ethernet.subnetMask());
+  Serial.print("gatewayIP: ");
+  Serial.println(Ethernet.gatewayIP());
+  Serial.print("dnsServerIP: ");
+  Serial.println(Ethernet.dnsServerIP());  
 }
 
 void handleHit(int x, int y) {
+  Serial.println(x);
+  Serial.println(y);
   Serial.println(keymap[x][y]); 
+  
+  client.stop();
+  Serial.println("Client connect");
+
+  if (client.connect(IPAddress(10,170,12,40),80))
+  {
+    Serial.println("Client connected");
+    
+    client.println("POST /callback.php HTTP/1.1");
+    client.println("Host: zimniok.thu");
+    client.println("User-Agent: Mozilla/4.0");
+    client.println("Content-Length: 10");
+    client.println("Content-Type: application/x-www-form-urlencoded");
+    client.println();
+    client.print("field=");
+    client.println(keymap[x][y]);
+    client.println();
+    client.flush();
+
+    delay(50);
+
+    client.stop();
+    Serial.println("Client disconnect");
+    
+  }
+  else {
+    Serial.println("Client connect failed");
+  }
 }
 
 
