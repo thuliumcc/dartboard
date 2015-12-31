@@ -1,0 +1,28 @@
+body {
+    font-family: Verdana, serif;
+}
+
+header {
+    border-bottom: 1px inset #384F60;
+    text-align: center;
+    background-color: #F3C33B;
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+h1 {
+    font-size: 50px;
+    color: #5B313F;
+}
+
+div.content {
+    margin: auto;
+}
+
+.content {
+    width: 900px;
+}
+
+fieldset.new-user {
+    width: 400px;
+}

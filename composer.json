@@ -1,0 +1,41 @@
+{
+    "name": "letsdrink/ouzo-app",
+    "description": "Ouzo framework application skeleton",
+    "minimum-stability": "dev",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Ouzo developers",
+            "email": "ouzo-framework@googlegroups.com"
+        }
+    ],
+    "require": {
+        "letsdrink/ouzo": "1.4.0",
+        "ruckusing/ruckusing-migrations": "1.0.3"
+    },
+    "require-dev": {
+        "composer/composer": "dev-master"
+    },
+    "autoload": {
+        "psr-4": {
+            "Application\\": "Application/",
+            "Installer\\": "bin/Installer/"
+        },
+        "classmap": [
+            "locales/"
+        ]
+    },
+    "autoload-dev": {
+        "classmap": [
+            "test/",
+            "seed/"
+        ]
+    },
+    "scripts": {
+        "post-create-project-cmd": [
+            "Installer\\PostCreateProject::setConfig",
+            "Installer\\PostCreateProject::changePrefix",
+            "Installer\\PostCreateProject::changeDbName"
+        ]
+    }
+}
