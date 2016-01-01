@@ -1,25 +1,20 @@
 <html>
 <head>
-    <title>Ouzo Framework :: Bootstrap</title>
+    <title>Arduino Dartboard Panel</title>
 
-    <!-- Latest compiled and minified CSS -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css">
-    <!-- Optional theme -->
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-theme.min.css">
-
-    <?php echo addFile(array('type' => 'link', 'params' => array('url' => '/public/css/style.css'))); ?>
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    <link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css">
+    <?= addFile(['type' => 'link', 'params' => ['url' => '/public/css/style.css']]); ?>
 
     <script src="http://code.jquery.com/jquery-1.11.0.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
 </head>
 <body>
-    <header>
-    </header>
+<header>
+</header>
 
-    <div class="content">
-        <?php echo $this->layoutContent(); ?>
-    </div>
-
-    <!-- Latest compiled and minified JavaScript -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<div class="content">
+    <?php echo $this->layoutContent(); ?>
+</div>
 </body>
 </html>
