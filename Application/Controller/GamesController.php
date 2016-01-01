@@ -7,7 +7,7 @@ class GamesController extends Controller
 {
     public function init()
     {
-        $this->layout->setLayout('sample_layout');
+        $this->layout->setLayout('layout');
     }
 
     public function index()
