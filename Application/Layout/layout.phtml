@@ -13,8 +13,40 @@
 <header>
 </header>
 
-<div class="content">
-    <?php echo $this->layoutContent(); ?>
-</div>
+<nav class="navbar navbar-custom">
+    <div class="container">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#top-nav"
+                    aria-expanded="false">
+                <span class="sr-only">MENU</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href=""><img src="<?= url('/public/images/thulium.png'); ?>" alt="Logo thulium.pl"></a>
+        </div>
+
+        <p class="navbar-right navbar-text">Arduino based dartboard game</p>
+    </div>
+</nav>
+
+<section class="container main-container">
+    <?= $this->layoutContent(); ?>
+</section>
+
+<footer>
+    <div class="container">
+        <div class="col-md-5 pull-left">
+            <small>Copyright &copy; 2016
+                <a href="http://ouzoframework.org" class="custom-link" target="_blank">Ouzo Developers</a>
+            </small>
+        </div>
+
+        <div class="col-md-3 pull-right">
+            <small>Sponsored by <a href="http://thulium.pl" class="custom-link" target="_blank">thulium.pl</a></small>
+        </div>
+    </div>
+</footer>
+
 </body>
 </html>

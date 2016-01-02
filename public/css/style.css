@@ -1,28 +1,75 @@
+@font-face {
+    font-family: C64base;
+    font-style: normal;
+    font-weight: normal;
+    src: url(../fonts/c64.ttf);
+}
+
 body {
-    font-family: Verdana, serif;
+    font-family: C64base;
+    background-color: #A6A1FF;
+    color: #A6A1FF;
+    font-size: 12pt
 }
 
-header {
-    border-bottom: 1px inset #384F60;
-    text-align: center;
-    background-color: #F3C33B;
-    padding: 20px;
-    margin-bottom: 20px;
+.navbar {
+    border: none;
+    margin-bottom: 0;
 }
 
-h1 {
-    font-size: 50px;
-    color: #5B313F;
+.navbar-brand {
+    height: auto;
 }
 
-div.content {
-    margin: auto;
+.container {
+    background-color: #4342E6;
 }
 
-.content {
-    width: 900px;
+.main-container {
+    padding-top: 30px;
+    padding-bottom: 30px;
 }
 
-fieldset.new-user {
-    width: 400px;
+.item {
+    border: 2px solid #A6A1FF;
+    padding: 10px;
+}
+
+.list-group {
+    box-shadow: none;
+}
+
+.list-group-item {
+    background-color: #4342E6;
+    border: none;
+}
+
+a.list-group-item,
+button.list-group-item {
+    color: #A6A1FF;
+}
+
+.list-group-item:first-child,
+.list-group-item:last-child {
+    border-radius: 0;
+}
+
+a.list-group-item:focus,
+a.list-group-item:hover,
+button.list-group-item:focus,
+button.list-group-item:hover {
+    background-color: white;
+    color: black;
+    text-decoration: none;
+}
+
+a.custom-link {
+    color: #A6A1FF;
+    text-decoration: underline;
+}
+
+a.custom-link:hover {
+    background-color: white;
+    color: black;
+    text-decoration: none;
 }
