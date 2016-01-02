@@ -4,7 +4,7 @@ namespace Application\Controller;
 use Application\Model\User;
 use Ouzo\Controller;
 
-class UsersController extends Controller
+class PlayersController extends Controller
 {
     public function init()
     {
@@ -34,10 +34,10 @@ class UsersController extends Controller
         $user = new User($this->params['user']);
         if ($user->isValid()) {
             $user->insert();
-            $this->redirect(usersPath(), "User added");
+            $this->redirect(playersPath(), "User added");
         } else {
             $this->view->user = $user;
-            $this->view->render('Users/fresh');
+            $this->view->render('Players/fresh');
         }
     }
 
@@ -51,10 +51,10 @@ class UsersController extends Controller
     {
         $user = User::findById($this->params['id']);
         if ($user->updateAttributes($this->params['user'])) {
-            $this->redirect(userPath($user->id), "User updated");
+            $this->redirect(playerPath($user->id), "User updated");
         } else {
             $this->view->user = $user;
-            $this->view->render('Users/edit');
+            $this->view->render('Players/edit');
         }
     }
 }

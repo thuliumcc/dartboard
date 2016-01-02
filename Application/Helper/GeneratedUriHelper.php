@@ -1,25 +1,34 @@
 <?php
-function indexUsersPath()
+function checkParameter($parameter)
 {
-    return url(array('string' => "/"));
+    if (!isset($parameter)) {
+        throw new \InvalidArgumentException("Missing parameters");
+    }
 }
 
-function usersPath()
+function indexGamesPath()
 {
-    return url(array('string' => "/users"));
+    return url("/");
 }
 
-function freshUserPath()
+function playersPath()
 {
-    return url(array('string' => "/users/fresh"));
+    return url("/players");
 }
 
-function editUserPath($id)
+function freshPlayerPath()
 {
-    return url(array('string' => "/users/$id/edit"));
+    return url("/players/fresh");
 }
 
-function userPath($id)
+function editPlayerPath($id)
 {
-    return url(array('string' => "/users/$id"));
+    checkParameter($id);
+    return url("/players/$id/edit");
+}
+
+function playerPath($id)
+{
+    checkParameter($id);
+    return url("/players/$id");
 }

@@ -18,7 +18,7 @@ class GamesControllerTest extends ControllerTestCase
         $this->post('/hit', ['field' => '15t']);
 
         //then
-        $this->assertRenders('Users/index');
+        $this->assertRenders('Players/index');
     }
 
 }

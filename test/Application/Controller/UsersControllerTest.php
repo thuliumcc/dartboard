@@ -14,7 +14,7 @@ class UsersControllerTest extends ControllerTestCase
         $this->get('/users');
 
         //then
-        $this->assertRenders('Users/index');
+        $this->assertRenders('Players/index');
     }
 
     /**
@@ -28,7 +28,7 @@ class UsersControllerTest extends ControllerTestCase
         )));
 
         //then
-        $this->assertRenders('Users/fresh');
+        $this->assertRenders('Players/fresh');
     }
 
     /**
@@ -72,7 +72,7 @@ class UsersControllerTest extends ControllerTestCase
         )));
 
         //then
-        $this->assertRenders('Users/edit');
+        $this->assertRenders('Players/edit');
     }
 
     /**
@@ -121,6 +121,6 @@ class UsersControllerTest extends ControllerTestCase
         $this->get("/users/{$user->id}");
 
         //then
-        $this->assertRenders('Users/show');
+        $this->assertRenders('Players/show');
     }
 }
