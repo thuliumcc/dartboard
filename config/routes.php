@@ -9,6 +9,6 @@ Route::get('/cancel_game', 'games#cancel_game');
 Route::post('/games/add_player/:id', 'games#add_player');
 Route::post('/long_poll', 'events#poll');
 
-Route::post('/hit', 'hit#index');
+Route::post('/hit', 'hits#index');
 
 Route::resource('players');
