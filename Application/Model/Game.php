@@ -24,6 +24,9 @@ class Game extends Model
         ));
     }
 
+    /**
+     * @return Game
+     */
     public static function currentGame()
     {
         // in the future we will have 'finished' flag or something

@@ -11,9 +11,24 @@ function indexGamesPath()
     return url("/");
 }
 
-function newGamePath()
+function newGameGamesPath()
 {
-    return url("/games");
+    return url("/new_game");
+}
+
+function gameGamesPath()
+{
+    return url("/game");
+}
+
+function restartGameGamesPath()
+{
+    return url("/restart_game");
+}
+
+function cancelGameGamesPath()
+{
+    return url("/cancel_game");
 }
 
 function addPlayerGamesPath($id)

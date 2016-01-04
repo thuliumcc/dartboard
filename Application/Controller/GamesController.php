@@ -25,9 +25,23 @@ class GamesController extends Controller
 
     public function new_game()
     {
+        Game::create();
+        $this->view->game = Game::currentGame();
+        $this->view->render();
+    }
+
+    public function restart_game()
+    {
         GameUser::queryBuilder()->deleteAll();
         Game::queryBuilder()->deleteAll();
         Game::create();
+        $this->redirect(newGameGamesPath());
+    }
+
+    public function cancel_game()
+    {
+        GameUser::queryBuilder()->deleteAll();
+        Game::queryBuilder()->deleteAll();
         $this->redirect(indexGamesPath());
     }
 
@@ -35,6 +49,12 @@ class GamesController extends Controller
     {
         $game = Game::currentGame();
         $game->addPlayer($this->params['id']);
-        $this->redirect(indexGamesPath());
+        $this->redirect(newGameGamesPath());
+    }
+
+    public function game()
+    {
+        $this->view->game = Game::currentGame();
+        $this->view->render();
     }
 }
