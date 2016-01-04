@@ -1,0 +1,11 @@
+<input type="text" id="field" style="width: 100px;">
+<button type="submit" id="simulate-hit" class="btn btn-primary">Simulate hit</button>
+
+
+<script>
+    $(function () {
+        $('#simulate-hit').click(function () {
+            $.post('<?= indexHitsPath()?>', {field: $('#field').val()});
+        });
+    });
+</script>

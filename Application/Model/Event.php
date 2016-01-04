@@ -28,7 +28,7 @@ class Event extends Model
 
     public static function loadNew()
     {
-        $lastEventId = Session::get('last_event_id') ?: 0;
+        $lastEventId = Session::get('last_event_id');
         if (!$lastEventId) {
             //do not load events that we triggered before this session was started
             $lastEvent = Event::queryBuilder()->limit(1)->order('id desc')->fetch();

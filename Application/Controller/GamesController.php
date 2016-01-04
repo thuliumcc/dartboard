@@ -59,6 +59,11 @@ class GamesController extends Controller
         $this->view->render();
     }
 
+    public function test()
+    {
+        $this->view->render();
+    }
+
     public function next_player()
     {
         $game = Game::currentGame();

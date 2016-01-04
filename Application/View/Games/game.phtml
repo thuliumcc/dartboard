@@ -2,89 +2,61 @@
     th {
         text-align: center;
     }
+    .bigger {
+        font-size: 20pt;
+    }
 </style>
 
-<div class="col-md-4 col-md-offset-4">
-    <?= postButton('New game', restartGamesPath())?>
-    <?= postButton('Cancel game', cancelGamesPath())?>
-    <?= postButton('Next player', nextPlayerGamesPath())?>
+<div class="col-md-6 col-md-offset-3">
+    <?= postButton('New game', restartGamesPath()) ?>
+    <?= postButton('Cancel game', cancelGamesPath()) ?>
+    <?= postButton('Next player', nextPlayerGamesPath()) ?>
 
     <hr>
+    <div class="bigger">
+        <div>Round: <?= $this->game->round ?></div>
+        <div>Current user: <?= $this->game->current_game_user->user->login ?></div>
 
-    <div>Round: <?= $this->game->round ?></div>
-    <div>Current user: <?= $this->game->current_game_user->user->login ?></div>
+        <hr>
 
-    <hr>
-
-    <div>
-        Players:
-        <table class="table">
-            <thead>
-            <tr>
-                <td>Login</td>
-                <td>Score</td>
-            </tr>
-            </thead>
-            <? foreach ($this->game->game_users as $game_user): ?>
+        <div>
+            Players:
+            <table class="table">
+                <thead>
                 <tr>
-                    <td><?= $game_user->user->login ?></td>
-                    <td><?= $game_user->score ?></td>
+                    <td>Login</td>
+                    <th>15</th>
+                    <th>16</th>
+                    <th>17</th>
+                    <th>18</th>
+                    <th>19</th>
+                    <th>20</th>
+                    <th>25</th>
                 </tr>
-            <? endforeach; ?>
-        </table>
+                </thead>
+                <? foreach ($this->game->game_users as $game_user): ?>
+                    <tr>
+                        <td><?= $game_user->user->login ?></td>
+                        <td><?= str_repeat('X', $game_user->getScore(15)) ?></td>
+                        <td><?= str_repeat('X', $game_user->getScore(16)) ?></td>
+                        <td><?= str_repeat('X', $game_user->getScore(17)) ?></td>
+                        <td><?= str_repeat('X', $game_user->getScore(18)) ?></td>
+                        <td><?= str_repeat('X', $game_user->getScore(19)) ?></td>
+                        <td><?= str_repeat('X', $game_user->getScore(20)) ?></td>
+                        <td><?= str_repeat('X', $game_user->getScore(25)) ?></td>
+                    </tr>
+                <? endforeach; ?>
+            </table>
+        </div>
     </div>
 </div>
 
-<div class="col-md-7 col-md-offset-3">
-    <table class="table text-center">
-        <thead>
-        <tr>
-            <th>15</th>
-            <th>16</th>
-            <th>17</th>
-            <th>18</th>
-            <th>19</th>
-            <th>20</th>
-            <th>25</th>
-        </tr>
-        </thead>
-        <tbody>
-        <tr>
-            <td>x</td>
-            <td></td>
-            <td>x</td>
-            <td></td>
-            <td>x</td>
-            <td></td>
-            <td>x</td>
-        </tr>
-        <tr>
-            <td>x</td>
-            <td></td>
-            <td>x</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        <tr>
-            <td>x</td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-            <td></td>
-        </tr>
-        </tbody>
-    </table>
-</div>
 <?= addFile(array('type' => 'script', 'params' => array('url' => '/public/js/long-poll.js'))); ?>
 
 <script>
-    $(function() {
-        eventBus.bind('hit', function(params) {
+    $(function () {
+        eventBus.bind('hit', function (params) {
             location.reload();
-        })
+        });
     });
 </script>

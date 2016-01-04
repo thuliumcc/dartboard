@@ -65,8 +65,7 @@ class Game extends Model
     {
         $this->current_game_user_id = null;
         $this->update();
-        GameUser::queryBuilder()->deleteAll();
-        Game::queryBuilder()->deleteAll();
+        GameUser::queryBuilder()->deleteEach();
         return parent::delete();
     }
 

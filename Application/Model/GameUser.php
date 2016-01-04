@@ -25,4 +25,16 @@ class GameUser extends Model
             ]
         ]);
     }
+
+    function getScore($field)
+    {
+        $sum = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->id, 'field' => $field])->fetch();
+        return min($sum[0], 3);
+    }
+
+    public function delete()
+    {
+        Hit::where(['game_user_id' => $this->id])->deleteAll();
+        return parent::delete();
+    }
 }

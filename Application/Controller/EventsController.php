@@ -25,7 +25,7 @@ class EventsController extends Controller
             session_write_close();
 
             if ($events) {
-                $this->layout->renderAjax(Json::encode(Arrays::map(Event::loadNew(), function ($event) {
+                $this->layout->renderAjax(Json::encode(Arrays::map($events, function ($event) {
                     return $event->toJsonArray();
                 })));
                 return;
