@@ -11,13 +11,6 @@
     <hr>
 
     <div>Round: <?= $this->game->round ?></div>
-    <div>
-        <? foreach ($this->game->possibleUsers() as $user): ?>
-            <form action="<?= addPlayerGamesPath($user->id) ?>" class="add-player" method="post">
-                <button type="submit" class="btn btn-primary">Add <?= $user->login ?></button>
-            </form>
-        <? endforeach; ?>
-    </div>
 
     <hr>
 
