@@ -35,4 +35,10 @@ class Game extends Model
         $currentGame = self::currentGame();
         return User::where('not exists (select true from game_users where game_id = ? AND user_id = users.id)', $currentGame->id)->fetchAll();
     }
+
+    public function addPlayer($id)
+    {
+        $ordinal = GameUser::count(['game_id' => $this->id]);
+        GameUser::create(['game_id' => $this->id, 'user_id' => $id, 'ordinal' => $ordinal]);
+    }
 }
