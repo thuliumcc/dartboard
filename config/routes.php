@@ -7,6 +7,8 @@ Route::get('/game', 'games#game');
 Route::get('/restart_game', 'games#restart_game');
 Route::get('/cancel_game', 'games#cancel_game');
 Route::post('/games/add_player/:id', 'games#add_player');
+Route::post('/games/next_player', 'games#next_player');
+
 Route::post('/long_poll', 'events#poll');
 
 Route::post('/hit', 'hits#index');

@@ -60,4 +60,11 @@ class GamesController extends Controller
         $this->view->game = Game::currentGame();
         $this->view->render();
     }
+
+    public function next_player()
+    {
+        $game = Game::currentGame();
+        $game->nextPlayer();
+        $this->redirect(indexGamesPath());
+    }
 }

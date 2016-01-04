@@ -7,10 +7,12 @@
 <div class="col-md-4 col-md-offset-4">
     <?= linkButton(['name' => 'star-game', 'value' => 'New game', 'url' => restartGameGamesPath(), 'class' => "btn btn-primary"]); ?>
     <?= linkButton(['name' => 'star-game', 'value' => 'Cancel game', 'url' => cancelGameGamesPath(), 'class' => "btn btn-primary"]); ?>
+    <?= postButton('Next player', nextPlayerGamesPath())?>
 
     <hr>
 
     <div>Round: <?= $this->game->round ?></div>
+    <div>Current user: <?= $this->game->current_game_user->user->login ?></div>
 
     <hr>
 

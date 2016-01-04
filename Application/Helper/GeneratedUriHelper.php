@@ -37,6 +37,21 @@ function addPlayerGamesPath($id)
     return url("/games/add_player/$id");
 }
 
+function nextPlayerGamesPath()
+{
+    return url("/games/next_player");
+}
+
+function pollEventsPath()
+{
+    return url("/long_poll");
+}
+
+function indexHitsPath()
+{
+    return url("/hit");
+}
+
 function playersPath()
 {
     return url("/players");
@@ -57,4 +72,9 @@ function playerPath($id)
 {
     checkParameter($id);
     return url("/players/$id");
+}
+
+function allGeneratedUriNames()
+{
+    return array('indexGamesPath', 'newGameGamesPath', 'gameGamesPath', 'restartGameGamesPath', 'cancelGameGamesPath', 'addPlayerGamesPath', 'nextPlayerGamesPath', 'pollEventsPath', 'indexHitsPath', 'playersPath', 'freshPlayerPath', 'editPlayerPath', 'playerPath', 'playersPath', 'playerPath', 'playerPath', 'playerPath');
 }

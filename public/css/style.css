@@ -73,3 +73,8 @@ a.custom-link:hover {
     color: black;
     text-decoration: none;
 }
+
+.post-button {
+    display: inline-block;
+    margin-bottom: 0;
+}
