@@ -8,6 +8,7 @@ use Ouzo\Restrictions;
 use Ouzo\Session;
 use Ouzo\Utilities\Arrays;
 use Ouzo\Utilities\Clock;
+use Ouzo\Utilities\Json;
 
 /**
  * @property string name
@@ -28,10 +29,24 @@ class Event extends Model
     public static function loadNew()
     {
         $lastEventId = Session::get('last_event_id') ?: 0;
+        if (!$lastEventId) {
+            //do not load events that we triggered before this session was started
+            $lastEvent = Event::queryBuilder()->limit(1)->order('id desc')->fetch();
+            Session::set('last_event_id', $lastEvent ? $lastEvent->id : 0);
+        }
+
         $events = Event::where(['id' => Restrictions::greaterThan($lastEventId)])->order('id asc')->fetchAll();
         if ($events) {
             Session::set('last_event_id', Arrays::last($events)->id);
         }
         return $events;
+    }
+
+    function toJsonArray()
+    {
+        return [
+            'name' => $this->name,
+            'params' => Json::decode($this->params),
+        ];
     }
 }

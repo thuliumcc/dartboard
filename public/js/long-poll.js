@@ -2,8 +2,8 @@ var eventBus = {
     trigger: function (event, params) {
         $(eventBus).trigger(event, params);
     },
-    subscribe: function (event, handler) {
-        $(eventBus).subscribe(event, handler);
+    bind: function (event, handler) {
+        $(eventBus).bind(event, handler);
     }
 };
 
@@ -14,7 +14,10 @@ function longPoll() {
         method: "POST",
         url: "/dartboard/long_poll",
         dataType: "json",
-    }) .done(function( response ) {
+    }) .done(function( events ) {
+        $.each(events, function() {
+            eventBus.trigger(this.name, this.params);
+        });
         longPoll();
     });
 }
