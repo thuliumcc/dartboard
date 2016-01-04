@@ -33,18 +33,16 @@ class GamesController extends Controller
         $this->view->render();
     }
 
-    public function restart_game()
+    public function restart()
     {
-        GameUser::queryBuilder()->deleteAll();
-        Game::queryBuilder()->deleteAll();
+        Game::queryBuilder()->deleteEach();
         Game::create();
         $this->redirect(newGameGamesPath());
     }
 
-    public function cancel_game()
+    public function cancel()
     {
-        GameUser::queryBuilder()->deleteAll();
-        Game::queryBuilder()->deleteAll();
+        Game::queryBuilder()->deleteEach();
         $this->redirect(indexGamesPath());
     }
 

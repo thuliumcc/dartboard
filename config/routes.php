@@ -4,8 +4,9 @@ use Ouzo\Routing\Route;
 Route::get('/', 'games#index');
 Route::get('/new_game', 'games#new_game');
 Route::get('/game', 'games#game');
-Route::get('/restart_game', 'games#restart_game');
-Route::get('/cancel_game', 'games#cancel_game');
+
+Route::post('/games/restart', 'games#restart');
+Route::post('/games/cancel', 'games#cancel');
 Route::post('/games/add_player/:id', 'games#add_player');
 Route::post('/games/next_player', 'games#next_player');
 

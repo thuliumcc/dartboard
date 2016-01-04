@@ -55,6 +55,19 @@ class Game extends Model
         $nextOrdinal = ($this->current_game_user->ordinal + 1) % $count;
         $nextPlayer = GameUser::where(['ordinal' => $nextOrdinal])->fetch();
         $this->current_game_user_id = $nextPlayer->id;
+        if ($nextOrdinal == 0) {
+            $this->round++;
+        }
         $this->update();
     }
+
+    public function delete()
+    {
+        $this->current_game_user_id = null;
+        $this->update();
+        GameUser::queryBuilder()->deleteAll();
+        Game::queryBuilder()->deleteAll();
+        return parent::delete();
+    }
+
 }

@@ -5,8 +5,8 @@
 </style>
 
 <div class="col-md-4 col-md-offset-4">
-    <?= linkButton(['name' => 'star-game', 'value' => 'New game', 'url' => restartGameGamesPath(), 'class' => "btn btn-primary"]); ?>
-    <?= linkButton(['name' => 'star-game', 'value' => 'Cancel game', 'url' => cancelGameGamesPath(), 'class' => "btn btn-primary"]); ?>
+    <?= postButton('New game', restartGamesPath())?>
+    <?= postButton('Cancel game', cancelGamesPath())?>
     <?= postButton('Next player', nextPlayerGamesPath())?>
 
     <hr>
