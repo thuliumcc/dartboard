@@ -25,8 +25,11 @@ class GamesController extends Controller
 
     public function new_game()
     {
-        Game::create();
-        $this->view->game = Game::currentGame();
+        $game = Game::currentGame();
+        if (!$game) {
+            $game = Game::create();
+        }
+        $this->view->game = $game;
         $this->view->render();
     }
 
