@@ -23,7 +23,10 @@ class Hit extends Model
     {
         parent::__construct([
             'attributes' => $attributes,
-            'fields' => $this->_fields
+            'fields' => $this->_fields,
+            'belongsTo' => [
+                'userGame' => ['class' => 'GameUser', 'foreignKey' => 'game_user_id'],
+            ]
         ]);
     }
 

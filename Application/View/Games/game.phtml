@@ -1,3 +1,8 @@
+<?
+use Application\Model\Hit;
+
+?>
+
 <style>
     th {
         text-align: center;
@@ -25,13 +30,13 @@
                 <thead>
                 <tr>
                     <td>Login</td>
-                    <th>15</th>
-                    <th>16</th>
-                    <th>17</th>
-                    <th>18</th>
-                    <th>19</th>
-                    <th>20</th>
-                    <th>25</th>
+                    <td>15</td>
+                    <td>16</td>
+                    <td>17</td>
+                    <td>18</td>
+                    <td>19</td>
+                    <td>20</td>
+                    <td>25</td>
                 </tr>
                 </thead>
                 <? foreach ($this->game->game_users as $game_user): ?>
@@ -48,6 +53,13 @@
                 <? endforeach; ?>
             </table>
         </div>
+    </div>
+
+    <div>
+        Last hits:
+        <? foreach (Hit::queryBuilder()->with('userGame->user')->order('id desc')->limit(9)->fetchAll() as $hit): ?>
+            <div><?= $hit->userGame->user->login ?> <?= $hit->field ?>x<?= $hit->multiplier ?></div>
+        <? endforeach; ?>
     </div>
 </div>
 

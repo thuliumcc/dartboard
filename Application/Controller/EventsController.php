@@ -16,10 +16,17 @@ class EventsController extends Controller
 
     function poll()
     {
+        ob_end_clean();
+
         Stats::reset();
         session_write_close();
         $stop = Clock::now()->plusSeconds(self::$TIMEOUT);
-        while ($stop->isAfter(Clock::now())) {
+        while (true) {
+            print " ";
+            if (!$stop->isAfter(Clock::now()) || connection_aborted()) {
+                $this->layout->renderAjax("[]");
+                return;
+            }
             session_start();
             $events = Event::loadNew();
             session_write_close();
@@ -32,6 +39,5 @@ class EventsController extends Controller
             }
             usleep(100*1000);
         }
-        $this->layout->renderAjax("[]");
     }
 }
