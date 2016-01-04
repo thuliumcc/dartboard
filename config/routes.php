@@ -8,4 +8,6 @@ Route::get('/restart_game', 'games#restart_game');
 Route::get('/cancel_game', 'games#cancel_game');
 Route::post('/games/add_player/:id', 'games#add_player');
 
+Route::post('/hit', 'hit#index');
+
 Route::resource('players');
