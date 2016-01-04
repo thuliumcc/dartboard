@@ -1,6 +1,7 @@
 <?php
 namespace Application\Model;
 
+use BadMethodCallException;
 use Ouzo\Model;
 
 /**
@@ -10,6 +11,12 @@ use Ouzo\Model;
  */
 class Hit extends Model
 {
+    private static $multiplierCharMap = [
+        's' => 1,
+        'd' => 2,
+        't' => 3
+    ];
+
     private $_fields = ['game_user_id', 'field', 'multiplier'];
 
     public function __construct($attributes = [])
@@ -18,5 +25,19 @@ class Hit extends Model
             'attributes' => $attributes,
             'fields' => $this->_fields
         ]);
+    }
+
+    /**
+     * @param $field
+     * @param $gameUserId
+     * @return Hit
+     */
+    public static function createFor($field, $gameUserId)
+    {
+        if (preg_match('/(\d+)([sdt])/', $field, $matches)) {
+            $multiplier = self::$multiplierCharMap[$matches[2]];
+            return self::create(['game_user_id' => $gameUserId, 'field' => $matches[1], 'multiplier' => $multiplier]);
+        }
+        throw new BadMethodCallException('Cannot parse field');
     }
 }

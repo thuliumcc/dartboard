@@ -12,17 +12,17 @@ use Ouzo\Model;
  */
 class GameUser extends Model
 {
-    private $_fields = array('game_id', 'user_id', 'score' => 0, 'ordinal');
+    private $_fields = ['game_id', 'user_id', 'score' => 0, 'ordinal'];
 
-    public function __construct($attributes = array())
+    public function __construct($attributes = [])
     {
-        parent::__construct(array(
+        parent::__construct([
             'attributes' => $attributes,
             'fields' => $this->_fields,
             'belongsTo' => [
                 'user' => ['class' => 'User', 'foreignKey' => 'user_id'],
                 'game' => ['class' => 'Game', 'foreignKey' => 'game_id', 'referencedColumn' => 'id']
             ]
-        ));
+        ]);
     }
 }
