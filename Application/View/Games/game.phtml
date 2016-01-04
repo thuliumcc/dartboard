@@ -1,0 +1,44 @@
+<style>
+
+
+</style>
+
+<div class="col-md-4 col-md-offset-4">
+    <button class="btn btn-primary new-game">New game</button>
+    <?= linkButton(['name' => 'players', 'value' => 'Players', 'url' => playersPath(), 'class' => "btn btn-primary"]); ?>
+
+    <div>Round: <?= $this->game->round ?></div>
+    <div>
+        <? foreach ($this->game->possibleUsers() as $user): ?>
+            <form action="<?= addPlayerGamesPath($user->id) ?>" class="add-player" method="post">
+                <button type="submit" class="btn btn-primary">Add <?= $user->login ?></button>
+            </form>
+        <? endforeach; ?>
+    </div>
+
+    <div>
+        Players:
+        <table>
+            <thead>
+            <tr>
+                <td>Login</td>
+                <td>Score</td>
+            </tr>
+            </thead>
+        <? foreach ($this->game->game_users as $game_user): ?>
+            <tr>
+                <td><?= $game_user->user->login ?></td>
+                <td><?= $game_user->score ?></td>
+            </tr>
+        <? endforeach; ?>
+        </table>
+    </div>
+
+</div>
+<?= renderPartial('Games/_new_game') ?>
+
+<script>
+    $(function () {
+
+    });
+</script>

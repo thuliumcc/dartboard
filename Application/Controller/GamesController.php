@@ -1,6 +1,8 @@
 <?php
 namespace Application\Controller;
 
+use Application\Model\Game;
+use Application\Model\GameUser;
 use Ouzo\Controller;
 
 class GamesController extends Controller
@@ -12,6 +14,27 @@ class GamesController extends Controller
 
     public function index()
     {
-        $this->view->render();
+        $game = Game::currentGame();
+        if ($game) {
+            $this->view->game = $game;
+            $this->view->render('Games/game');
+        } else {
+            $this->view->render();
+        }
+    }
+
+    public function new_game()
+    {
+        GameUser::queryBuilder()->deleteAll();
+        Game::queryBuilder()->deleteAll();
+        Game::create();
+        $this->redirect(indexGamesPath());
+    }
+
+    public function add_player()
+    {
+        $game = Game::currentGame();
+        $game->addPlayer($this->params['id']);
+        $this->redirect(indexGamesPath());
     }
 }

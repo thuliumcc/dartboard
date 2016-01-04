@@ -12,7 +12,7 @@ use Ouzo\Model;
  */
 class GameUser extends Model
 {
-    private $_fields = array('game_id', 'user_id', 'score', 'ordinal', 'current_game_user_id');
+    private $_fields = array('game_id', 'user_id', 'score' => 0, 'ordinal');
 
     public function __construct($attributes = array())
     {
@@ -20,8 +20,8 @@ class GameUser extends Model
             'attributes' => $attributes,
             'fields' => $this->_fields,
             'belongsTo' => [
-                'user' => ['class' => 'User'],
-                'game' => ['class' => 'Game']
+                'user' => ['class' => 'User', 'foreignKey' => 'user_id'],
+                'game' => ['class' => 'Game', 'foreignKey' => 'game_id', 'referencedColumn' => 'id']
             ]
         ));
     }

@@ -1,0 +1,10 @@
+<form action="<?= newGamePath()?>" class="play-form" method="post" >
+</form>
+<script>
+    $(function() {
+        $('.new-game').click(function(e) {
+            e.preventDefault();
+            $('.play-form').submit();
+        });
+    });
+</script>

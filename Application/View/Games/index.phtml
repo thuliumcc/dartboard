@@ -1,6 +1,13 @@
 <div class="col-md-4 col-md-offset-4">
     <div class="list-group text-center">
-        <a href="#" class="list-group-item">Play</a>
+        <a href="#" class="list-group-item new-game">Play</a>
         <a href="<?= playersPath() ?>" class="list-group-item">Players</a>
     </div>
 </div>
+
+<?= renderPartial('Games/_new_game') ?>
+<script>
+    $(function () {
+
+    });
+</script>
