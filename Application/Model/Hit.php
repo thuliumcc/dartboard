@@ -14,13 +14,14 @@ use Ouzo\Utilities\Arrays;
  */
 class Hit extends Model
 {
+    const SCORED_FIELDS = [15, 16, 17, 18, 19, 20, 25];
+    const BULLSEYE = 25;
+
     private static $multiplierCharMap = [
         's' => 1,
         'd' => 2,
         't' => 3
     ];
-
-    const BULLSEYE = 25;
 
     public function __construct($attributes = [])
     {
@@ -49,8 +50,12 @@ class Hit extends Model
 
     public function isScored()
     {
-        $sum = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->game_user_id, 'field' => $this->field])->fetch();
-        $hitCountBeforeCurrentHit = Arrays::first($sum) - $this->multiplier;
-        return $hitCountBeforeCurrentHit < 3;
+        $isScoredField = in_array($this->field, self::SCORED_FIELDS);
+        if ($isScoredField) {
+            $sum = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->game_user_id, 'field' => $this->field])->fetch();
+            $hitCountBeforeCurrentHit = Arrays::first($sum) - $this->multiplier;
+            return $hitCountBeforeCurrentHit < 3;
+        }
+        return false;
     }
 }
