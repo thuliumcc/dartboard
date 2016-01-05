@@ -11,6 +11,7 @@ use Application\Model\Hit;
     <div class="bigger">
         <div>Round: <?= $this->game->round ?></div>
         <div>Current user: <?= $this->game->current_game_user->user->login ?></div>
+        <div>Left: <?= $this->game->current_game_user->getLeftShoots() ?></div>
 
         <hr>
 

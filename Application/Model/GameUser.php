@@ -32,6 +32,11 @@ class GameUser extends Model
         return min($sum[0], 3);
     }
 
+    public function getLeftShoots()
+    {
+        return 3 - Hit::count(['game_user_id' => $this->getId(), 'round' => $this->game->round]);
+    }
+
     public function delete()
     {
         Hit::where(['game_user_id' => $this->id])->deleteAll();
