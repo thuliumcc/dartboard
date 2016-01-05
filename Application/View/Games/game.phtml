@@ -20,6 +20,7 @@ use Ouzo\Config;
 
 <script>
     $(function () {
+
         function loadGameContent() {
             $.get('<?= gameContentGamesPath() ?>', function (content) {
                 $('#game_content').html(content);

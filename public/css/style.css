@@ -78,3 +78,10 @@ a.custom-link:hover {
     display: inline-block;
     margin-bottom: 0;
 }
+
+.error-container {
+    background-color: white;
+    color: black;
+    font-family: monospace;
+    font-size: 10px;
+}
