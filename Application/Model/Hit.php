@@ -39,7 +39,7 @@ class Hit extends Model
     {
         if (preg_match('/(\d+)([sdt])/', $field, $matches)) {
             $multiplier = self::$multiplierCharMap[$matches[2]];
-            return self::create(['game_user_id' => $gameUser->getId(), 'field' => $matches[1], 'multiplier' => $multiplier, 'round' => $gameUser->game->round]);
+            return self::create(['game_user_id' => $gameUser->getId(), 'field' => intval($matches[1]), 'multiplier' => intval($multiplier), 'round' => $gameUser->game->round]);
         }
         throw new BadMethodCallException('Cannot parse field');
     }

@@ -1,4 +1,6 @@
 <?
+use Ouzo\Config;
+
 ?>
 
 <style>
@@ -24,9 +26,53 @@
             });
         }
 
-        eventBus.bind('hit', function (params) {
+        eventBus.bind('hit', function (event, hit) {
+            playSounds(hit);
             loadGameContent();
         });
+
+        function playSounds(hit) {
+            var files = [];
+
+            if (hit.multiplier == 2) {
+                files.push('double');
+            }
+
+            if (hit.field == 25) {
+                files.push('bullseye');
+                if (hit.multiplier == 2) {
+                    files.push('yeah');
+                }
+            }
+
+            if (hit.multiplier == 3) {
+                files.push('triple');
+                files.push('yeah');
+            }
+
+            playFilesSynchronously(files);
+        }
+
+        function playFilesSynchronously(files) {
+            if (files.length == 0) {
+                return;
+            }
+            var currentPlayIndex = 0;
+
+            function play() {
+                var path = '<?= Config::getPrefixSystem() ?>' + '/public/sounds/' + files[currentPlayIndex] + '.mp3';
+                var audio = new Audio(path);
+                audio.onended = function () {
+                    currentPlayIndex++;
+                    if (currentPlayIndex < files.length) {
+                        play();
+                    }
+                };
+                audio.play();
+            }
+
+            play();
+        }
 
         loadGameContent();
     });
