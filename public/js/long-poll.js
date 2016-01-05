@@ -21,8 +21,9 @@ function longPoll() {
         longPoll();
     });
 }
-
-longPoll();
+$(function() {
+    longPoll();
+});
 
 $( window ).unload(function() {
     if (xhr) {
