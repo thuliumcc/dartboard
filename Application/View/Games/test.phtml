@@ -1,7 +1,7 @@
 <style>
     .number {
         font-family: monospace;
-        font-size: 16px;
+        font-size: 15px;
         font-weight: bold;
         margin-bottom: 5px;
     }
@@ -14,14 +14,14 @@ foreach (['s', 'd', 't'] as $multiplier) {
     echo "<br/>";
     foreach (range(1, 20) as $number) {
         echo <<<_IN
-    <input type="button" class="number" value="{$number}{$multiplier}">
+    <input type="button" class="number btn btn-primary" value="{$number}{$multiplier}">
 _IN;
     }
 }
 ?>
 <br/>
-<input type="button" class="number" value="25s">
-<input type="button" class="number" value="25d">
+<input type="button" class="number btn btn-primary" value="25s">
+<input type="button" class="number btn btn-primary" value="25d">
 <br/>
 
 <script>
