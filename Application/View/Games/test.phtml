@@ -1,11 +1,33 @@
-<input type="text" id="field" style="width: 100px;">
-<button type="submit" id="simulate-hit" class="btn btn-primary">Simulate hit</button>
+<style>
+    .number {
+        font-family: monospace;
+        font-size: 16px;
+        font-weight: bold;
+    }
+</style>
 
+Simulate hit: <br/>
+<?
+
+foreach (['s', 'd', 't'] as $multiplier) {
+    echo "<br/>";
+    foreach (range(1, 20) as $number) {
+        echo <<<_IN
+    <input type="button" class="number" value="{$number}{$multiplier}">
+_IN;
+    }
+}
+?>
+<br/>
+<input type="button" class="number" value="25s">
+<input type="button" class="number" value="25d">
+<br/>
 
 <script>
     $(function () {
-        $('#simulate-hit').click(function () {
-            $.post('<?= indexHitsPath()?>', {field: $('#field').val()});
+        $('.number').click(function () {
+            var value = $(this).val();
+            $.post('<?= indexHitsPath()?>', {field: value});
         });
     });
 </script>
