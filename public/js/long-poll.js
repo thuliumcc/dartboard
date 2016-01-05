@@ -13,7 +13,7 @@ function longPoll() {
     xhr = $.ajax({
         method: "POST",
         url: "/dartboard/long_poll",
-        dataType: "json",
+        dataType: "json"
     }) .done(function( events ) {
         $.each(events, function() {
             eventBus.trigger(this.name, this.params);
