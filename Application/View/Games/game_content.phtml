@@ -1,6 +1,7 @@
 <?
 use Application\Model\Hit;
 use Ouzo\Config;
+use Ouzo\Utilities\Objects;
 
 ?>
 <div class="col-md-6 col-md-offset-3">
@@ -59,6 +60,9 @@ use Ouzo\Config;
 
 <script>
     function playFilesSynchronously(files) {
+        if (files.length == 0) {
+            return;
+        }
         var currentPlayIndex = 0;
 
         function play() {
@@ -77,8 +81,8 @@ use Ouzo\Config;
     }
 
     function lastHit() {
-        var field = '<?= $lastHit->field ?>';
-        var multiplier = '<?= $lastHit->multiplier ?>';
+        var field = '<?= Objects::getValue($lastHit, 'field') ?>';
+        var multiplier = '<?= Objects::getValue($lastHit, 'multiplier') ?>';
         return {
             number: field,
             multiplier: multiplier
