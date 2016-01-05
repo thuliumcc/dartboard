@@ -14,6 +14,8 @@ use Ouzo\Model;
  */
 class GameUser extends Model
 {
+    const POSSIBLE_SHOTS = 3;
+
     public function __construct($attributes = [])
     {
         parent::__construct([
@@ -34,7 +36,8 @@ class GameUser extends Model
 
     public function getLeftShoots()
     {
-        return 3 - Hit::count(['game_user_id' => $this->getId(), 'round' => $this->game->round]);
+        $shoots = self::POSSIBLE_SHOTS - Hit::count(['game_user_id' => $this->getId(), 'round' => $this->game->round]);
+        return $shoots > 0 ? $shoots : null;
     }
 
     public function delete()

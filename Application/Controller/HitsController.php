@@ -10,9 +10,12 @@ class HitsController extends Controller
 {
     public function index()
     {
-        $game = Game::currentGame();
         $field = $this->params['field'];
-        Hit::createFor($field, $game->current_game_user);
-        Event::create(['name' => 'hit', 'params' => '{"field":"' . $field . '"}']);
+        $game = Game::currentGame();
+        $currentGameUser = $game->current_game_user;
+        if ($currentGameUser->getLeftShoots() !== null) {
+            Hit::createFor($field, $currentGameUser);
+            Event::create(['name' => 'hit', 'params' => '{"field":"' . $field . '"}']);
+        }
     }
 }
