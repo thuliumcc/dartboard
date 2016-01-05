@@ -31,6 +31,10 @@ use Ouzo\Config;
             loadGameContent();
         });
 
+        eventBus.bind('next_player', function () {
+            playFilesSynchronously(['next']);
+        });
+
         function playSounds(hit) {
             var files = [];
 

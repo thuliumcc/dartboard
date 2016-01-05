@@ -20,6 +20,8 @@ class HitsController extends Controller
                 'multiplier' => $hit->multiplier,
                 'scored' => $hit->isScored(),
             ])]);
+        } else {
+            Event::create(['name' => 'next_player', 'params' => '']);
         }
     }
 }
