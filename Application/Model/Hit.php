@@ -3,6 +3,7 @@ namespace Application\Model;
 
 use BadMethodCallException;
 use Ouzo\Model;
+use Ouzo\Utilities\Arrays;
 
 /**
  * @property int game_user_id
@@ -18,6 +19,8 @@ class Hit extends Model
         'd' => 2,
         't' => 3
     ];
+
+    const BULLSEYE = 25;
 
     public function __construct($attributes = [])
     {
@@ -42,5 +45,12 @@ class Hit extends Model
             return self::create(['game_user_id' => $gameUser->getId(), 'field' => intval($matches[1]), 'multiplier' => intval($multiplier), 'round' => $gameUser->game->round]);
         }
         throw new BadMethodCallException('Cannot parse field');
+    }
+
+    public function isScored()
+    {
+        $sum = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->game_user_id, 'field' => $this->field])->fetch();
+        $hitCountBeforeCurrentHit = Arrays::first($sum) - $this->multiplier;
+        return $hitCountBeforeCurrentHit < 3;
     }
 }
