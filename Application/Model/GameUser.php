@@ -3,7 +3,6 @@ namespace Application\Model;
 
 use Ouzo\Model;
 use Ouzo\Utilities\Arrays;
-use Ouzo\Utilities\Functions;
 
 /**
  * @property int game_id
@@ -42,7 +41,10 @@ class GameUser extends Model
             ->groupBy('field')
             ->fetchAll();
         $allFieldsHit = sizeof($scoredFieldsHits) == sizeof(Hit::SCORED_FIELDS);
-        $allFieldsHit3Times = Arrays::all($scoredFieldsHits, Functions::equals([3]));
+        $allFieldsHit3Times = Arrays::all($scoredFieldsHits, function ($fetchedFieldHits) {
+            $fieldHitCount = Arrays::first($fetchedFieldHits);
+            return $fieldHitCount >= 3;
+        });
         return $allFieldsHit && $allFieldsHit3Times;
     }
 

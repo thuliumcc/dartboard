@@ -27,7 +27,7 @@ use Ouzo\Config;
         }
 
         eventBus.bind('hit', function (event, hit) {
-            playSounds(hit);
+            playSoundsForHit(hit);
             loadGameContent();
         });
 
@@ -35,8 +35,13 @@ use Ouzo\Config;
             playFilesSynchronously(['next']);
         });
 
-        function playSounds(hit) {
+
+        function playSoundsForHit(hit) {
             var files = [];
+            if (hit.winner) {
+                playFilesSynchronously(['winner']);
+                return;
+            }
 
             if (hit.scored) {
                 if (hit.multiplier == 2) {
