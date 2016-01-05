@@ -10,6 +10,7 @@ use Ouzo\Model;
  * @property int ordinal
  * @property int current_game_user_id
  * @property User user
+ * @property Game game
  */
 class GameUser extends Model
 {

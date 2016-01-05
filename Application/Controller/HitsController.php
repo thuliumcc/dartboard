@@ -12,7 +12,7 @@ class HitsController extends Controller
     {
         $game = Game::currentGame();
         $field = $this->params['field'];
-        Hit::createFor($field, $game->current_game_user_id);
+        Hit::createFor($field, $game->current_game_user);
         Event::create(['name' => 'hit', 'params' => '{"field":"' . $field . '"}']);
     }
 }

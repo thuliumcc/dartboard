@@ -1,5 +1,6 @@
 <?php
 use Application\Model\Game;
+use Application\Model\GameUser;
 use Application\Model\Hit;
 use Application\Model\User;
 use Ouzo\Tests\DbTransactionalTestCase;
@@ -21,14 +22,17 @@ class HitTest extends DbTransactionalTestCase
         /** @var Game $game */
         $game = Game::create();
         $game->addPlayer($user->getId());
+        /** @var GameUser $gameUser */
         $gameUser = Arrays::first($game->game_users);
+        $game->updateAttributes(['current_game_user_id' => $gameUser->getId(), 'round' => 1]);
 
         //when
-        $hit = Hit::createFor($field, $gameUser->getId());
+        $hit = Hit::createFor($field, $gameUser);
 
         //then
         $this->assertEquals($expectedField, $hit->field);
         $this->assertEquals($expectedMultiplier, $hit->multiplier);
+        $this->assertEquals(1, $hit->round);
     }
 
     public function fields()

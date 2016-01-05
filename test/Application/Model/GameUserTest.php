@@ -16,8 +16,8 @@ class GameUserTest extends DbTransactionalTestCase
         $user = User::create(['login' => 'A']);
         $game = Game::create();
         $gameUser = GameUser::create(['game_id' => $game->getId(), 'user_id' => $user->getId()]);
-        Hit::createFor('15s', $gameUser->getId());
-        Hit::createFor('15s', $gameUser->getId());
+        Hit::createFor('15s', $gameUser);
+        Hit::createFor('15s', $gameUser);
 
         //when
         $score = $gameUser->getScore(15);
@@ -34,9 +34,9 @@ class GameUserTest extends DbTransactionalTestCase
         $user = User::create(['login' => 'A']);
         $game = Game::create();
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
-        Hit::createFor('15d', $gameUser->getId());
-        Hit::createFor('16d', $gameUser->getId());
-        Hit::createFor('15t', $gameUser->getId());
+        Hit::createFor('15d', $gameUser);
+        Hit::createFor('16d', $gameUser);
+        Hit::createFor('15t', $gameUser);
 
         //when
         $score = $gameUser->getScore(15);
