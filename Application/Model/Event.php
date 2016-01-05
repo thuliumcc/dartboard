@@ -1,7 +1,5 @@
 <?php
-
 namespace Application\Model;
-
 
 use Ouzo\Model;
 use Ouzo\Restrictions;
@@ -18,12 +16,12 @@ use Ouzo\Utilities\Json;
  */
 class Event extends Model
 {
-    public function __construct($attributes = array())
+    public function __construct($attributes = [])
     {
-        parent::__construct(array(
+        parent::__construct([
             'attributes' => $attributes,
             'fields' => ['id', 'name', 'params', 'created_at' => Clock::nowAsString()]
-        ));
+        ]);
     }
 
     public static function loadNew()
@@ -42,7 +40,7 @@ class Event extends Model
         return $events;
     }
 
-    function toJsonArray()
+    public function toJsonArray()
     {
         return [
             'name' => $this->name,

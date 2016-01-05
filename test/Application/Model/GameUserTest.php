@@ -1,6 +1,4 @@
 <?php
-
-
 use Application\Model\Game;
 use Application\Model\GameUser;
 use Application\Model\Hit;
@@ -17,9 +15,9 @@ class GameUserTest extends DbTransactionalTestCase
         //given
         $user = User::create(['login' => 'A']);
         $game = Game::create();
-        $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->id]);
-        Hit::createFor('15s', $gameUser->id);
-        Hit::createFor('15s', $gameUser->id);
+        $gameUser = GameUser::create(['game_id' => $game->getId(), 'user_id' => $user->getId()]);
+        Hit::createFor('15s', $gameUser->getId());
+        Hit::createFor('15s', $gameUser->getId());
 
         //when
         $score = $gameUser->getScore(15);
@@ -35,10 +33,10 @@ class GameUserTest extends DbTransactionalTestCase
         //given
         $user = User::create(['login' => 'A']);
         $game = Game::create();
-        $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->id]);
-        Hit::createFor('15d', $gameUser->id);
-        Hit::createFor('16d', $gameUser->id);
-        Hit::createFor('15t', $gameUser->id);
+        $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
+        Hit::createFor('15d', $gameUser->getId());
+        Hit::createFor('16d', $gameUser->getId());
+        Hit::createFor('15t', $gameUser->getId());
 
         //when
         $score = $gameUser->getScore(15);

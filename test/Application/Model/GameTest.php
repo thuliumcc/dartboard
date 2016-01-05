@@ -1,6 +1,4 @@
 <?php
-
-
 use Application\Model\Game;
 use Application\Model\User;
 use Ouzo\Tests\DbTransactionalTestCase;
@@ -13,14 +11,18 @@ class GameTest extends DbTransactionalTestCase
     public function shouldMoveToNextPlayer()
     {
         //given
+        /** @var User $user1 */
         $user1 = User::create(['login' => 'A']);
+        /** @var User $user2 */
         $user2 = User::create(['login' => 'B']);
+        /** @var User $user3 */
         $user3 = User::create(['login' => 'C']);
 
+        /** @var Game $game */
         $game = Game::create();
-        $game->addPlayer($user1->id);
-        $game->addPlayer($user2->id);
-        $game->addPlayer($user3->id);
+        $game->addPlayer($user1->getId());
+        $game->addPlayer($user2->getId());
+        $game->addPlayer($user3->getId());
 
         //when
         $this->assertEquals($user1, $game->reload()->current_game_user->user);

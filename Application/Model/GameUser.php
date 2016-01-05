@@ -9,16 +9,15 @@ use Ouzo\Model;
  * @property int score
  * @property int ordinal
  * @property int current_game_user_id
+ * @property User user
  */
 class GameUser extends Model
 {
-    private $_fields = ['game_id', 'user_id', 'score' => 0, 'ordinal'];
-
     public function __construct($attributes = [])
     {
         parent::__construct([
             'attributes' => $attributes,
-            'fields' => $this->_fields,
+            'fields' => ['game_id', 'user_id', 'score' => 0, 'ordinal'],
             'belongsTo' => [
                 'user' => ['class' => 'User', 'foreignKey' => 'user_id'],
                 'game' => ['class' => 'Game', 'foreignKey' => 'game_id', 'referencedColumn' => 'id']
@@ -26,7 +25,7 @@ class GameUser extends Model
         ]);
     }
 
-    function getScore($field)
+    public function getScore($field)
     {
         $sum = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->id, 'field' => $field])->fetch();
         return min($sum[0], 3);

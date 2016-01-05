@@ -18,6 +18,7 @@ class HitTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'test', 'password' => 'a']);
+        /** @var Game $game */
         $game = Game::create();
         $game->addPlayer($user->getId());
         $gameUser = Arrays::first($game->game_users);

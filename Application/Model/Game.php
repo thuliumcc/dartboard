@@ -7,12 +7,14 @@ use Ouzo\Model;
  * @property int current_game_user_id
  * @property int round
  * @property int id
+ * @property GameUser current_game_user
+ * @property GameUser[] game_users
  */
 class Game extends Model
 {
-    public function __construct($attributes = array())
+    public function __construct($attributes = [])
     {
-        parent::__construct(array(
+        parent::__construct([
             'attributes' => $attributes,
             'fields' => ['id', 'current_game_user_id', 'round' => 1],
             'belongsTo' => [
@@ -21,7 +23,7 @@ class Game extends Model
             'hasMany' => [
                 'game_users' => ['class' => 'GameUser', 'foreignKey' => 'game_id']
             ]
-        ));
+        ]);
     }
 
     /**
@@ -68,5 +70,4 @@ class Game extends Model
         GameUser::queryBuilder()->deleteEach();
         return parent::delete();
     }
-
 }

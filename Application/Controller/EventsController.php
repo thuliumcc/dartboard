@@ -1,7 +1,5 @@
 <?php
-
 namespace Application\Controller;
-
 
 use Application\Model\Event;
 use Ouzo\Controller;
@@ -12,9 +10,9 @@ use Ouzo\Utilities\Json;
 
 class EventsController extends Controller
 {
-    static $TIMEOUT = 12;
+    public static $TIMEOUT = 12;
 
-    function poll()
+    public function poll()
     {
         ob_end_clean();
 

@@ -17,13 +17,11 @@ class Hit extends Model
         't' => 3
     ];
 
-    private $_fields = ['game_user_id', 'field', 'multiplier'];
-
     public function __construct($attributes = [])
     {
         parent::__construct([
             'attributes' => $attributes,
-            'fields' => $this->_fields,
+            'fields' => ['game_user_id', 'field', 'multiplier'],
             'belongsTo' => [
                 'userGame' => ['class' => 'GameUser', 'foreignKey' => 'game_user_id'],
             ]
