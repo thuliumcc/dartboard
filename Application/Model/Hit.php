@@ -14,7 +14,7 @@ use Ouzo\Utilities\Arrays;
  */
 class Hit extends Model
 {
-    const SCORED_FIELDS = [15, 16, 17, 18, 19, 20, 25];
+    static $SCORED_FIELDS = [15, 16, 17, 18, 19, 20, 25];
     const BULLSEYE = 25;
 
     private static $multiplierCharMap = [
@@ -29,7 +29,7 @@ class Hit extends Model
             'attributes' => $attributes,
             'fields' => ['game_user_id', 'field', 'multiplier', 'round'],
             'belongsTo' => [
-                'userGame' => ['class' => 'GameUser', 'foreignKey' => 'game_user_id'],
+                'userGame' => ['class' => 'GameUser', 'foreignKey' => 'game_user_id', 'referencedColumn' => 'id'],
             ]
         ]);
     }
@@ -50,7 +50,7 @@ class Hit extends Model
 
     public function isScored()
     {
-        $isScoredField = in_array($this->field, self::SCORED_FIELDS);
+        $isScoredField = in_array($this->field, self::$SCORED_FIELDS);
         if ($isScoredField) {
             $sum = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->game_user_id, 'field' => $this->field])->fetch();
             $hitCountBeforeCurrentHit = Arrays::first($sum) - $this->multiplier;

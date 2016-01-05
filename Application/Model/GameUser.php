@@ -23,7 +23,7 @@ class GameUser extends Model
             'attributes' => $attributes,
             'fields' => ['game_id', 'user_id', 'score' => 0, 'ordinal'],
             'belongsTo' => [
-                'user' => ['class' => 'User', 'foreignKey' => 'user_id'],
+                'user' => ['class' => 'User', 'foreignKey' => 'user_id', 'referencedColumn' => 'id'],
                 'game' => ['class' => 'Game', 'foreignKey' => 'game_id', 'referencedColumn' => 'id']
             ]
         ]);
@@ -37,10 +37,10 @@ class GameUser extends Model
 
     public function isWinner()
     {
-        $scoredFieldsHits = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->id, 'field' => Hit::SCORED_FIELDS])
+        $scoredFieldsHits = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->id, 'field' => Hit::$SCORED_FIELDS])
             ->groupBy('field')
             ->fetchAll();
-        $allFieldsHit = sizeof($scoredFieldsHits) == sizeof(Hit::SCORED_FIELDS);
+        $allFieldsHit = sizeof($scoredFieldsHits) == sizeof(Hit::$SCORED_FIELDS);
         $allFieldsHit3Times = Arrays::all($scoredFieldsHits, function ($fetchedFieldHits) {
             $fieldHitCount = Arrays::first($fetchedFieldHits);
             return $fieldHitCount >= 3;

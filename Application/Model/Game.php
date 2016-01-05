@@ -18,10 +18,10 @@ class Game extends Model
             'attributes' => $attributes,
             'fields' => ['id', 'current_game_user_id', 'round' => 1],
             'belongsTo' => [
-                'current_game_user' => ['class' => 'GameUser', 'foreignKey' => 'current_game_user_id'],
+                'current_game_user' => ['class' => 'GameUser', 'foreignKey' => 'current_game_user_id', 'referencedColumn' => 'id'],
             ],
             'hasMany' => [
-                'game_users' => ['class' => 'GameUser', 'foreignKey' => 'game_id']
+                'game_users' => ['class' => 'GameUser', 'foreignKey' => 'game_id', 'referencedColumn' => 'id']
             ]
         ]);
     }
@@ -69,5 +69,10 @@ class Game extends Model
         $this->update();
         GameUser::queryBuilder()->deleteEach();
         return parent::delete();
+    }
+
+    public function isStarted()
+    {
+        return $this->current_game_user_id;
     }
 }

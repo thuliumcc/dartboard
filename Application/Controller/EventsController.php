@@ -32,6 +32,7 @@ class EventsController extends Controller
                 })));
                 return;
             }
+            Stats::reset();
             usleep(100*1000);
         }
     }

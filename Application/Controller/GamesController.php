@@ -14,7 +14,7 @@ class GamesController extends Controller
     public function index()
     {
         $game = Game::currentGame();
-        if ($game) {
+        if ($game && $game->isStarted()) {
             $this->view->game = $game;
             $this->view->render('Games/game');
         } else {
