@@ -14,13 +14,10 @@ class EventsController extends Controller
 
     public function poll()
     {
-        ob_end_clean();
-
         Stats::reset();
         session_write_close();
         $stop = Clock::now()->plusSeconds(self::$TIMEOUT);
         while (true) {
-            print " ";
             if (!$stop->isAfter(Clock::now()) || connection_aborted()) {
                 $this->layout->renderAjax("[]");
                 return;
