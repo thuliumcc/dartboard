@@ -1,6 +1,7 @@
 <?php
 namespace Application\Controller;
 
+use Application\Model\Event;
 use Application\Model\Game;
 use Ouzo\Controller;
 
@@ -77,6 +78,8 @@ class GamesController extends Controller
     {
         $game = Game::currentGame();
         $game->nextPlayer();
+        Event::create(['name' => 'refresh', 'params' => json_encode([])]);
+
         $this->redirect(indexGamesPath());
     }
 }
