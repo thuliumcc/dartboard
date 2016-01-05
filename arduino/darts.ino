@@ -24,8 +24,8 @@ void setup() {
     pinMode(outputs[i], OUTPUT);
   }
   Serial.begin(9600);
-  
-  
+
+
   uint8_t mac[6] = {0x00,0x01,0x02,0x03,0x04,0x05};
   Ethernet.begin(mac);
 
@@ -36,23 +36,23 @@ void setup() {
   Serial.print("gatewayIP: ");
   Serial.println(Ethernet.gatewayIP());
   Serial.print("dnsServerIP: ");
-  Serial.println(Ethernet.dnsServerIP());  
+  Serial.println(Ethernet.dnsServerIP());
 }
 
 void handleHit(int x, int y) {
   Serial.println(x);
   Serial.println(y);
-  Serial.println(keymap[x][y]); 
-  
-  client.stop();
+  Serial.println(keymap[x][y]);
+
+  EthernetClient client;
   Serial.println("Client connect");
 
-  if (client.connect(IPAddress(10,170,12,40),80))
+  if (client.connect(IPAddress(10,170,10,194),80))
   {
     Serial.println("Client connected");
-    
-    client.println("POST /callback.php HTTP/1.1");
-    client.println("Host: zimniok.thu");
+
+    client.println("POST /dartboard/hit HTTP/1.1");
+    client.println("Host: 10.170.10.194");
     client.println("User-Agent: Mozilla/4.0");
     client.println("Content-Length: 10");
     client.println("Content-Type: application/x-www-form-urlencoded");
@@ -66,7 +66,7 @@ void handleHit(int x, int y) {
 
     client.stop();
     Serial.println("Client disconnect");
-    
+
   }
   else {
     Serial.println("Client connect failed");
@@ -86,7 +86,7 @@ void loop() {
         while (digitalRead(inputs[i]) == HIGH);
       }
     }
-    
+
     digitalWrite(outputs[in], LOW);
   }
 }
