@@ -2,7 +2,6 @@
 namespace Application\Controller;
 
 use Application\Model\Game;
-use Application\Model\GameUser;
 use Ouzo\Controller;
 
 class GamesController extends Controller
@@ -19,6 +18,16 @@ class GamesController extends Controller
             $this->view->game = $game;
             $this->view->render('Games/game');
         } else {
+            $this->view->render();
+        }
+    }
+
+    public function game_content()
+    {
+        $this->layout->setLayout('ajax_layout');
+        $game = Game::currentGame();
+        if ($game) {
+            $this->view->game = $game;
             $this->view->render();
         }
     }
