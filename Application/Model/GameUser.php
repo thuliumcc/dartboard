@@ -2,6 +2,8 @@
 namespace Application\Model;
 
 use Ouzo\Model;
+use Ouzo\Utilities\Arrays;
+use Ouzo\Utilities\Functions;
 
 /**
  * @property int game_id
@@ -32,6 +34,16 @@ class GameUser extends Model
     {
         $sum = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->id, 'field' => $field])->fetch();
         return min($sum[0], 3);
+    }
+
+    public function isWinner()
+    {
+        $scoredFieldsHits = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->id, 'field' => Hit::SCORED_FIELDS])
+            ->groupBy('field')
+            ->fetchAll();
+        $allFieldsHit = sizeof($scoredFieldsHits) == sizeof(Hit::SCORED_FIELDS);
+        $allFieldsHit3Times = Arrays::all($scoredFieldsHits, Functions::equals([3]));
+        return $allFieldsHit && $allFieldsHit3Times;
     }
 
     public function getLeftShoots()

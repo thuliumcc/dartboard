@@ -123,6 +123,52 @@ class GameUserTest extends DbTransactionalTestCase
 
     /**
      * @test
+     */
+    public function shouldReturnIsWinner()
+    {
+        //given
+        $user = User::create(['login' => 'A']);
+        $game = Game::create();
+        $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
+        $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
+        Hit::createFor('15t', $gameUser);
+        Hit::createFor('16t', $gameUser);
+        Hit::createFor('17t', $gameUser);
+        Hit::createFor('18t', $gameUser);
+        Hit::createFor('19t', $gameUser);
+        Hit::createFor('20t', $gameUser);
+        Hit::createFor('25d', $gameUser);
+        Hit::createFor('25s', $gameUser);
+
+        //when
+        $isWinner = $gameUser->isWinner();
+
+        //then
+        $this->assertTrue($isWinner);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnIsNotWinner()
+    {
+        //given
+        $user = User::create(['login' => 'A']);
+        $game = Game::create();
+        $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
+        $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
+        Hit::createFor('15t', $gameUser);
+        Hit::createFor('16t', $gameUser);
+
+        //when
+        $isWinner = $gameUser->isWinner();
+
+        //then
+        $this->assertFalse($isWinner);
+    }
+
+    /**
+     * @test
      * @dataProvider hits
      */
     public function shouldReturnIsScoredIfFieldIsInRange($hit, $isScored)
