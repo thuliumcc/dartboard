@@ -79,7 +79,6 @@ class GamesController extends Controller
         $game = Game::currentGame();
         $game->nextPlayer();
         Event::create(['name' => 'refresh', 'params' => json_encode([])]);
-
-        $this->redirect(indexGamesPath());
+        $this->layout->renderAjax();
     }
 }

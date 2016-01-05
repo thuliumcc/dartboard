@@ -1,15 +1,9 @@
 <?
 use Application\Model\Hit;
 use Ouzo\Config;
-use Ouzo\Utilities\Objects;
 
 ?>
-<div class="col-md-6 col-md-offset-3">
-    <?= postButton('New game', restartGamesPath()) ?>
-    <?= postButton('Cancel game', cancelGamesPath()) ?>
-    <?= postButton('Next player', nextPlayerGamesPath(), ['class' => 'pull-right']) ?>
-
-    <hr>
+<div>
     <div class="bigger">
         <div>Round: <?= $this->game->round ?></div>
         <div>Current user: <?= $this->game->current_game_user->user->login ?></div>

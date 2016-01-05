@@ -13,20 +13,18 @@ use Ouzo\Config;
     }
 </style>
 
-<div id="game_content">
+<div class="col-md-6 col-md-offset-3">
+    <?= postButton('New game', restartGamesPath()) ?>
+    <?= postButton('Cancel game', cancelGamesPath()) ?>
+    <?= postButton('Next player', nextPlayerGamesPath(), ['class' => 'pull-right', 'id' => 'next_player']) ?>
+    <hr>
+    <div id="game_content"></div>
 </div>
 
 <?= addFile(array('type' => 'script', 'params' => array('url' => '/public/js/long-poll.js'))); ?>
 
 <script>
     $(function () {
-
-        function loadGameContent() {
-            $.get('<?= gameContentGamesPath() ?>', function (content) {
-                $('#game_content').html(content);
-            });
-        }
-
         eventBus.bind('hit', function (event, hit) {
             playSoundsForHit(hit);
             loadGameContent();
@@ -39,6 +37,17 @@ use Ouzo\Config;
         eventBus.bind('next_player', function () {
             playFilesSynchronously(['next']);
         });
+
+        $("#next_player").submit(function (ev) {
+            ev.preventDefault();
+            $.post($(this).attr('action'));
+        });
+
+        function loadGameContent() {
+            $.get('<?= gameContentGamesPath() ?>', function (content) {
+                $('#game_content').html(content);
+            });
+        }
 
         function playSoundsForHit(hit) {
             var files = [];
