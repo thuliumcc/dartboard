@@ -1,34 +1,114 @@
 <style>
-    .number {
-        font-family: monospace;
-        font-size: 15px;
-        font-weight: bold;
-        margin-bottom: 5px;
+    #dartboard_container {
+        zoom: .7;
+        -o-transform: scale(.7);
+        -moz-transform: scale(.7);
     }
 </style>
+<div id="dartboard_container" style="text-align: center;">
+    Simulate hit
+    <div id="hit_list">&nbsp;</div>
+    <br/>
+    <img id="dartboard" src="<?= \Ouzo\Config::getPrefixSystem() ?>/public/images/Dartboard_clip_art.png"
+         usemap="#map"/>
+    <map name="map" id="dartboard_map">
+        <area shape="poly"
+              coords="496, 484, 495, 463, 484, 469, 475, 475, 467, 486, 465, 506, 470, 517, 477, 528, 488, 533, 506, 535, 518, 532, 524, 525, 510, 513, 503, 516, 493, 515, 485, 508, 483, 497, 489, 487"
+              href="25s"/>
+        <area shape="poly"
+              coords="496, 462, 510, 465, 526, 474, 536, 496, 532, 514, 524, 526, 511, 512, 517, 503, 514, 492, 506, 485, 497, 484"
+              href="25s"/>
+        <area shape="circle" coords="500, 500, 16" href="25d"/>
+        <area shape="poly" coords="404, 310, 436, 294, 466, 287, 494, 462, 484, 468" href="5s"/>
+        <area shape="poly" coords="396, 292, 425, 277, 464, 269, 466, 286, 435, 295, 402, 308" href="5t"/>
+        <area shape="poly" coords="340, 184, 389, 164, 446, 150, 464, 268, 425, 276, 394, 288" href="5s"/>
+        <area shape="poly" coords="330, 165, 381, 143, 442, 129, 446, 149, 388, 163, 338, 182" href="5d"/>
+        <area shape="poly" coords="350, 349, 372, 330, 402, 309, 483, 468, 475, 474" href="12s"/>
+        <area shape="poly" coords="334, 333, 361, 311, 394, 290, 402, 309, 371, 328, 348, 349" href="12t"/>
+        <area shape="poly" coords="250, 250, 292, 212, 338, 183, 394, 289, 360, 310, 332, 331" href="12s"/>
+        <area shape="poly" coords="236, 234, 277, 198, 328, 166, 337, 184, 290, 212, 249, 249" href="12d"/>
+        <area shape="poly" coords="308, 402, 324, 375, 348, 349, 475, 474, 467, 485" href="9s"/>
+        <area shape="poly" coords="292, 393, 308, 363, 334, 332, 348, 348, 322, 376, 308, 402" href="9t"/>
+        <area shape="poly" coords="186, 336, 213, 291, 250, 250, 332, 334, 306, 364, 289, 393" href="9s"/>
+        <area shape="poly" coords="167, 328, 196, 278, 235, 235, 248, 249, 211, 292, 184, 338" href="9d"/>
+        <area shape="poly" coords="288, 464, 296, 430, 308, 404, 466, 484, 463, 493" href="14s"/>
+        <area shape="poly" coords="270, 460, 275, 429, 290, 394, 307, 403, 294, 437, 288, 465" href="14t"/>
+        <area shape="poly" coords="151, 445, 161, 394, 185, 340, 289, 394, 274, 430, 267, 462" href="14s"/>
+        <area shape="poly" coords="131, 440, 143, 382, 166, 330, 183, 339, 161, 395, 148, 444" href="14d"/>
+        <area shape="poly" coords="290, 468, 464, 494, 464, 506, 288, 535, 284, 498" href="11s"/>
+        <area shape="poly" coords="268, 534, 263, 505, 268, 462, 287, 466, 284, 504, 286, 532" href="11t"/>
+        <area shape="poly" coords="148, 446, 267, 464, 264, 506, 268, 536, 149, 554, 143, 494" href="11s"/>
+        <area shape="poly" coords="129, 557, 124, 500, 130, 443, 148, 445, 144, 499, 149, 555" href="11d"/>
+        <area shape="poly" coords="309, 596, 296, 569, 289, 535, 464, 507, 466, 516" href="8s"/>
+        <area shape="poly" coords="288, 605, 276, 574, 268, 538, 287, 536, 295, 570, 307, 597" href="8t"/>
+        <area shape="poly" coords="184, 658, 163, 608, 150, 557, 267, 539, 275, 576, 289, 606" href="8s"/>
+        <area shape="poly" coords="165, 668, 144, 619, 129, 559, 149, 556, 164, 616, 182, 660" href="8d"/>
+        <area shape="poly" coords="347, 650, 328, 630, 309, 598, 468, 517, 473, 526" href="16s"/>
+        <area shape="poly" coords="334, 663, 312, 642, 291, 606, 308, 598, 326, 628, 347, 652" href="16t"/>
+        <area shape="poly" coords="334, 665, 248, 750, 212, 708, 183, 660, 291, 607, 310, 639" href="16s"/>
+        <area shape="poly" coords="248, 752, 235, 764, 193, 717, 165, 670, 184, 661, 209, 704" href="16d"/>
+        <area shape="poly" coords="402, 692, 376, 675, 348, 653, 475, 527, 483, 532" href="7s"/>
+        <area shape="poly" coords="391, 711, 402, 692, 371, 673, 347, 653, 334, 666, 363, 691" href="7t"/>
+        <area shape="poly" coords="391, 711, 339, 815, 293, 788, 250, 751, 334, 667, 362, 692" href="7s"/>
+        <area shape="poly" coords="337, 816, 328, 835, 273, 800, 235, 766, 250, 751, 293, 788" href="7d"/>
+        <area shape="poly" coords="468, 712, 439, 706, 404, 692, 484, 534, 494, 536" href="19s"/>
+        <area shape="poly" coords="468, 713, 464, 732, 424, 722, 392, 709, 403, 692, 435, 706" href="19t"/>
+        <area shape="poly" coords="465, 735, 445, 851, 390, 837, 340, 816, 394, 710, 430, 725" href="19s"/>
+        <area shape="poly" coords="444, 851, 443, 871, 378, 856, 329, 835, 340, 817, 390, 838" href="19d"/>
+        <area shape="poly" coords="533, 713, 504, 716, 469, 712, 496, 536, 505, 536" href="3s"/>
+        <area shape="poly" coords="535, 731, 504, 735, 464, 731, 468, 713, 502, 716, 533, 713" href="3t"/>
+        <area shape="poly" coords="553, 851, 504, 855, 446, 850, 464, 734, 501, 737, 537, 734" href="3s"/>
+        <area shape="poly" coords="552, 851, 558, 871, 499, 875, 442, 870, 444, 850, 501, 855" href="3d"/>
+        <area shape="poly" coords="597, 690, 570, 704, 535, 713, 505, 535, 518, 533" href="17s"/>
+        <area shape="poly" coords="607, 710, 575, 724, 538, 732, 535, 714, 567, 706, 598, 692" href="17t"/>
+        <area shape="poly" coords="659, 816, 610, 838, 557, 851, 538, 734, 573, 725, 608, 711" href="17s"/>
+        <area shape="poly" coords="660, 817, 669, 835, 610, 859, 559, 871, 556, 851, 606, 839" href="17d"/>
+        <area shape="poly" coords="651, 653, 627, 675, 599, 690, 517, 532, 527, 527" href="2s"/>
+        <area shape="poly" coords="667, 666, 639, 691, 608, 709, 598, 693, 627, 676, 652, 653" href="2t"/>
+        <area shape="poly" coords="748, 753, 710, 786, 660, 815, 609, 711, 642, 690, 667, 669" href="2s"/>
+        <area shape="poly" coords="749, 753, 763, 765, 722, 803, 671, 834, 660, 817, 710, 786" href="2d"/>
+        <area shape="poly" coords="690, 599, 675, 626, 652, 651, 526, 526, 535, 517" href="15s"/>
+        <area shape="poly" coords="707, 609, 691, 638, 668, 665, 653, 653, 676, 628, 693, 599" href="15t"/>
+        <area shape="poly" coords="814, 662, 789, 707, 749, 751, 668, 668, 693, 638, 710, 609" href="15s"/>
+        <area shape="poly" coords="834, 671, 805, 720, 766, 765, 750, 752, 789, 708, 817, 663" href="15d"/>
+        <area shape="poly" coords="714, 535, 705, 565, 692, 596, 533, 516, 539, 506" href="10s"/>
+        <area shape="poly" coords="733, 539, 726, 572, 709, 606, 693, 597, 707, 566, 715, 535" href="10t"/>
+        <area shape="poly" coords="850, 558, 838, 608, 815, 659, 711, 607, 727, 570, 734, 538" href="10s"/>
+        <area shape="poly" coords="852, 558, 869, 561, 858, 617, 835, 670, 816, 661, 840, 609" href="10d"/>
+        <area shape="poly" coords="712, 466, 717, 502, 715, 533, 536, 506, 538, 495" href="6s"/>
+        <area shape="poly" coords="732, 534, 736, 499, 733, 465, 714, 466, 717, 501, 715, 533" href="6t"/>
+        <area shape="poly" coords="733, 464, 849, 446, 855, 502, 851, 556, 733, 536, 737, 499" href="6s"/>
+        <area shape="poly" coords="849, 444, 870, 442, 875, 506, 871, 559, 852, 556, 858, 499, 853, 445" href="6d"/>
+        <area shape="poly" coords="693, 406, 704, 436, 713, 466, 537, 493, 536, 484" href="13s"/>
+        <area shape="poly" coords="710, 395, 723, 427, 733, 463, 714, 466, 705, 430, 693, 403" href="13t"/>
+        <area shape="poly" coords="817, 341, 836, 391, 850, 444, 734, 462, 724, 420, 712, 394" href="13s"/>
+        <area shape="poly" coords="836, 331, 857, 383, 870, 441, 850, 445, 837, 388, 818, 341" href="13d"/>
+        <area shape="poly" coords="653, 350, 675, 372, 692, 402, 534, 484, 527, 472" href="4s"/>
+        <area shape="poly" coords="667, 335, 688, 359, 709, 392, 693, 401, 674, 370, 653, 347" href="4t"/>
+        <area shape="poly" coords="750, 250, 784, 290, 816, 339, 711, 391, 690, 358, 668, 333" href="4s"/>
+        <area shape="poly" coords="765, 236, 802, 279, 833, 328, 817, 337, 789, 290, 752, 249" href="4d"/>
+        <area shape="poly" coords="599, 310, 625, 326, 649, 348, 526, 472, 519, 466" href="18s"/>
+        <area shape="poly" coords="609, 291, 636, 307, 666, 333, 652, 346, 626, 324, 599, 308" href="18t"/>
+        <area shape="poly" coords="663, 188, 707, 214, 747, 250, 666, 331, 636, 306, 610, 290" href="18s"/>
+        <area shape="poly" coords="671, 167, 723, 200, 763, 234, 750, 248, 710, 212, 663, 184" href="18d"/>
+        <area shape="poly" coords="536, 289, 568, 295, 596, 309, 516, 467, 507, 463" href="1s"/>
+        <area shape="poly" coords="536, 269, 575, 279, 604, 291, 598, 307, 570, 293, 534, 286" href="1t"/>
+        <area shape="poly" coords="555, 151, 608, 162, 660, 183, 607, 289, 574, 276, 536, 267" href="1s"/>
+        <area shape="poly" coords="560, 130, 617, 144, 667, 166, 660, 182, 611, 161, 557, 147" href="1d"/>
+        <area shape="poly" coords="468, 290, 500, 287, 532, 290, 504, 463, 496, 462" href="20s"/>
+        <area shape="poly" coords="466, 268, 500, 266, 536, 269, 533, 286, 500, 284, 467, 286" href="20t"/>
+        <area shape="poly" coords="448, 153, 504, 148, 553, 152, 535, 264, 493, 262, 466, 264" href="20s"/>
+        <area shape="poly" coords="443, 132, 505, 126, 557, 131, 554, 148, 503, 144, 447, 149" href="20d"/>
+    </map>
 
-Simulate hit: <br/>
-<?
-
-foreach (['s', 'd', 't'] as $multiplier) {
-    echo "<br/>";
-    foreach (range(1, 20) as $number) {
-        echo <<<_IN
-    <input type="button" class="number btn btn-primary" value="{$number}{$multiplier}">
-_IN;
-    }
-}
-?>
-<br/>
-<input type="button" class="number btn btn-primary" value="25s">
-<input type="button" class="number btn btn-primary" value="25d">
-<br/>
-
+</div>
 <script>
     $(function () {
-        $('.number').click(function () {
-            var value = $(this).val();
-            $.post('<?= indexHitsPath()?>', {field: value});
+        $("#dartboard_map area").click(function () {
+            var field = $(this).attr("href");
+            $.post('<?= indexHitsPath()?>', {field: field});
+            $("#hit_list").append(field + " ");
+            return false;
         });
     });
 </script>
