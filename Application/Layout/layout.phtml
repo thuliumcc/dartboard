@@ -49,7 +49,11 @@
         </div>
     </div>
     <? if (Ouzo\Config::getValue('debug')): ?>
-        <div id="error" class="container error-container"></div>
+        <div class="container">
+            <hr>
+            <button onclick="clearErrors();">Clear errors</button>
+            <div id="error" class="container error-container"></div>
+        </div>
         <script>
             var defaultErrorHandler = window.onerror;
 
@@ -60,7 +64,8 @@
                     defaultErrorHandler.apply(window, arguments);
                 }
                 try {
-                    var savedError = localStorage.getItem('dartboard-error');
+                    var item = localStorage.getItem('dartboard-error');
+                    var savedError = item ? item : '';
                     localStorage.setItem('dartboard-error', savedError + errorLine);
                 } catch (e) {
                 }
@@ -69,6 +74,11 @@
 
             if (window.localStorage) {
                 $('#error').html(localStorage.getItem('dartboard-error'));
+            }
+
+            function clearErrors() {
+                localStorage.removeItem('dartboard-error');
+                $('#error').html('');
             }
         </script>
     <? endif; ?>
