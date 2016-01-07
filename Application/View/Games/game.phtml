@@ -72,14 +72,13 @@ use Ouzo\Config;
 
                 if (hit.winner) {
                     files.push('winner');
-                } else {
-                    if (hit.shots_left == 0) {
-                        files.push('next');
-                    }
                 }
-
             } else {
                 files.push('no');
+            }
+
+            if (!hit.winner && hit.shots_left == 0) {
+                files.push('next');
             }
 
             playFilesSynchronously(files);
