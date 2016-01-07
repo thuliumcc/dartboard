@@ -14,21 +14,24 @@ function longPoll() {
         method: "POST",
         url: "/dartboard/long_poll",
         dataType: "json"
-    }).done(function (events) {
-        $.each(events, function () {
-            eventBus.trigger(this.name, this.params);
-        });
-        longPoll();
-    }).fail(function () {
-        throw new Error(arguments);
+    }).always(function (events, textStatus) {
+        if (textStatus != 'abort') {
+            $.each(events, function () {
+                eventBus.trigger(this.name, this.params);
+            });
+            longPoll();
+        }
+    }).fail(function (jqXHR, textStatus, errorThrown) {
+        var response = jqXHR.responseText || '(null)';
+        throw new Error("long_pool failed! status: '" + textStatus + "', errorThrown: '" + errorThrown + "'. Response text: '" + response + "'.");
     });
 }
 $(function () {
     longPoll();
 });
 
-$(window).unload(function () {
+window.onbeforeunload = function () {
     if (xhr) {
         xhr.abort();
     }
-});
+};

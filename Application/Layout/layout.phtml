@@ -54,12 +54,22 @@
             var defaultErrorHandler = window.onerror;
 
             window.onerror = function (message, url, line, column, error) {
-                $('#error').append('<div><span class="trace">' + url + ' line:' + line + ', col:' + column + '</span> msg: ' + message + '</div>');
+                var errorLine = '<div><span class="trace">' + url + ' line:' + line + ', col:' + column + '</span> msg: ' + message + '</div>';
+                $('#error').append(errorLine);
                 if (defaultErrorHandler) {
                     defaultErrorHandler.apply(window, arguments);
                 }
+                try {
+                    var savedError = localStorage.getItem('dartboard-error');
+                    localStorage.setItem('dartboard-error', savedError + errorLine);
+                } catch (e) {
+                }
                 return false;
             };
+
+            if (window.localStorage) {
+                $('#error').html(localStorage.getItem('dartboard-error'));
+            }
         </script>
     <? endif; ?>
 </footer>
