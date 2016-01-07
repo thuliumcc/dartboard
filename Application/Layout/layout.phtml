@@ -59,8 +59,9 @@
         <script>
             var defaultErrorHandler = window.onerror;
 
-            function logError(errorText) {
-                errorText = "<div>" + errorText + "</div>";
+            function logMessage(errorText, type) {
+                type = type || 'error';
+                errorText = "<div>" + type + ": " + errorText + "</div>";
                 $('#error').append(errorText);
                 try {
                     var item = localStorage.getItem('dartboard-error');
@@ -72,7 +73,7 @@
 
             window.onerror = function (message, url, line, column, error) {
                 var errorLine = '<div><span class="trace">' + url + ' line:' + line + ', col:' + column + '</span> msg: ' + message + '</div>';
-                logError(errorLine);
+                logMessage(errorLine);
                 if (defaultErrorHandler) {
                     defaultErrorHandler.apply(window, arguments);
                 }
