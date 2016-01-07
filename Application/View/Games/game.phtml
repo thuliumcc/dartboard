@@ -51,11 +51,6 @@ use Ouzo\Config;
 
         function playSoundsForHit(hit) {
             var files = [];
-            if (hit.winner) {
-                playFilesSynchronously(['winner']);
-                return;
-            }
-
             if (hit.scored) {
                 if (hit.multiplier == 2) {
                     files.push('double');
@@ -71,13 +66,18 @@ use Ouzo\Config;
                     files.push('yeah');
                 }
 
-                if (hit.shots_left == 0) {
-                    files.push('next');
-                }
-
                 if (files.length == 0) {
                     files.push('yes');
                 }
+
+                if (hit.winner) {
+                    files.push('winner');
+                } else {
+                    if (hit.shots_left == 0) {
+                        files.push('next');
+                    }
+                }
+
             } else {
                 files.push('no');
             }

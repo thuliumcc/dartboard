@@ -22,7 +22,7 @@ class HitsController extends Controller
                 'multiplier' => $hit->multiplier,
                 'scored' => $hit->isScored(),
                 'winner' => $currentGameUser->isWinner(),
-                'shots_left' => $leftShoots
+                'shots_left' => $leftShoots - 1
             ])]);
 
         } else {
