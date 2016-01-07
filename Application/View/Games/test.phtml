@@ -106,7 +106,9 @@
     $(function () {
         $("#dartboard_map area").click(function () {
             var field = $(this).attr("href");
-            $.post('<?= indexHitsPath()?>', {field: field});
+            $.post('<?= indexHitsPath()?>', {field: field}).fail(function () {
+                alert("Hit failed!");
+            });
             $("#hit_list").append(field + " ");
             return false;
         });

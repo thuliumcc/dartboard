@@ -68,10 +68,13 @@ use Ouzo\Config;
 
                 if (hit.field == 25) {
                     files.push('bullseye');
-                    if (hit.multiplier == 2) {
-                        files.push('yeah');
-                    }
+                    files.push('yeah');
                 }
+
+                if (hit.shots_left == 0) {
+                    files.push('next');
+                }
+
                 if (files.length == 0) {
                     files.push('yes');
                 }
