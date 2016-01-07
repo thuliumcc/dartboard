@@ -14,18 +14,20 @@ function longPoll() {
         method: "POST",
         url: "/dartboard/long_poll",
         dataType: "json"
-    }) .done(function( events ) {
-        $.each(events, function() {
+    }).done(function (events) {
+        $.each(events, function () {
             eventBus.trigger(this.name, this.params);
         });
         longPoll();
+    }).fail(function () {
+        throw new Error(arguments);
     });
 }
-$(function() {
+$(function () {
     longPoll();
 });
 
-$( window ).unload(function() {
+$(window).unload(function () {
     if (xhr) {
         xhr.abort();
     }
