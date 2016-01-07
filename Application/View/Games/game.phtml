@@ -102,7 +102,11 @@ use Ouzo\Config;
                 audio.play();
             }
 
-            play();
+            try {
+                play();
+            } catch (e) {
+                logMessage(e.message);
+            }
         }
 
         loadGameContent();
