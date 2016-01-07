@@ -23,7 +23,9 @@ function longPoll() {
         }
     }).fail(function (jqXHR, textStatus, errorThrown) {
         var response = jqXHR.responseText || '(null)';
-        throw new Error("long_pool failed! status: '" + textStatus + "', errorThrown: '" + errorThrown + "'. Response text: '" + response + "'.");
+        var msg = "long_pool failed! status: '" + textStatus + "', errorThrown: '" + errorThrown + "'. Response text: '" + response + "'.";
+        logError(msg);
+        //throw new Error(msg);
     });
 }
 $(function () {

@@ -59,23 +59,29 @@
         <script>
             var defaultErrorHandler = window.onerror;
 
-            window.onerror = function (message, url, line, column, error) {
-                var errorLine = '<div><span class="trace">' + url + ' line:' + line + ', col:' + column + '</span> msg: ' + message + '</div>';
-                $('#error').append(errorLine);
-                if (defaultErrorHandler) {
-                    defaultErrorHandler.apply(window, arguments);
-                }
+            function logError(errorText) {
+                errorText = "<div>" + errorText + "</div>";
+                $('#error').append(errorText);
                 try {
                     var item = localStorage.getItem('dartboard-error');
                     var savedError = item ? item : '';
-                    localStorage.setItem('dartboard-error', savedError + errorLine);
+                    localStorage.setItem('dartboard-error', savedError + errorText);
                 } catch (e) {
+                }
+            }
+
+            window.onerror = function (message, url, line, column, error) {
+                var errorLine = '<div><span class="trace">' + url + ' line:' + line + ', col:' + column + '</span> msg: ' + message + '</div>';
+                logError(errorLine);
+                if (defaultErrorHandler) {
+                    defaultErrorHandler.apply(window, arguments);
                 }
                 return false;
             };
 
-            if (window.localStorage) {
-                $('#error').html(localStorage.getItem('dartboard-error'));
+            var errors = localStorage.getItem('dartboard-error');
+            if (errors) {
+                $('#error').html(errors);
             }
 
             function clearErrors() {
