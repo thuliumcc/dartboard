@@ -62,7 +62,7 @@ class GameUserTest extends DbTransactionalTestCase
         $left = $gameUser->getLeftShoots();
 
         //then
-        $this->assertNull($left);
+        $this->assertEquals(0, $left);
     }
 
     /**

@@ -85,3 +85,22 @@ a.custom-link:hover {
     font-family: monospace;
     font-size: 10px;
 }
+
+.cricket-score {
+    height: 10px;
+    margin-top: 5px;
+}
+.cricket-score.closed {
+    background-color: #DC0909;
+}
+.cricket-score.open {
+    background-color: #837DED;
+}
+
+.current {
+    color: #48FF48;
+}
+
+.table.score thead td {
+    text-align: center;
+}

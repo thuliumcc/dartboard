@@ -9,7 +9,7 @@ use Ouzo\Config;
     }
 
     .bigger {
-        font-size: 20pt;
+        font-size: 16pt;
     }
 </style>
 
@@ -93,6 +93,7 @@ use Ouzo\Config;
             function play() {
                 var path = '<?= Config::getPrefixSystem() ?>' + '/public/sounds/' + files[currentPlayIndex] + '.mp3';
                 var audio = new Audio(path);
+                console.log('playing ', path, audio);
                 audio.onended = function () {
                     currentPlayIndex++;
                     if (currentPlayIndex < files.length) {

@@ -50,8 +50,12 @@ class GameUser extends Model
 
     public function getLeftShoots()
     {
-        $shoots = self::POSSIBLE_SHOTS - Hit::count(['game_user_id' => $this->getId(), 'round' => $this->game->round]);
-        return $shoots > 0 ? $shoots : null;
+        return self::POSSIBLE_SHOTS - Hit::count(['game_user_id' => $this->getId(), 'round' => $this->game->round]);
+    }
+
+    public function isCurrent()
+    {
+        return $this->game->current_game_user_id == $this->id;
     }
 
     public function delete()

@@ -2,21 +2,30 @@
 use Application\Model\Hit;
 use Ouzo\Config;
 
+function score($score)
+{
+    return str_repeat('<div class="cricket-score open"></div>', 3 - $score) .
+        str_repeat('<div class="cricket-score closed"></div>', $score);
+}
+
 ?>
+
 <div>
     <div class="bigger">
-        <div>Round: <?= $this->game->round ?></div>
-        <div>Current user: <?= $this->game->current_game_user->user->login ?></div>
-        <div>Left: <?= $this->game->current_game_user->getLeftShoots() ?: 0 ?></div>
+        <div style="float: left;">
+            <div>Round: <?= $this->game->round ?></div>
+            <div>User: <?= $this->game->current_game_user->user->login ?></div>
+        </div>
+        <div style="float: right;"><?= str_repeat('<img src="' . url('/public/images/arrow.png') . '">', $this->game->current_game_user->getLeftShoots()) ?></div>
 
+        <div style="clear: both;"></div>
         <hr>
 
         <div>
-            Players:
-            <table class="table">
+            <table class="table score">
                 <thead>
                 <tr>
-                    <td>Login</td>
+                    <td></td>
                     <td>15</td>
                     <td>16</td>
                     <td>17</td>
@@ -28,14 +37,14 @@ use Ouzo\Config;
                 </thead>
                 <? foreach ($this->game->game_users as $game_user): ?>
                     <tr>
-                        <td><?= $game_user->user->login ?></td>
-                        <td><?= str_repeat('X', $game_user->getScore(15)) ?></td>
-                        <td><?= str_repeat('X', $game_user->getScore(16)) ?></td>
-                        <td><?= str_repeat('X', $game_user->getScore(17)) ?></td>
-                        <td><?= str_repeat('X', $game_user->getScore(18)) ?></td>
-                        <td><?= str_repeat('X', $game_user->getScore(19)) ?></td>
-                        <td><?= str_repeat('X', $game_user->getScore(20)) ?></td>
-                        <td><?= str_repeat('X', $game_user->getScore(25)) ?></td>
+                        <td class="<?=$game_user->isCurrent() ? 'current' : '' ?>"><?= $game_user->user->login ?></td>
+                        <td><?= score($game_user->getScore(15)) ?></td>
+                        <td><?= score($game_user->getScore(16)) ?></td>
+                        <td><?= score($game_user->getScore(17)) ?></td>
+                        <td><?= score($game_user->getScore(18)) ?></td>
+                        <td><?= score($game_user->getScore(19)) ?></td>
+                        <td><?= score($game_user->getScore(20)) ?></td>
+                        <td><?= score($game_user->getScore(25)) ?></td>
                     </tr>
                 <? endforeach; ?>
             </table>

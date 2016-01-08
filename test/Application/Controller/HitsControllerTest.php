@@ -58,6 +58,6 @@ class HitsControllerTest extends ControllerTestCase
         /** @var Event $event */
         $event = Arrays::first(Event::all());
         $this->assertEquals('hit', $event->name);
-        $this->assertEquals('{"field":"20t"}', $event->params);
+        $this->assertEquals('{"field":20,"multiplier":3,"scored":true,"winner":false,"shots_left":2}', $event->params);
     }
 }

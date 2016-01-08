@@ -14,7 +14,7 @@ class HitsController extends Controller
         $game = Game::currentGame();
         $currentGameUser = $game->current_game_user;
         $leftShoots = $currentGameUser->getLeftShoots();
-        if ($leftShoots !== null) {
+        if ($leftShoots) {
             $hit = Hit::createFor($field, $currentGameUser);
 
             Event::create(['name' => 'hit', 'params' => json_encode([
