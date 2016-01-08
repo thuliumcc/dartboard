@@ -3,6 +3,7 @@ use Ouzo\Routing\Route;
 
 Route::get('/', 'games#index');
 Route::get('/new_game', 'games#new_game');
+Route::get('/end_game', 'games#end_game');
 Route::get('/game', 'games#game');
 Route::get('/test', 'games#test');
 Route::get('/game_content', 'games#game_content');

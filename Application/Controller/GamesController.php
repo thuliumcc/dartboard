@@ -86,4 +86,12 @@ class GamesController extends Controller
         Event::create(['name' => 'refresh', 'params' => json_encode([])]);
         $this->layout->renderAjax();
     }
+
+    public function end_game()
+    {
+        $game = Game::currentGame();
+        $game->endedByCurrentGameUser();
+        $this->view->game = $game;
+        $this->view->render();
+    }
 }

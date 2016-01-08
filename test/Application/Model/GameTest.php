@@ -51,4 +51,31 @@ class GameTest extends DbTransactionalTestCase
         //then
         $this->assertFalse($hasPlayers);
     }
+
+    /**
+     * @test
+     */
+    public function shouldSetGameEndedByCurrentUser()
+    {
+        //given
+        /** @var User $user1 */
+        $user1 = User::create(['login' => 'A']);
+        /** @var User $user2 */
+        $user2 = User::create(['login' => 'B']);
+        /** @var Game $game */
+        $game = Game::create();
+        $game->addPlayer($user1->getId());
+        $game->addPlayer($user2->getId());
+
+        $currentGame = Game::currentGame();
+        $currentGame->nextPlayer();
+
+        //when
+        $currentGame->endedByCurrentGameUser();
+
+        //then
+        $game->reload();
+        $this->assertTrue($game->finished);
+        $this->assertEquals($user2->getId(), $game->winner_game_user->user_id);
+    }
 }

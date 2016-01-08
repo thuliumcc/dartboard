@@ -7,7 +7,10 @@ use Ouzo\Model;
  * @property int current_game_user_id
  * @property int round
  * @property int id
+ * @property bool finished
+ * @property int winner_game_user_id
  * @property GameUser current_game_user
+ * @property GameUser winner_game_user
  * @property GameUser[] game_users
  */
 class Game extends Model
@@ -16,9 +19,10 @@ class Game extends Model
     {
         parent::__construct([
             'attributes' => $attributes,
-            'fields' => ['id', 'current_game_user_id', 'round' => 1],
+            'fields' => ['id', 'current_game_user_id', 'round' => 1, 'finished' => false, 'winner_game_user_id'],
             'belongsTo' => [
                 'current_game_user' => ['class' => 'GameUser', 'foreignKey' => 'current_game_user_id', 'referencedColumn' => 'id'],
+                'winner_game_user' => ['class' => 'GameUser', 'foreignKey' => 'winner_game_user_id', 'referencedColumn' => 'id'],
             ],
             'hasMany' => [
                 'game_users' => ['class' => 'GameUser', 'foreignKey' => 'game_id', 'referencedColumn' => 'id']
@@ -66,6 +70,7 @@ class Game extends Model
     public function delete()
     {
         $this->current_game_user_id = null;
+        $this->winner_game_user_id = null;
         $this->update();
         GameUser::where(['game_id' => $this->id])->deleteEach();
         return parent::delete();
@@ -79,5 +84,11 @@ class Game extends Model
     public function hasPlayers()
     {
         return GameUser::count(['game_id' => $this->id]) > 0;
+    }
+
+    public function endedByCurrentGameUser()
+    {
+        $current_game_user_id = $this->current_game_user_id;
+        $this->updateAttributes(['finished' => true, 'winner_game_user_id' => $current_game_user_id]);
     }
 }

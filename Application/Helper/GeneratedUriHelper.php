@@ -16,6 +16,11 @@ function newGameGamesPath()
     return url("/new_game");
 }
 
+function endGameGamesPath()
+{
+    return url("/end_game");
+}
+
 function gameGamesPath()
 {
     return url("/game");
@@ -86,5 +91,5 @@ function playerPath($id)
 
 function allGeneratedUriNames()
 {
-    return array('indexGamesPath', 'newGameGamesPath', 'gameGamesPath', 'testGamesPath', 'gameContentGamesPath', 'restartGamesPath', 'cancelGamesPath', 'addPlayerGamesPath', 'nextPlayerGamesPath', 'pollEventsPath', 'indexHitsPath', 'playersPath', 'freshPlayerPath', 'editPlayerPath', 'playerPath', 'playersPath', 'playerPath', 'playerPath', 'playerPath');
+    return array('indexGamesPath', 'newGameGamesPath', 'endGameGamesPath', 'gameGamesPath', 'testGamesPath', 'gameContentGamesPath', 'restartGamesPath', 'cancelGamesPath', 'addPlayerGamesPath', 'nextPlayerGamesPath', 'pollEventsPath', 'indexHitsPath', 'playersPath', 'freshPlayerPath', 'editPlayerPath', 'playerPath', 'playersPath', 'playerPath', 'playerPath', 'playerPath');
 }

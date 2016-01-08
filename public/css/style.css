@@ -100,7 +100,8 @@ a.custom-link:hover {
     background-color: #837DED;
 }
 
-.current {
+.current,
+.highlight-player-name {
     color: #48FF48;
 }
 
