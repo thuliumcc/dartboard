@@ -49,14 +49,17 @@ class GamesController extends Controller
 
     public function restart()
     {
-        Game::queryBuilder()->deleteEach();
+        $unfinishedGame = Game::findUnfinishedGame();
+        if ($unfinishedGame) {
+            $unfinishedGame->delete();
+        }
         Game::create();
         $this->redirect(newGameGamesPath());
     }
 
     public function cancel()
     {
-        Game::queryBuilder()->deleteEach();
+        Game::findUnfinishedGame()->delete();
         $this->redirect(indexGamesPath());
     }
 

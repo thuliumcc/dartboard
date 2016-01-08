@@ -35,8 +35,15 @@ class Game extends Model
      */
     public static function currentGame()
     {
-        // in the future we will have 'finished' flag or something
-        return Game::queryBuilder()->fetch();
+        return self::findUnfinishedGame();
+    }
+
+    /**
+     * @return Game
+     */
+    public static function findUnfinishedGame()
+    {
+        return self::where(['finished' => false])->fetch();
     }
 
     public function possibleUsers()
