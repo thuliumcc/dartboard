@@ -75,4 +75,9 @@ class Game extends Model
     {
         return $this->current_game_user_id;
     }
+
+    public function hasPlayers()
+    {
+        return GameUser::count(['game_id' => $this->id]) > 0;
+    }
 }

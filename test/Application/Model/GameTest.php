@@ -36,4 +36,19 @@ class GameTest extends DbTransactionalTestCase
         $game->nextPlayer();
         $this->assertEquals($user1, $game->reload()->current_game_user->user);
     }
+
+    /**
+     * @test
+     */
+    public function shouldReturnFalseIfGameHasNotPlayers()
+    {
+        //given
+        $game = Game::create();
+
+        //when
+        $hasPlayers = $game->hasPlayers();
+
+        //then
+        $this->assertFalse($hasPlayers);
+    }
 }

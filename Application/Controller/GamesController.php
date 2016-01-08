@@ -65,8 +65,13 @@ class GamesController extends Controller
 
     public function game()
     {
-        $this->view->game = Game::currentGame();
-        $this->view->render();
+        $game = Game::currentGame();
+        if ($game->hasPlayers()) {
+            $this->view->game = $game;
+            $this->view->render();
+        } else {
+            $this->redirect(newGameGamesPath());
+        }
     }
 
     public function test()
