@@ -1,6 +1,8 @@
 # dartboard
 Arduino based electronic dartboard
 
+postgresql db setup:
+
 ```
 CREATE DATABASE dartboard;
 CREATE DATABASE dartboard_test;
