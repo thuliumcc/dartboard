@@ -66,7 +66,7 @@ class Game extends Model
     {
         $count = GameUser::count(['game_id' => $this->id]);
         $nextOrdinal = ($this->current_game_user->ordinal + 1) % $count;
-        $nextPlayer = GameUser::where(['ordinal' => $nextOrdinal])->fetch();
+        $nextPlayer = GameUser::where(['game_id' => $this->id, 'ordinal' => $nextOrdinal])->fetch();
         $this->current_game_user_id = $nextPlayer->id;
         if ($nextOrdinal == 0) {
             $this->round++;
