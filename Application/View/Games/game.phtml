@@ -15,19 +15,25 @@ use Ouzo\Config;
 
 <div class="col-md-6 col-md-offset-3">
     <?= postButton('New game', restartGamesPath()) ?>
-    <?= postButton('Cancel game', cancelGamesPath()) ?>
-    <?= postButton('Next player', nextPlayerGamesPath(), ['class' => 'pull-right', 'id' => 'next_player']) ?>
+    <? if (!$this->game->isFinished()): ?>
+        <?= postButton('Cancel game', cancelGamesPath(), ['id' => 'cancel-game']) ?>
+        <?= postButton('Next player', nextPlayerGamesPath(), ['class' => 'pull-right', 'id' => 'next_player']) ?>
+    <? endif; ?>
     <hr>
     <div id="game_content"></div>
 </div>
 
-<?= addFile(array('type' => 'script', 'params' => array('url' => '/public/js/long-poll.js'))); ?>
+<?= addFile(['type' => 'script', 'params' => ['url' => '/public/js/long-poll.js']]); ?>
 
 <script>
     $(function () {
         eventBus.bind('hit', function (event, hit) {
             playSoundsForHit(hit);
-            loadGameContent();
+            if (hit.winner) {
+                loadWinnerContent();
+            } else {
+                loadGameContent();
+            }
         });
 
         eventBus.bind('refresh', function () {
@@ -46,6 +52,14 @@ use Ouzo\Config;
         function loadGameContent() {
             $.get('<?= gameContentGamesPath() ?>', function (content) {
                 $('#game_content').html(content);
+            });
+        }
+
+        function loadWinnerContent() {
+            $.get('<?= endGameGamesPath() ?>', function (content) {
+                $('#game_content').html(content);
+                $('#cancel-game').hide();
+                $('#next_player').hide();
             });
         }
 

@@ -29,7 +29,11 @@ class GamesController extends Controller
         $game = Game::currentGame();
         if ($game) {
             $this->view->game = $game;
-            $this->view->render();
+            if ($game->isFinished()) {
+                $this->view->render('Games/end_game');
+            } else {
+                $this->view->render();
+            }
         }
     }
 
@@ -89,6 +93,7 @@ class GamesController extends Controller
 
     public function end_game()
     {
+        $this->layout->setLayout('ajax_layout');
         $game = Game::currentGame();
         $game->endedByCurrentGameUser();
         $this->view->game = $game;
