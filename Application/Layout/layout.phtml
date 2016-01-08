@@ -1,3 +1,7 @@
+<?php
+use Ouzo\Config;
+
+?>
 <html>
 <head>
     <title>Arduino Dartboard Panel</title>
@@ -50,11 +54,13 @@
             <small>Sponsored by <a href="http://thulium.pl" class="custom-link" target="_blank">thulium.pl</a></small>
         </div>
     </div>
-    <? if (Ouzo\Config::getValue('debug')): ?>
+    <? if (Config::getValue('debug')): ?>
         <div class="container">
             <hr>
-            <button onclick="clearErrors();">Clear errors</button>
-            <div id="error" class="container error-container"></div>
+            <div class="col-md-12">
+                <button onclick="clearErrors();" class="btn btn-default">Clear errors</button>
+                <div id="error" class="error-container"></div>
+            </div>
         </div>
         <script>
             var defaultErrorHandler = window.onerror;
