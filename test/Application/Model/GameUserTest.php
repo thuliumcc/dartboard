@@ -231,7 +231,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create(['type' => 'cricket']~);
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
 
