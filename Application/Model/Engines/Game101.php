@@ -58,12 +58,21 @@ class Game101 implements GameEngine
 
     public function isScored($field, $multiplier)
     {
+        $newScore = $this->calculateNewScore($field, $multiplier);
+        return $newScore <= 101;
+    }
+
+    public function updateScore($field, $multiplier)
+    {
+        $newScore = $this->calculateNewScore($field, $multiplier);
+        $this->game->current_game_user->updateAttributes(['score' => $newScore]);
+
+    }
+
+    private function calculateNewScore($field, $multiplier)
+    {
         $currentScore = $this->game->current_game_user->score;
         $newScore = $currentScore + ($field * $multiplier);
-        if ($newScore <= 101) {
-            $this->game->current_game_user->updateAttributes(['score' => $newScore]);
-            return true;
-        }
-        return false;
+        return $newScore;
     }
 }

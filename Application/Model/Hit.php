@@ -58,8 +58,22 @@ class Hit extends Model
             ->fetchAll();
     }
 
+    public function handleScore()
+    {
+        $isScored = $this->isScored();
+        if ($isScored) {
+            $this->updateScore();
+        }
+        return $isScored;
+    }
+
     public function isScored()
     {
         return $this->userGame->game->getEngine()->isScored($this->field, $this->multiplier);
+    }
+
+    public function updateScore()
+    {
+        return $this->userGame->game->getEngine()->updateScore($this->field, $this->multiplier);
     }
 }

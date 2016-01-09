@@ -37,7 +37,7 @@ class Game101Test extends DbTransactionalTestCase
         $hit = Hit::createFor('13d', $this->gameUser);
 
         //when
-        $isScored = $hit->isScored();
+        $isScored = $hit->handleScore();
 
         //then
         $this->gameUser->reload();
@@ -55,7 +55,7 @@ class Game101Test extends DbTransactionalTestCase
         $hit = Hit::createFor('13d', $this->gameUser);
 
         //when
-        $isScored = $hit->isScored();
+        $isScored = $hit->handleScore();
 
         //then
         $this->gameUser->reload();
@@ -73,7 +73,7 @@ class Game101Test extends DbTransactionalTestCase
         $hit = Hit::createFor('2s', $this->gameUser);
 
         //when
-        $isScored = $hit->isScored();
+        $isScored = $hit->handleScore();
 
         //then
         $this->gameUser->reload();
