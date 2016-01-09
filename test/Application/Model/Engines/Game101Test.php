@@ -60,7 +60,7 @@ class Game101Test extends DbTransactionalTestCase
     /**
      * @test
      */
-    public function should()
+    public function shouldSetScoreWhenIsExactly101()
     {
         //given
         $this->gameUser->updateAttributes(['score' => 99]);
