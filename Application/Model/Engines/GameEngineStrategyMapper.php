@@ -3,9 +3,15 @@ namespace Application\Model\Engines;
 
 use Application\Model\Game;
 use BadMethodCallException;
+use Ouzo\Utilities\Arrays;
 
 class GameEngineStrategyMapper
 {
+    private static $map = [
+        'cricket' => '\Application\Model\Engines\Cricket',
+        '101' => '\Application\Model\Engines\Game101',
+    ];
+
     /**
      * @param Game $game
      * @return GameEngine
@@ -13,13 +19,9 @@ class GameEngineStrategyMapper
     public static function instance(Game $game)
     {
         $type = $game->type;
-        switch ($type) {
-            case 'cricket':
-                return new Cricket($game);
-                break;
-            case '101':
-                return new Game101($game);
-                break;
+        $class = Arrays::getValue(self::$map, $type);
+        if ($class) {
+            return new $class($game);
         }
         throw new BadMethodCallException('Unknown type [' . $type . ']');
     }
