@@ -53,7 +53,7 @@ function score($score)
 
     <div>
         Last hits:
-        <? foreach (Hit::queryBuilder()->with('userGame->user')->order('id desc')->limit(9)->fetchAll() as $hit): ?>
+        <? foreach (Hit::findForGame($this->game) as $hit): ?>
             <div><?= $hit->userGame->user->login ?> <?= $hit->field ?>x<?= $hit->multiplier ?></div>
         <? endforeach; ?>
     </div>

@@ -3,6 +3,7 @@ use Application\Model\Game;
 use Application\Model\GameUser;
 use Application\Model\Hit;
 use Application\Model\User;
+use Ouzo\Tests\Assert;
 use Ouzo\Tests\DbTransactionalTestCase;
 use Ouzo\Utilities\Arrays;
 
@@ -45,5 +46,32 @@ class HitTest extends DbTransactionalTestCase
             ['1d', 1, 2],
             ['8t', 8, 3]
         ];
+    }
+
+    /**
+     * @test
+     */
+    public function shouldGetHitsOnlyForPlayersInCurrentGame()
+    {
+        //given
+        $user = User::create(['login' => 'test', 'password' => 'a']);
+        $game1 = Game::create();
+        $game1->addPlayer($user->getId());
+        /** @var GameUser $gameUser1 */
+        $gameUser1 = Arrays::first($game1->game_users);
+
+        $game2 = Game::create();
+        $game2->addPlayer($user->getId());
+        /** @var GameUser $gameUser2 */
+        $gameUser2 = Arrays::first($game2->game_users);
+
+        Hit::createFor('4d', $gameUser1);
+        Hit::createFor('15t', $gameUser2);
+
+        //when
+        $hits = Hit::findForGame($game1);
+
+        //then
+        Assert::thatArray($hits)->onProperty('field')->containsExactly('4');
     }
 }

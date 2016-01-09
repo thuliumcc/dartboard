@@ -4,6 +4,7 @@ namespace Application\Model;
 use BadMethodCallException;
 use Ouzo\Model;
 use Ouzo\Utilities\Arrays;
+use Ouzo\Utilities\Functions;
 
 /**
  * @property int game_user_id
@@ -46,6 +47,16 @@ class Hit extends Model
             return self::create(['game_user_id' => $gameUser->getId(), 'field' => intval($matches[1]), 'multiplier' => intval($multiplier), 'round' => $gameUser->game->round]);
         }
         throw new BadMethodCallException('Cannot parse field');
+    }
+
+    public static function findForGame(Game $game1)
+    {
+        $gameUserIds = Arrays::map($game1->game_users, Functions::extractId());
+        return Hit::where(['game_user_id' => $gameUserIds])
+            ->with('userGame->user')
+            ->order('id desc')
+            ->limit(9)
+            ->fetchAll();
     }
 
     public function isScored()
