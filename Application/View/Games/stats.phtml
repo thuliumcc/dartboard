@@ -1,0 +1,30 @@
+<?
+use Ouzo\Utilities\Arrays;
+use Ouzo\Utilities\Json;
+?>
+
+<?
+$data = [];
+foreach ($this->game->game_users as $game_user) {
+    $data[] = array_values(Arrays::mapEntries($game_user->getClosedByRoundForCricket(), function ($round, $closed) {
+        return [$round, $closed];
+    }));
+}
+?>
+
+<style>
+    #placeholder {
+        height: 300px;
+    }
+</style>
+<div id="placeholder" class="demo-placeholder"></div>
+
+<?= addFile(array('type' => 'script', 'params' => array('url' => '/public/js/jquery.flot.min.js'))); ?>
+
+<script type="text/javascript">
+
+    $(function () {
+        $.plot("#placeholder", <?= Json::encode($data)?>);
+    });
+
+</script>

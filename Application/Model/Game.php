@@ -57,12 +57,14 @@ class Game extends Model
 
     public function addPlayer($id)
     {
-        $ordinal = GameUser::count(['game_id' => $this->getId()]);
-        $player = GameUser::create(['game_id' => $this->getId(), 'user_id' => $id, 'ordinal' => $ordinal]);
+        $ordinal = GameUser::count(['game_id' => $this->id]);
+        $player = GameUser::create(['game_id' => $this->id, 'user_id' => $id, 'ordinal' => $ordinal]);
+        $player->game = $this;
         if ($ordinal == 0) {
-            $this->current_game_user_id = $player->getId();
+            $this->current_game_user_id = $player->id;
             $this->update();
         }
+        return $player;
     }
 
     public function nextPlayer()

@@ -178,6 +178,34 @@ class GameUserTest extends DbTransactionalTestCase
     /**
      * @test
      */
+    public function shouldReturnClosedByRoundForCricket()
+    {
+        //given
+        $user = User::create(['login' => 'A']);
+        $game = Game::create();
+        $gameUser = $game->addPlayer($user->getId());
+        Hit::createFor('15t', $gameUser);
+        Hit::createFor('16d', $gameUser);
+        Hit::createFor('11t', $gameUser);
+        $game->nextPlayer();
+        Hit::createFor('16t', $gameUser);
+        Hit::createFor('15s', $gameUser);
+        Hit::createFor('18s', $gameUser);
+        $game->nextPlayer();
+        Hit::createFor('18t', $gameUser);
+        Hit::createFor('20t', $gameUser);
+        Hit::createFor('25d', $gameUser);
+
+        //when
+        $stats = $gameUser->getClosedByRoundForCricket();
+
+        //then
+        $this->assertEquals([1 => 5, 2 => 2, 3 => 7], $stats);
+    }
+
+    /**
+     * @test
+     */
     public function shouldReturnIsNotWinner()
     {
         //given

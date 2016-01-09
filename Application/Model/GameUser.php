@@ -3,6 +3,7 @@ namespace Application\Model;
 
 use Ouzo\Model;
 use Ouzo\Utilities\Arrays;
+use Ouzo\Utilities\Functions;
 
 /**
  * @property int game_id
@@ -54,5 +55,25 @@ class GameUser extends Model
     {
         Hit::where(['game_user_id' => $this->getId()])->deleteAll();
         return parent::delete();
+    }
+
+    public function getClosedByRoundForCricket()
+    {
+        $hits = Hit::join('userGame->user')->where(['game_user_id' => $this->id])->fetchAll();
+        $byRound = Arrays::groupBy($hits, Functions::extract()->round);
+        $closedInRound = [];
+        $closed = [15 => 0, 16 => 0, 17 => 0, 18 => 0, 19 => 0, 20 => 0, 25 => 0];
+        foreach ($byRound as $round => $hits) {
+            $closedInCurrentRound = 0;
+            foreach ($hits as $hit) {
+                if (isset($closed[$hit->field])) {
+                    $closedField = min($hit->multiplier, 3 - $closed[$hit->field]);
+                    $closedInCurrentRound += $closedField;
+                    $closed[$hit->field] += $closedField;
+                }
+            }
+            $closedInRound[$round] = $closedInCurrentRound;
+        }
+        return $closedInRound;
     }
 }

@@ -102,4 +102,10 @@ class GamesController extends Controller
         $this->view->game = $game;
         $this->view->render();
     }
+
+    public function stats()
+    {
+        $this->view->game = Game::currentGame();
+        $this->view->render();
+    }
 }
