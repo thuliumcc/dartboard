@@ -17,6 +17,9 @@ class GameEngineStrategyMapper
             case 'cricket':
                 return new Cricket($game);
                 break;
+            case '101':
+                return new Game101($game);
+                break;
             default:
                 throw new BadMethodCallException('Unknown type [' . $type . ']');
         }

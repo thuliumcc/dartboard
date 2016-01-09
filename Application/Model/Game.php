@@ -113,6 +113,6 @@ class Game extends Model
      */
     public function getEngine()
     {
-        return GameEngineStrategyMapper::instance('cricket', $this);
+        return GameEngineStrategyMapper::instance('101', $this);
     }
 }
