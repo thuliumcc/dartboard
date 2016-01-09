@@ -8,4 +8,6 @@ interface GameEngine
     public function isWinner();
 
     public function isScored($field, $multiplier);
+
+    public function updateScore($field, $multiplier);
 }

@@ -50,4 +50,8 @@ class Cricket implements GameEngine
         }
         return false;
     }
+
+    public function updateScore($field, $multiplier)
+    {
+    }
 }

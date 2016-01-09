@@ -21,7 +21,7 @@ class HitsController extends Controller
             $params = Json::encode([
                 'field' => $hit->field,
                 'multiplier' => $hit->multiplier,
-                'scored' => $hit->isScored(),
+                'scored' => $hit->handleScore(),
                 'winner' => $currentGameUser->isWinner(),
                 'shots_left' => $leftShoots - 1
             ]);
