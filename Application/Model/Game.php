@@ -1,8 +1,8 @@
 <?php
 namespace Application\Model;
 
-use Application\Model\Engines\GameEngineStrategyMapper;
 use Application\Model\Engines\GameEngine;
+use Application\Model\Engines\GameEngineStrategyMapper;
 use Ouzo\Model;
 
 /**

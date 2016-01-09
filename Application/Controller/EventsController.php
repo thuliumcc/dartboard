@@ -10,13 +10,13 @@ use Ouzo\Utilities\Json;
 
 class EventsController extends Controller
 {
-    public static $TIMEOUT = 12;
+    const TIMEOUT = 12;
 
     public function poll()
     {
         Stats::reset();
         session_write_close();
-        $stop = Clock::now()->plusSeconds(self::$TIMEOUT);
+        $stop = Clock::now()->plusSeconds(self::TIMEOUT);
         while (true) {
             if (!$stop->isAfter(Clock::now()) || connection_aborted()) {
                 $this->layout->renderAjax("[]");
@@ -27,13 +27,13 @@ class EventsController extends Controller
             session_write_close();
 
             if ($events) {
-                $this->layout->renderAjax(Json::encode(Arrays::map($events, function ($event) {
+                $this->layout->renderAjax(Json::encode(Arrays::map($events, function (Event $event) {
                     return $event->toJsonArray();
                 })));
                 return;
             }
             Stats::reset();
-            usleep(100*1000);
+            usleep(100 * 1000);
         }
     }
 }

@@ -5,6 +5,7 @@ use Application\Model\Event;
 use Application\Model\Game;
 use Application\Model\Hit;
 use Ouzo\Controller;
+use Ouzo\Utilities\Json;
 
 class HitsController extends Controller
 {
@@ -17,14 +18,14 @@ class HitsController extends Controller
         if ($leftShoots) {
             $hit = Hit::createFor($field, $currentGameUser);
 
-            Event::create(['name' => 'hit', 'params' => json_encode([
+            $params = Json::encode([
                 'field' => $hit->field,
                 'multiplier' => $hit->multiplier,
                 'scored' => $hit->isScored(),
                 'winner' => $currentGameUser->isWinner(),
                 'shots_left' => $leftShoots - 1
-            ])]);
-
+            ]);
+            Event::create(['name' => 'hit', 'params' => $params]);
         } else {
             Event::create(['name' => 'next_player', 'params' => '']);
         }
