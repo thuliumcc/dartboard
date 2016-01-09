@@ -7,12 +7,12 @@ use BadMethodCallException;
 class GameEngineStrategyMapper
 {
     /**
-     * @param $type
      * @param Game $game
      * @return GameEngine
      */
-    public static function instance($type, Game $game)
+    public static function instance(Game $game)
     {
+        $type = $game->type;
         switch ($type) {
             case 'cricket':
                 return new Cricket($game);
@@ -20,8 +20,7 @@ class GameEngineStrategyMapper
             case '101':
                 return new Game101($game);
                 break;
-            default:
-                throw new BadMethodCallException('Unknown type [' . $type . ']');
         }
+        throw new BadMethodCallException('Unknown type [' . $type . ']');
     }
 }

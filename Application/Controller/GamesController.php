@@ -4,6 +4,7 @@ namespace Application\Controller;
 use Application\Model\Event;
 use Application\Model\Game;
 use Ouzo\Controller;
+use Ouzo\Utilities\Arrays;
 
 class GamesController extends Controller
 {
@@ -72,7 +73,11 @@ class GamesController extends Controller
 
     public function game()
     {
+        $type = Arrays::getValue($this->params, 'type');
         $game = Game::currentGame();
+        if ($type) {
+            $game->setType($type);
+        }
         if ($game->hasPlayers()) {
             $this->view->game = $game;
             $this->view->render();

@@ -11,6 +11,7 @@ use Ouzo\Model;
  * @property int id
  * @property bool finished
  * @property int winner_game_user_id
+ * @property string type
  * @property GameUser current_game_user
  * @property GameUser winner_game_user
  * @property GameUser[] game_users
@@ -21,7 +22,7 @@ class Game extends Model
     {
         parent::__construct([
             'attributes' => $attributes,
-            'fields' => ['id', 'current_game_user_id', 'round' => 1, 'finished' => false, 'winner_game_user_id'],
+            'fields' => ['id', 'current_game_user_id', 'round' => 1, 'finished' => false, 'winner_game_user_id', 'type'],
             'belongsTo' => [
                 'current_game_user' => ['class' => 'GameUser', 'foreignKey' => 'current_game_user_id', 'referencedColumn' => 'id'],
                 'winner_game_user' => ['class' => 'GameUser', 'foreignKey' => 'winner_game_user_id', 'referencedColumn' => 'id'],
@@ -113,6 +114,11 @@ class Game extends Model
      */
     public function getEngine()
     {
-        return GameEngineStrategyMapper::instance('101', $this);
+        return GameEngineStrategyMapper::instance($this);
+    }
+
+    public function setType($type)
+    {
+        $this->updateAttributes(['type' => $type]);
     }
 }

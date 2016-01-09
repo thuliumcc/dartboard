@@ -1,5 +1,14 @@
 <div class="col-md-4 col-md-offset-4 text-center">
-    <?= linkButton(['name' => 'star-game', 'value' => 'Start game', 'url' => gameGamesPath(), 'class' => "btn btn-primary"]); ?>
+    <div class="btn-group">
+        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                aria-expanded="false">
+            Start game <span class="caret"></span>
+        </button>
+        <ul class="dropdown-menu">
+            <li><a href="<?= gameGamesPath() ?>?type=cricket">Cricket</a></li>
+            <li><a href="<?= gameGamesPath() ?>?type=101">101</a></li>
+        </ul>
+    </div>
     <?= linkButton(['name' => 'players', 'value' => 'Players', 'url' => playersPath(), 'class' => "btn btn-primary"]); ?>
 
     <hr>
