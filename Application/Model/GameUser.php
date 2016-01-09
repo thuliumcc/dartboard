@@ -37,15 +37,7 @@ class GameUser extends Model
 
     public function isWinner()
     {
-        $scoredFieldsHits = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->getId(), 'field' => Hit::$SCORED_FIELDS])
-            ->groupBy('field')
-            ->fetchAll();
-        $allFieldsHit = sizeof($scoredFieldsHits) == sizeof(Hit::$SCORED_FIELDS);
-        $allFieldsHit3Times = Arrays::all($scoredFieldsHits, function ($fetchedFieldHits) {
-            $fieldHitCount = Arrays::first($fetchedFieldHits);
-            return $fieldHitCount >= 3;
-        });
-        return $allFieldsHit && $allFieldsHit3Times;
+        return $this->game->getEngine()->isWinner();
     }
 
     public function getLeftShoots()
