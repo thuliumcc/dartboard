@@ -1,6 +1,8 @@
 <?php
 namespace Application\Model;
 
+use Application\Model\Engines\GameEngineStrategyMapper;
+use Application\Model\Engines\GameEngine;
 use Ouzo\Model;
 
 /**
@@ -49,15 +51,16 @@ class Game extends Model
     public function possibleUsers()
     {
         $currentGame = self::currentGame();
-        return User::where('not exists (select true from game_users where game_id = ? AND user_id = users.id)', $currentGame->id)->fetchAll();
+        return User::where('not exists (select true from game_users where game_id = ? AND user_id = users.id)', $currentGame->getId())
+            ->fetchAll();
     }
 
     public function addPlayer($id)
     {
-        $ordinal = GameUser::count(['game_id' => $this->id]);
-        $player = GameUser::create(['game_id' => $this->id, 'user_id' => $id, 'ordinal' => $ordinal]);
+        $ordinal = GameUser::count(['game_id' => $this->getId()]);
+        $player = GameUser::create(['game_id' => $this->getId(), 'user_id' => $id, 'ordinal' => $ordinal]);
         if ($ordinal == 0) {
-            $this->current_game_user_id = $player->id;
+            $this->current_game_user_id = $player->getId();
             $this->update();
         }
     }
@@ -67,7 +70,7 @@ class Game extends Model
         $count = GameUser::count(['game_id' => $this->id]);
         $nextOrdinal = ($this->current_game_user->ordinal + 1) % $count;
         $nextPlayer = GameUser::where(['game_id' => $this->id, 'ordinal' => $nextOrdinal])->fetch();
-        $this->current_game_user_id = $nextPlayer->id;
+        $this->current_game_user_id = $nextPlayer->getId();
         if ($nextOrdinal == 0) {
             $this->round++;
         }
@@ -79,7 +82,7 @@ class Game extends Model
         $this->current_game_user_id = null;
         $this->winner_game_user_id = null;
         $this->update();
-        GameUser::where(['game_id' => $this->id])->deleteEach();
+        GameUser::where(['game_id' => $this->getId()])->deleteEach();
         return parent::delete();
     }
 
@@ -100,7 +103,14 @@ class Game extends Model
 
     public function endedByCurrentGameUser()
     {
-        $current_game_user_id = $this->current_game_user_id;
-        $this->updateAttributes(['finished' => true, 'winner_game_user_id' => $current_game_user_id]);
+        $this->updateAttributes(['finished' => true, 'winner_game_user_id' => $this->current_game_user_id]);
+    }
+
+    /**
+     * @return GameEngine
+     */
+    public function getEngine()
+    {
+        return GameEngineStrategyMapper::instance('cricket', $this);
     }
 }

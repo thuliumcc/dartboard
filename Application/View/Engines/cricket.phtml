@@ -1,0 +1,39 @@
+<?
+use Ouzo\Config;
+
+function score($score)
+{
+    return str_repeat('<div class="cricket-score open"></div>', 3 - $score) .
+    str_repeat('<div class="cricket-score closed"></div>', $score);
+}
+
+?>
+
+<div>
+    <table class="table score">
+        <thead>
+        <tr>
+            <td></td>
+            <td>15</td>
+            <td>16</td>
+            <td>17</td>
+            <td>18</td>
+            <td>19</td>
+            <td>20</td>
+            <td>25</td>
+        </tr>
+        </thead>
+        <? foreach ($this->game->game_users as $game_user): ?>
+            <tr>
+                <td class="<?= $game_user->isCurrent() ? 'current' : '' ?>"><?= $game_user->user->login ?></td>
+                <td><?= score($game_user->getScore(15)) ?></td>
+                <td><?= score($game_user->getScore(16)) ?></td>
+                <td><?= score($game_user->getScore(17)) ?></td>
+                <td><?= score($game_user->getScore(18)) ?></td>
+                <td><?= score($game_user->getScore(19)) ?></td>
+                <td><?= score($game_user->getScore(20)) ?></td>
+                <td><?= score($game_user->getScore(25)) ?></td>
+            </tr>
+        <? endforeach; ?>
+    </table>
+</div>

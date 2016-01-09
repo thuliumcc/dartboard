@@ -37,7 +37,7 @@ class GameUser extends Model
 
     public function isWinner()
     {
-        $scoredFieldsHits = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->id, 'field' => Hit::$SCORED_FIELDS])
+        $scoredFieldsHits = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->getId(), 'field' => Hit::$SCORED_FIELDS])
             ->groupBy('field')
             ->fetchAll();
         $allFieldsHit = sizeof($scoredFieldsHits) == sizeof(Hit::$SCORED_FIELDS);
@@ -55,12 +55,12 @@ class GameUser extends Model
 
     public function isCurrent()
     {
-        return $this->game->current_game_user_id == $this->id;
+        return $this->game->current_game_user_id == $this->getId();
     }
 
     public function delete()
     {
-        Hit::where(['game_user_id' => $this->id])->deleteAll();
+        Hit::where(['game_user_id' => $this->getId()])->deleteAll();
         return parent::delete();
     }
 }
