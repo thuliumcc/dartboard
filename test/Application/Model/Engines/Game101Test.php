@@ -5,6 +5,7 @@ use Application\Model\GameUser;
 use Application\Model\Hit;
 use Application\Model\User;
 use Ouzo\Tests\DbTransactionalTestCase;
+use Ouzo\Utilities\Arrays;
 
 class Game101Test extends DbTransactionalTestCase
 {
@@ -22,7 +23,7 @@ class Game101Test extends DbTransactionalTestCase
         parent::setUp();
         /** @var User $user */
         $user = User::create(['login' => 'A']);
-        $this->game = $game = Game::create();
+        $this->game = $game = Game::create(['type' => '101']);
         $this->gameUser = $gameUser = GameUser::create(['game_id' => $game->getId(), 'user_id' => $user->getId()]);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
     }
@@ -86,17 +87,17 @@ class Game101Test extends DbTransactionalTestCase
      * @param $score
      * @param $expectedBestShots
      */
-    public function should($score, $expectedBestShots)
+    public function shouldCalculateBestShot($score, $expectedBestShots)
     {
         //given
         $this->gameUser->updateAttributes(['score' => $score]);
         $game101 = new Game101($this->game);
 
         //when
-        $bestShots = $game101->getBestShots();
+        $bestShots = $game101->getPlayersBestShots();
 
         //then
-        $this->assertEquals($expectedBestShots, $bestShots);
+        $this->assertEquals($expectedBestShots, Arrays::getValue($bestShots, $this->gameUser->getId(), []));
     }
 
     public function bestShotCalculate()

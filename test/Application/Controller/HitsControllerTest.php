@@ -18,7 +18,7 @@ class HitsControllerTest extends ControllerTestCase
     {
         parent::setUp();
         $user = User::create(['login' => 'test', 'password' => 'a']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $game->addPlayer($user->getId());
         $this->gameUser = $gameUser = Arrays::first($game->game_users);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);

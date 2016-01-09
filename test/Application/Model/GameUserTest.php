@@ -14,7 +14,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = GameUser::create(['game_id' => $game->getId(), 'user_id' => $user->getId()]);
         Hit::createFor('15s', $gameUser);
         Hit::createFor('15s', $gameUser);
@@ -32,7 +32,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
         Hit::createFor('15d', $gameUser);
         Hit::createFor('16d', $gameUser);
@@ -51,7 +51,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
         Hit::createFor('15d', $gameUser);
@@ -72,7 +72,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
 
@@ -90,7 +90,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
         Hit::createFor('15d', $gameUser);
@@ -109,7 +109,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
         Hit::createFor('15t', $gameUser);
@@ -128,7 +128,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
         Hit::createFor('15t', $gameUser);
@@ -154,7 +154,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
         Hit::createFor('15t', $gameUser);
@@ -182,7 +182,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = $game->addPlayer($user->getId());
         Hit::createFor('15t', $gameUser);
         Hit::createFor('16d', $gameUser);
@@ -210,7 +210,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']);
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
         Hit::createFor('15t', $gameUser);
@@ -231,7 +231,7 @@ class GameUserTest extends DbTransactionalTestCase
     {
         //given
         $user = User::create(['login' => 'A']);
-        $game = Game::create();
+        $game = Game::create(['type' => 'cricket']~);
         $gameUser = GameUser::create(['game_id' => $game->id, 'user_id' => $user->getId()]);
         $game->updateAttributes(['current_game_user_id' => $gameUser->getId()]);
 

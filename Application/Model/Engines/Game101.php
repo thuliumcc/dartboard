@@ -30,20 +30,23 @@ class Game101 implements GameEngine
     {
         $view = new View('Engines/101');
         $view->game = $this->game;
-        $view->bestShots = $this->getBestShots();
+        $view->bestShots = $this->getPlayersBestShots();
         return $view->render();
     }
 
-    public function getBestShots()
+    public function getPlayersBestShots()
     {
-        $diff = 101 - $this->game->current_game_user->score;
         $shots = [];
-        foreach (self::$sortedShots as $key => $value) {
-            $mod = $diff % $value;
-            if ($mod != $diff) {
-                $shots[] = $key;
+        $gameUsers = $this->game->game_users;
+        foreach ($gameUsers as $gameUser) {
+            $diff = 101 - $gameUser->score;
+            foreach (self::$sortedShots as $key => $value) {
+                $mod = $diff % $value;
+                if ($mod != $diff) {
+                    $shots[$gameUser->getId()][] = $key;
+                }
+                $diff = $mod;
             }
-            $diff = $mod;
         }
         return $shots;
     }
