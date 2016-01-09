@@ -19,7 +19,7 @@ $game = $this->game;
             <tr>
                 <td class="<?= $game_user->isCurrent() ? 'current' : '' ?>"><?= $game_user->user->login ?></td>
                 <td class="text-center"><?= $game_user->score ?></td>
-                <td class="text-center"></td>
+                <td class="text-center">(<?= implode(' + ', $this->bestShots) ?>)</td>
             </tr>
         <? endforeach; ?>
         </tbody>
