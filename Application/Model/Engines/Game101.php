@@ -66,7 +66,6 @@ class Game101 implements GameEngine
     {
         $newScore = $this->calculateNewScore($field, $multiplier);
         $this->game->current_game_user->updateAttributes(['score' => $newScore]);
-
     }
 
     private function calculateNewScore($field, $multiplier)
