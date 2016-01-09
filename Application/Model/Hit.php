@@ -15,7 +15,6 @@ use Ouzo\Utilities\Functions;
  */
 class Hit extends Model
 {
-    static $SCORED_FIELDS = [15, 16, 17, 18, 19, 20, 25];
     const BULLSEYE = 25;
 
     private static $multiplierCharMap = [
@@ -61,12 +60,6 @@ class Hit extends Model
 
     public function isScored()
     {
-        $isScoredField = in_array($this->field, self::$SCORED_FIELDS);
-        if ($isScoredField) {
-            $sum = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->game_user_id, 'field' => $this->field])->fetch();
-            $hitCountBeforeCurrentHit = Arrays::first($sum) - $this->multiplier;
-            return $hitCountBeforeCurrentHit < 3;
-        }
-        return false;
+        return $this->userGame->game->getEngine()->isScored($this->field, $this->multiplier);
     }
 }
