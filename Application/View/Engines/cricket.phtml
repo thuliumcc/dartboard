@@ -1,4 +1,5 @@
 <?
+use Application\Model\Game;
 use Ouzo\Config;
 
 function score($score)
@@ -7,6 +8,8 @@ function score($score)
     str_repeat('<div class="cricket-score closed"></div>', $score);
 }
 
+/** @var Game $game */
+$game = $this->game;
 ?>
 
 <div>
@@ -23,16 +26,16 @@ function score($score)
             <td>25</td>
         </tr>
         </thead>
-        <? foreach ($this->game->game_users as $game_user): ?>
+        <? foreach ($game->game_users as $gameUser): ?>
             <tr>
-                <td class="<?= $game_user->isCurrent() ? 'current' : '' ?>"><?= $game_user->user->login ?></td>
-                <td><?= score($game_user->getScore(15)) ?></td>
-                <td><?= score($game_user->getScore(16)) ?></td>
-                <td><?= score($game_user->getScore(17)) ?></td>
-                <td><?= score($game_user->getScore(18)) ?></td>
-                <td><?= score($game_user->getScore(19)) ?></td>
-                <td><?= score($game_user->getScore(20)) ?></td>
-                <td><?= score($game_user->getScore(25)) ?></td>
+                <td class="<?= $gameUser->isCurrent() ? 'current' : '' ?>"><?= $gameUser->user->login ?></td>
+                <td><?= score($gameUser->getScore(15)) ?></td>
+                <td><?= score($gameUser->getScore(16)) ?></td>
+                <td><?= score($gameUser->getScore(17)) ?></td>
+                <td><?= score($gameUser->getScore(18)) ?></td>
+                <td><?= score($gameUser->getScore(19)) ?></td>
+                <td><?= score($gameUser->getScore(20)) ?></td>
+                <td><?= score($gameUser->getScore(25)) ?></td>
             </tr>
         <? endforeach; ?>
     </table>

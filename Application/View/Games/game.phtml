@@ -1,6 +1,9 @@
 <?
+use Application\Model\Game;
 use Ouzo\Config;
 
+/** @var Game $game */
+$game = $this->game;
 ?>
 
 <style>
@@ -15,7 +18,7 @@ use Ouzo\Config;
 
 <div class="col-md-6 col-md-offset-3">
     <?= postButton('New game', restartGamesPath()) ?>
-    <? if (!$this->game->isFinished()): ?>
+    <? if (!$game->isFinished()): ?>
         <?= postButton('Cancel game', cancelGamesPath(), ['id' => 'cancel-game']) ?>
         <?= postButton('Next player', nextPlayerGamesPath(), ['class' => 'pull-right', 'id' => 'next_player']) ?>
     <? endif; ?>

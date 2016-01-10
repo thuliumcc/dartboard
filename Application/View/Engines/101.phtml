@@ -15,11 +15,11 @@ $game = $this->game;
         </tr>
         </thead>
         <tbody>
-        <? foreach ($this->game->game_users as $game_user): ?>
+        <? foreach ($game->game_users as $gameUser): ?>
             <tr>
-                <td class="<?= $game_user->isCurrent() ? 'current' : '' ?>"><?= $game_user->user->login ?></td>
-                <td class="text-center"><?= $game_user->score ?></td>
-                <td class="text-center">(<?= implode(' + ', $this->bestShots[$game_user->getId()]) ?>)</td>
+                <td class="<?= $gameUser->isCurrent() ? 'current' : '' ?>"><?= $gameUser->user->login ?></td>
+                <td class="text-center"><?= $gameUser->score ?></td>
+                <td class="text-center">(<?= implode(' + ', $this->bestShots[$gameUser->getId()]) ?>)</td>
             </tr>
         <? endforeach; ?>
         </tbody>

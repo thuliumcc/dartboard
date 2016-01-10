@@ -1,6 +1,9 @@
 <?php
 use Application\Model\Engines\GameEngineStrategyMapper;
+use Application\Model\Game;
 
+/** @var Game $game */
+$game = $this->game;
 ?>
 <div class="col-md-4 col-md-offset-4 text-center">
     <div class="btn-group">
@@ -19,7 +22,7 @@ use Application\Model\Engines\GameEngineStrategyMapper;
     <hr>
 
     <div>
-        <? foreach ($this->game->possibleUsers() as $user): ?>
+        <? foreach ($game->possibleUsers() as $user): ?>
             <form action="<?= addPlayerGamesPath($user->id) ?>" class="add-player" method="post">
                 <button type="submit" class="btn btn-primary">Add <?= $user->login ?></button>
             </form>
@@ -34,9 +37,9 @@ use Application\Model\Engines\GameEngineStrategyMapper;
                 <td>Login</td>
             </tr>
             </thead>
-            <? foreach ($this->game->game_users as $game_user): ?>
+            <? foreach ($game->game_users as $gameUser): ?>
                 <tr>
-                    <td><?= $game_user->user->login ?></td>
+                    <td><?= $gameUser->user->login ?></td>
                 </tr>
             <? endforeach; ?>
         </table>

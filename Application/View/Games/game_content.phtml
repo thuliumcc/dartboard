@@ -1,28 +1,31 @@
 <?
+use Application\Model\Game;
 use Application\Model\Hit;
 use Ouzo\Config;
 
+/** @var Game $game */
+$game = $this->game;
 ?>
 
 <div>
     <div class="bigger">
         <div style="float: left;">
-            <div>Round: <?= $this->game->round ?></div>
-            <div>User: <?= $this->game->current_game_user->user->login ?></div>
+            <div>Round: <?= $game->round ?></div>
+            <div>User: <?= $game->current_game_user->user->login ?></div>
         </div>
         <div style="float: right;">
-            <?= str_repeat('<img src="' . url('/public/images/arrow.png') . '">', $this->game->current_game_user->getLeftShoots()) ?>
+            <?= str_repeat('<img src="' . url('/public/images/arrow.png') . '">', $game->current_game_user->getLeftShoots()) ?>
         </div>
 
         <div style="clear: both;"></div>
         <hr>
 
-        <?= $this->game->getEngine()->renderView() ?>
+        <?= $game->getEngine()->renderView() ?>
     </div>
 
     <div>
         Last hits:
-        <? foreach (Hit::findForGame($this->game) as $hit): ?>
+        <? foreach (Hit::findForGame($game) as $hit): ?>
             <div><?= $hit->game_user->user->login ?> <?= $hit->field ?>x<?= $hit->multiplier ?></div>
         <? endforeach; ?>
     </div>
