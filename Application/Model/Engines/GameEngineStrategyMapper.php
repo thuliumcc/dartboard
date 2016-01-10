@@ -45,5 +45,4 @@ class GameEngineStrategyMapper
         }
         return $typeNamesMap;
     }
-
 }
