@@ -11,7 +11,7 @@ use Ouzo\Utilities\Functions;
  * @property int field
  * @property int multiplier
  * @property int round
- * @property GameUser userGame
+ * @property GameUser game_user
  */
 class Hit extends Model
 {
@@ -30,7 +30,7 @@ class Hit extends Model
             'attributes' => $attributes,
             'fields' => ['game_user_id', 'field', 'multiplier', 'round'],
             'belongsTo' => [
-                'userGame' => ['class' => 'GameUser', 'foreignKey' => 'game_user_id', 'referencedColumn' => 'id'],
+                'game_user' => ['class' => 'GameUser', 'foreignKey' => 'game_user_id', 'referencedColumn' => 'id'],
             ]
         ]);
     }
@@ -57,7 +57,7 @@ class Hit extends Model
     {
         $gameUserIds = Arrays::map($game->game_users, Functions::extractId());
         return Hit::where(['game_user_id' => $gameUserIds])
-            ->with('userGame->user')
+            ->with('game_user->user')
             ->order('id desc')
             ->limit(9)
             ->fetchAll();
@@ -80,7 +80,7 @@ class Hit extends Model
      */
     public function isScored()
     {
-        return $this->userGame->game->getEngine()->isScored($this->field, $this->multiplier);
+        return $this->game_user->game->getEngine()->isScored($this->field, $this->multiplier);
     }
 
     /**
@@ -88,6 +88,6 @@ class Hit extends Model
      */
     public function updateScore()
     {
-        $this->userGame->game->getEngine()->updateScore($this->field, $this->multiplier);
+        $this->game_user->game->getEngine()->updateScore($this->field, $this->multiplier);
     }
 }

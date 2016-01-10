@@ -23,7 +23,7 @@ use Ouzo\Config;
     <div>
         Last hits:
         <? foreach (Hit::findForGame($this->game) as $hit): ?>
-            <div><?= $hit->userGame->user->login ?> <?= $hit->field ?>x<?= $hit->multiplier ?></div>
+            <div><?= $hit->game_user->user->login ?> <?= $hit->field ?>x<?= $hit->multiplier ?></div>
         <? endforeach; ?>
     </div>
 </div>
