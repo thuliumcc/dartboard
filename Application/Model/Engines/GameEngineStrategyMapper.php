@@ -8,11 +8,17 @@ use Ouzo\Utilities\Arrays;
 
 class GameEngineStrategyMapper
 {
+    /**
+     * @var array
+     */
     private static $classMap = [
         'cricket' => '\Application\Model\Engines\Cricket',
         '101' => '\Application\Model\Engines\Game101',
     ];
 
+    /**
+     * @var array
+     */
     private static $nameMap = [
         'cricket' => 'Cricket',
         '101' => '101'
@@ -21,6 +27,7 @@ class GameEngineStrategyMapper
     /**
      * @param Game $game
      * @return GameEngine
+     * @throws BadMethodCallException
      */
     public static function instance(Game $game)
     {
@@ -32,6 +39,10 @@ class GameEngineStrategyMapper
         throw new BadMethodCallException('Unknown type [' . $type . ']');
     }
 
+    /**
+     * @return array
+     * @throws Exception
+     */
     public static function getTypeNames()
     {
         $typeNamesMap = [];

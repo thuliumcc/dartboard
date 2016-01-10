@@ -20,6 +20,9 @@ class Cricket implements GameEngine
         $this->game = $game;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function renderView()
     {
         $view = new View('Engines/cricket');
@@ -27,6 +30,9 @@ class Cricket implements GameEngine
         return $view->render();
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isWinner()
     {
         $scoredFieldsHits = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->game->current_game_user_id, 'field' => self::$SCORED_FIELDS])
@@ -40,6 +46,9 @@ class Cricket implements GameEngine
         return $allFieldsHit && $allFieldsHit3Times;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isScored($field, $multiplier)
     {
         $isScoredField = in_array($field, self::$SCORED_FIELDS);
@@ -51,6 +60,9 @@ class Cricket implements GameEngine
         return false;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function updateScore($field, $multiplier)
     {
     }

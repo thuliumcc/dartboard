@@ -15,8 +15,9 @@ use Ouzo\Utilities\Functions;
  */
 class Hit extends Model
 {
-    const BULLSEYE = 25;
-
+    /**
+     * @var array
+     */
     private static $multiplierCharMap = [
         's' => 1,
         'd' => 2,
@@ -35,7 +36,7 @@ class Hit extends Model
     }
 
     /**
-     * @param $field
+     * @param string $field
      * @param GameUser $gameUser
      * @return Hit
      */
@@ -48,9 +49,13 @@ class Hit extends Model
         throw new BadMethodCallException('Cannot parse field');
     }
 
-    public static function findForGame(Game $game1)
+    /**
+     * @param Game $game
+     * @return Hit[]
+     */
+    public static function findForGame(Game $game)
     {
-        $gameUserIds = Arrays::map($game1->game_users, Functions::extractId());
+        $gameUserIds = Arrays::map($game->game_users, Functions::extractId());
         return Hit::where(['game_user_id' => $gameUserIds])
             ->with('userGame->user')
             ->order('id desc')
@@ -58,6 +63,9 @@ class Hit extends Model
             ->fetchAll();
     }
 
+    /**
+     * @return bool
+     */
     public function handleScore()
     {
         $isScored = $this->isScored();
@@ -67,13 +75,19 @@ class Hit extends Model
         return $isScored;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isScored()
     {
         return $this->userGame->game->getEngine()->isScored($this->field, $this->multiplier);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function updateScore()
     {
-        return $this->userGame->game->getEngine()->updateScore($this->field, $this->multiplier);
+        $this->userGame->game->getEngine()->updateScore($this->field, $this->multiplier);
     }
 }

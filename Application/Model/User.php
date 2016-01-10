@@ -3,6 +3,10 @@ namespace Application\Model;
 
 use Ouzo\Model;
 
+/**
+ * @property string login
+ * @property string password
+ */
 class User extends Model
 {
     public function __construct($attributes = [])

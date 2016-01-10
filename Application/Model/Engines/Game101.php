@@ -11,6 +11,9 @@ class Game101 implements GameEngine
      */
     private $game;
 
+    /**
+     * @var array
+     */
     private static $sortedShots = [
         '20t' => 60, '19t' => 57, '18t' => 54, '17t' => 51, '25d' => 50, '16t' => 48, '14t' => 42, '20d' => 40,
         '13t' => 39, '19d' => 38, '18d' => 36, '12t' => 36, '17d' => 34, '11t' => 33, '16d' => 32, '10t' => 30,
@@ -26,6 +29,9 @@ class Game101 implements GameEngine
         $this->game = $game;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function renderView()
     {
         $view = new View('Engines/101');
@@ -34,6 +40,9 @@ class Game101 implements GameEngine
         return $view->render();
     }
 
+    /**
+     * @return array
+     */
     public function getPlayersBestShots()
     {
         $shots = [];
@@ -51,23 +60,37 @@ class Game101 implements GameEngine
         return $shots;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isWinner()
     {
         return $this->game->current_game_user->score == 101;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isScored($field, $multiplier)
     {
         $newScore = $this->calculateNewScore($field, $multiplier);
         return $newScore <= 101;
     }
 
+    /**
+     * @inheritdoc
+     */
     public function updateScore($field, $multiplier)
     {
         $newScore = $this->calculateNewScore($field, $multiplier);
         $this->game->current_game_user->updateAttributes(['score' => $newScore]);
     }
 
+    /**
+     * @param int $field
+     * @param int $multiplier
+     * @return int
+     */
     private function calculateNewScore($field, $multiplier)
     {
         $currentScore = $this->game->current_game_user->score;

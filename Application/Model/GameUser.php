@@ -30,27 +30,43 @@ class GameUser extends Model
         ]);
     }
 
+    /**
+     * @param int $field
+     * @return int
+     */
     public function getScore($field)
     {
         $sum = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->id, 'field' => $field])->fetch();
         return min($sum[0], 3);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function isWinner()
     {
         return $this->game->getEngine()->isWinner();
     }
 
+    /**
+     * @return int
+     */
     public function getLeftShoots()
     {
         return self::POSSIBLE_SHOTS - Hit::count(['game_user_id' => $this->getId(), 'round' => $this->game->round]);
     }
 
+    /**
+     * @return bool
+     */
     public function isCurrent()
     {
         return $this->game->current_game_user_id == $this->getId();
     }
 
+    /**
+     * @return bool
+     */
     public function delete()
     {
         Hit::where(['game_user_id' => $this->getId()])->deleteAll();

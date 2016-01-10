@@ -4,6 +4,7 @@ namespace Application\Model;
 use Application\Model\Engines\GameEngine;
 use Application\Model\Engines\GameEngineStrategyMapper;
 use Ouzo\Model;
+use Ouzo\ValidationException;
 
 /**
  * @property int current_game_user_id
@@ -49,6 +50,9 @@ class Game extends Model
         return self::where(['finished' => false])->fetch();
     }
 
+    /**
+     * @return User[]
+     */
     public function possibleUsers()
     {
         $currentGame = self::currentGame();
@@ -56,6 +60,11 @@ class Game extends Model
             ->fetchAll();
     }
 
+    /**
+     * @param int $id
+     * @return GameUser
+     * @throws ValidationException
+     */
     public function addPlayer($id)
     {
         $ordinal = GameUser::count(['game_id' => $this->id]);
@@ -68,6 +77,9 @@ class Game extends Model
         return $player;
     }
 
+    /**
+     * @return void
+     */
     public function nextPlayer()
     {
         $count = GameUser::count(['game_id' => $this->id]);
@@ -80,6 +92,9 @@ class Game extends Model
         $this->update();
     }
 
+    /**
+     * @return bool
+     */
     public function delete()
     {
         $this->current_game_user_id = null;
@@ -89,21 +104,33 @@ class Game extends Model
         return parent::delete();
     }
 
+    /**
+     * @return int
+     */
     public function isStarted()
     {
         return $this->current_game_user_id;
     }
 
+    /**
+     * @return bool
+     */
     public function isFinished()
     {
         return $this->finished;
     }
 
+    /**
+     * @return bool
+     */
     public function hasPlayers()
     {
         return GameUser::count(['game_id' => $this->id]) > 0;
     }
 
+    /**
+     * @return void
+     */
     public function endedByCurrentGameUser()
     {
         $this->updateAttributes(['finished' => true, 'winner_game_user_id' => $this->current_game_user_id]);
@@ -117,6 +144,10 @@ class Game extends Model
         return GameEngineStrategyMapper::instance($this);
     }
 
+    /**
+     * @param string $type
+     * @return void
+     */
     public function setType($type)
     {
         $this->updateAttributes(['type' => $type]);

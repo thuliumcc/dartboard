@@ -24,6 +24,9 @@ class Event extends Model
         ]);
     }
 
+    /**
+     * @return Event[]
+     */
     public static function loadNew()
     {
         $lastEventId = Session::get('last_event_id');
@@ -40,6 +43,9 @@ class Event extends Model
         return $events;
     }
 
+    /**
+     * @return array
+     */
     public function toJsonArray()
     {
         return [
