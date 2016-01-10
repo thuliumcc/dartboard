@@ -32,6 +32,7 @@ class Event extends Model
         $lastEventId = Session::get('last_event_id');
         if (!$lastEventId) {
             //do not load events that we triggered before this session was started
+            /** @var Event $lastEvent */
             $lastEvent = Event::queryBuilder()->limit(1)->order('id desc')->fetch();
             Session::set('last_event_id', $lastEvent ? $lastEvent->id : 0);
         }

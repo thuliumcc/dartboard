@@ -6,6 +6,7 @@ use Ouzo\Utilities\Arrays;
 use Ouzo\Utilities\Functions;
 
 /**
+ * @property int id
  * @property int game_id
  * @property int user_id
  * @property int score
@@ -22,7 +23,7 @@ class GameUser extends Model
     {
         parent::__construct([
             'attributes' => $attributes,
-            'fields' => ['game_id', 'user_id', 'score' => 0, 'ordinal'],
+            'fields' => ['id', 'game_id', 'user_id', 'score' => 0, 'ordinal'],
             'belongsTo' => [
                 'user' => ['class' => 'User', 'foreignKey' => 'user_id', 'referencedColumn' => 'id'],
                 'game' => ['class' => 'Game', 'foreignKey' => 'game_id', 'referencedColumn' => 'id']
@@ -53,7 +54,7 @@ class GameUser extends Model
      */
     public function getLeftShoots()
     {
-        return self::POSSIBLE_SHOTS - Hit::count(['game_user_id' => $this->getId(), 'round' => $this->game->round]);
+        return self::POSSIBLE_SHOTS - Hit::count(['game_user_id' => $this->id, 'round' => $this->game->round]);
     }
 
     /**
@@ -61,7 +62,7 @@ class GameUser extends Model
      */
     public function isCurrent()
     {
-        return $this->game->current_game_user_id == $this->getId();
+        return $this->game->current_game_user_id == $this->id;
     }
 
     /**
@@ -69,7 +70,7 @@ class GameUser extends Model
      */
     public function delete()
     {
-        Hit::where(['game_user_id' => $this->getId()])->deleteAll();
+        Hit::where(['game_user_id' => $this->id])->deleteAll();
         return parent::delete();
     }
 

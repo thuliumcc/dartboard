@@ -46,13 +46,12 @@ class Game101 implements GameEngine
     public function getPlayersBestShots()
     {
         $shots = [];
-        $gameUsers = $this->game->game_users;
-        foreach ($gameUsers as $gameUser) {
+        foreach ($this->game->game_users as $gameUser) {
             $diff = 101 - $gameUser->score;
             foreach (self::$sortedShots as $key => $value) {
                 $mod = $diff % $value;
                 if ($mod != $diff) {
-                    $shots[$gameUser->getId()][] = $key;
+                    $shots[$gameUser->id][] = $key;
                 }
                 $diff = $mod;
             }

@@ -56,7 +56,7 @@ class Game extends Model
     public function possibleUsers()
     {
         $currentGame = self::currentGame();
-        return User::where('not exists (select true from game_users where game_id = ? AND user_id = users.id)', $currentGame->getId())
+        return User::where('not exists (select true from game_users where game_id = ? AND user_id = users.id)', $currentGame->id)
             ->fetchAll();
     }
 
@@ -68,6 +68,7 @@ class Game extends Model
     public function addPlayer($id)
     {
         $ordinal = GameUser::count(['game_id' => $this->id]);
+        /** @var GameUser $player */
         $player = GameUser::create(['game_id' => $this->id, 'user_id' => $id, 'ordinal' => $ordinal]);
         $player->game = $this;
         if ($ordinal == 0) {
@@ -84,8 +85,9 @@ class Game extends Model
     {
         $count = GameUser::count(['game_id' => $this->id]);
         $nextOrdinal = ($this->current_game_user->ordinal + 1) % $count;
+        /** @var GameUser $nextPlayer */
         $nextPlayer = GameUser::where(['game_id' => $this->id, 'ordinal' => $nextOrdinal])->fetch();
-        $this->current_game_user_id = $nextPlayer->getId();
+        $this->current_game_user_id = $nextPlayer->id;
         if ($nextOrdinal == 0) {
             $this->round++;
         }
@@ -100,7 +102,7 @@ class Game extends Model
         $this->current_game_user_id = null;
         $this->winner_game_user_id = null;
         $this->update();
-        GameUser::where(['game_id' => $this->getId()])->deleteEach();
+        GameUser::where(['game_id' => $this->id])->deleteEach();
         return parent::delete();
     }
 

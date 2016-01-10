@@ -7,6 +7,7 @@ use Ouzo\Utilities\Arrays;
 use Ouzo\Utilities\Functions;
 
 /**
+ * @property int id
  * @property int game_user_id
  * @property int field
  * @property int multiplier
@@ -28,7 +29,7 @@ class Hit extends Model
     {
         parent::__construct([
             'attributes' => $attributes,
-            'fields' => ['game_user_id', 'field', 'multiplier', 'round'],
+            'fields' => ['id', 'game_user_id', 'field', 'multiplier', 'round'],
             'belongsTo' => [
                 'game_user' => ['class' => 'GameUser', 'foreignKey' => 'game_user_id', 'referencedColumn' => 'id'],
             ]
@@ -44,7 +45,7 @@ class Hit extends Model
     {
         if (preg_match('/(\d+)([sdt])/', $field, $matches)) {
             $multiplier = self::$multiplierCharMap[$matches[2]];
-            return self::create(['game_user_id' => $gameUser->getId(), 'field' => intval($matches[1]), 'multiplier' => intval($multiplier), 'round' => $gameUser->game->round]);
+            return self::create(['game_user_id' => $gameUser->id, 'field' => intval($matches[1]), 'multiplier' => intval($multiplier), 'round' => $gameUser->game->round]);
         }
         throw new BadMethodCallException('Cannot parse field');
     }
