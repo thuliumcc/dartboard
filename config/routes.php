@@ -13,7 +13,7 @@ Route::post('/games/cancel', 'games#cancel');
 Route::post('/games/add_player/:id', 'games#add_player');
 Route::post('/games/next_player', 'games#next_player');
 
-Route::get('/games/stats', 'games#stats');
+Route::get('/games/:id/stats', 'games#stats');
 
 Route::post('/long_poll', 'events#poll');
 

@@ -110,7 +110,7 @@ class GamesController extends Controller
 
     public function stats()
     {
-        $this->view->game = Game::currentGame();
+        $this->view->game = Game::findById($this->params['id']);
         $this->view->render();
     }
 }
