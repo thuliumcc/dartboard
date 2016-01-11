@@ -93,7 +93,6 @@ class Game101 implements GameEngine
     private function calculateNewScore($field, $multiplier)
     {
         $currentScore = $this->game->current_game_user->score;
-        $newScore = $currentScore + ($field * $multiplier);
-        return $newScore;
+        return $currentScore + ($field * $multiplier);
     }
 }

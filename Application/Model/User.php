@@ -4,6 +4,7 @@ namespace Application\Model;
 use Ouzo\Model;
 
 /**
+ * @property int id
  * @property string login
  * @property string password
  */
@@ -13,7 +14,7 @@ class User extends Model
     {
         parent::__construct([
             'attributes' => $attributes,
-            'fields' => ['login', 'password']
+            'fields' => ['id', 'login', 'password']
         ]);
     }
 

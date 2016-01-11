@@ -40,6 +40,7 @@ class Hit extends Model
      * @param string $field
      * @param GameUser $gameUser
      * @return Hit
+     * @throws BadMethodCallException
      */
     public static function createFor($field, GameUser $gameUser)
     {

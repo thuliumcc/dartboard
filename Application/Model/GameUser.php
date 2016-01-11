@@ -11,7 +11,6 @@ use Ouzo\Utilities\Functions;
  * @property int user_id
  * @property int score
  * @property int ordinal
- * @property int current_game_user_id
  * @property User user
  * @property Game game
  */
@@ -38,7 +37,7 @@ class GameUser extends Model
     public function getScore($field)
     {
         $sum = Hit::select('sum(multiplier)')->where(['game_user_id' => $this->id, 'field' => $field])->fetch();
-        return min($sum[0], 3);
+        return min($sum[0], self::POSSIBLE_SHOTS);
     }
 
     /**

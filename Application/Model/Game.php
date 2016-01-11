@@ -63,7 +63,6 @@ class Game extends Model
     /**
      * @param int $id
      * @return GameUser
-     * @throws ValidationException
      */
     public function addPlayer($id)
     {

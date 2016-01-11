@@ -8,7 +8,10 @@ use Ouzo\View;
 
 class Cricket implements GameEngine
 {
-    public static $SCORED_FIELDS = [15, 16, 17, 18, 19, 20, 25];
+    /**
+     * @var array
+     */
+    private static $SCORED_FIELDS = [15, 16, 17, 18, 19, 20, 25];
 
     /**
      * @var Game
