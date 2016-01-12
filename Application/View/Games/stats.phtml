@@ -38,12 +38,7 @@ foreach ($this->game->game_users as $game_user) {
 <script type="text/javascript">
 
     $(function () {
-        var data = $.map(<?= Json::encode($options)?>, function (val) {
-            return {
-                label: val.label,
-                data: val.data
-            }
-        });
+        var data = <?= Json::encode($options)?>;
         $.plot("#placeholder", data, {
             legend: {
                 container: $("#legend-container"),
