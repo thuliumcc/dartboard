@@ -107,15 +107,18 @@ $game = $this->game;
             }
             var currentPlayIndex = 0;
 
+            function playNext() {
+                currentPlayIndex++;
+                if (currentPlayIndex < files.length) {
+                    play();
+                }
+            }
+
             function play() {
-                var path = '<?= Config::getPrefixSystem() ?>' + '/public/sounds/' + files[currentPlayIndex] + '.mp3';
+                var path = '<?= Config::getPrefixSystem() ?>' + '/public/sounds/' + files[currentPlayIndex] + '.wav';
+                logMessage("Play audio" + path, "debug");
                 var audio = new Audio(path);
-                audio.onended = function () {
-                    currentPlayIndex++;
-                    if (currentPlayIndex < files.length) {
-                        play();
-                    }
-                };
+                audio.addEventListener('ended', playNext);
                 audio.play();
             }
 
