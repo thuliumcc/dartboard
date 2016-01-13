@@ -69,18 +69,17 @@ $game = $this->game;
         function playSoundsForHit(hit) {
             var files = [];
             if (hit.scored) {
-                if (hit.multiplier == 2) {
-                    files.push('double');
-                }
-
-                if (hit.multiplier == 3) {
-                    files.push('triple');
-                    files.push('yeah');
-                }
-
                 if (hit.field == 25) {
-                    files.push('bullseye');
-                    files.push('yeah');
+                    var bullseyeSound = (hit.multiplier == 2) ? 'double_bullseye' : 'bullseye';
+                    files.push(bullseyeSound);
+                } else {
+                    if (hit.multiplier == 2) {
+                        files.push('double');
+                    }
+
+                    if (hit.multiplier == 3) {
+                        files.push('triple');
+                    }
                 }
 
                 if (files.length == 0) {
