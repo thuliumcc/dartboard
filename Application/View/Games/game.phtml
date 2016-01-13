@@ -94,6 +94,9 @@ $game = $this->game;
             }
 
             if (!hit.winner && hit.shots_left == 0) {
+                if (hit.shitty_round) {
+                    files.push('shitty_' + hit.game);
+                }
                 files.push('next');
             }
 
