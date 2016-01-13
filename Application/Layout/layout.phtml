@@ -55,6 +55,17 @@ use Ouzo\Config;
         </div>
     </div>
     <? if (Config::getValue('debug')): ?>
+        <style>
+            .err-date {
+                font-weight: bold;
+                color: #3c3c3c;
+            }
+
+            .err-type {
+                color: #1b6d85;
+            }
+        </style>
+
         <div class="container">
             <hr>
             <div class="col-md-12">
@@ -65,14 +76,21 @@ use Ouzo\Config;
         <script>
             var defaultErrorHandler = window.onerror;
 
+            function now() {
+                var date = new Date();
+                return [date.getHours(), date.getMinutes(), date.getSeconds()].map(function (value) {
+                    return (value > 10) ? value : ('0' + value);
+                }).join(":");
+            }
+
             function logMessage(errorText, type) {
-                type = type || 'error';
-                errorText = "<div>" + type + ": " + errorText + "</div>";
-                $('#error').append(errorText);
+                type = (type || 'error').toLocaleUpperCase();
+                errorText = "<div class='err-log'><span class='err-date'>" + now() + "</span>&nbsp;<span class='err-type'>" + type + "</span>: " + errorText + "</div>";
+                $('#error').prepend(errorText);
                 try {
                     var item = localStorage.getItem('dartboard-error');
                     var savedError = item ? item : '';
-                    localStorage.setItem('dartboard-error', savedError + errorText);
+                    localStorage.setItem('dartboard-error', errorText + savedError);
                 } catch (e) {
                 }
             }
