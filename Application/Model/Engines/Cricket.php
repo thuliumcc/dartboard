@@ -69,4 +69,15 @@ class Cricket implements GameEngine
     public function updateScore($field, $multiplier)
     {
     }
+
+    /**
+     * @return bool
+     */
+    public function isShittyRound()
+    {
+        $hitsInRound = Hit::where(['game_user_id' => $this->game->current_game_user_id, 'round' => $this->game->round])->fetchAll();
+        return Arrays::all($hitsInRound, function ($hit) {
+            return !$this->isScored($hit->field, $hit->multiplier);
+        });
+    }
 }

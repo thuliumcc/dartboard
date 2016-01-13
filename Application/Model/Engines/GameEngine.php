@@ -26,4 +26,9 @@ interface GameEngine
      * @return void
      */
     public function updateScore($field, $multiplier);
+
+    /**
+     * @return bool
+     */
+    public function isShittyRound();
 }

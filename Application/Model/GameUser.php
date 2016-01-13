@@ -48,6 +48,11 @@ class GameUser extends Model
         return $this->game->getEngine()->isWinner();
     }
 
+    public function isShittyRound()
+    {
+        return $this->game->getEngine()->isShittyRound();
+    }
+
     /**
      * @return int
      */
@@ -92,4 +97,5 @@ class GameUser extends Model
         }
         return $closedInRound;
     }
+
 }

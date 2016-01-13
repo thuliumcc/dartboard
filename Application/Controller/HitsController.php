@@ -19,11 +19,13 @@ class HitsController extends Controller
             $hit = Hit::createFor($field, $currentGameUser);
 
             $params = Json::encode([
+                'game' => $game->type,
                 'field' => $hit->field,
                 'multiplier' => $hit->multiplier,
                 'scored' => $hit->handleScore(),
                 'winner' => $currentGameUser->isWinner(),
-                'shots_left' => $leftShoots - 1
+                'shots_left' => $leftShoots - 1,
+                'shitty_round' => $currentGameUser->isShittyRound(),
             ]);
             Event::create(['name' => 'hit', 'params' => $params]);
         } else {

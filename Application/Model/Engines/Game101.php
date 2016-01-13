@@ -95,4 +95,13 @@ class Game101 implements GameEngine
         $currentScore = $this->game->current_game_user->score;
         return $currentScore + ($field * $multiplier);
     }
+
+    /**
+     * @return bool
+     */
+    public function isShittyRound()
+    {
+        //todo: return true if sum < 3
+        return false;
+    }
 }
