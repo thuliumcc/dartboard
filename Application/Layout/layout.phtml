@@ -62,8 +62,17 @@ use Ouzo\Config;
             }
 
             .err-type {
+                color: #2e3436;
+            }
+
+            .err-type.debug {
                 color: #1b6d85;
             }
+
+            .err-type.error {
+                color: red;
+            }
+
         </style>
 
         <div class="container">
@@ -79,13 +88,17 @@ use Ouzo\Config;
             function now() {
                 var date = new Date();
                 return [date.getHours(), date.getMinutes(), date.getSeconds()].map(function (value) {
-                    return (value > 10) ? value : ('0' + value);
+                    return (value >= 10) ? value : ('0' + value);
                 }).join(":");
             }
 
             function logMessage(errorText, type) {
                 type = (type || 'error').toLocaleUpperCase();
-                errorText = "<div class='err-log'><span class='err-date'>" + now() + "</span>&nbsp;<span class='err-type'>" + type + "</span>: " + errorText + "</div>";
+                errorText = "<div class='err-log'>" +
+                    "<span class='err-date'>" + now() + "</span>&nbsp;" +
+                    "<span class='err-type " + type + "'>" + type + "</span>" +
+                    ": " + errorText +
+                    "</div>";
                 $('#error').prepend(errorText);
                 try {
                     var item = localStorage.getItem('dartboard-error');
@@ -96,7 +109,7 @@ use Ouzo\Config;
             }
 
             window.onerror = function (message, url, line, column, error) {
-                var errorLine = '<div><span class="trace">' + url + ' line:' + line + ', col:' + column + '</span> msg: ' + message + '</div>';
+                var errorLine = '<span><span class="trace">Default handler: ' + url + ' line:' + line + ', col:' + column + '</span> msg: ' + message + '</span>';
                 logMessage(errorLine);
                 if (defaultErrorHandler) {
                     defaultErrorHandler.apply(window, arguments);
