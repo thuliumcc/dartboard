@@ -144,13 +144,4 @@ class Game extends Model
     {
         return GameEngineStrategyMapper::instance($this);
     }
-
-    /**
-     * @param string $type
-     * @return void
-     */
-    public function setType($type)
-    {
-        $this->updateAttributes(['type' => $type]);
-    }
 }

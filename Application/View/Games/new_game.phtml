@@ -1,47 +1,58 @@
 <?php
-use Application\Model\Engines\GameEngineStrategyMapper;
-use Application\Model\Game;
+use Application\Model\GameFormObject;
+use Application\Model\User;
 
-/** @var Game $game */
+/** @var GameFormObject $game */
 $game = $this->game;
 ?>
-<div class="col-md-4 col-md-offset-4 text-center">
-    <div class="btn-group">
-        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
-                aria-expanded="false">
-            Start game <span class="caret"></span>
-        </button>
-        <ul class="dropdown-menu">
-            <? foreach (GameEngineStrategyMapper::getTypeNames() as $type => $name): ?>
-                <li><a href="<?= gameGamesPath() ?>?type=<?= $type ?>"><?= $name ?></a></li>
-            <? endforeach; ?>
-        </ul>
-    </div>
-    <?= linkButton(['name' => 'players', 'value' => 'Players', 'url' => playersPath(), 'class' => "btn btn-primary"]); ?>
 
+
+<?= showErrors($this->game->getErrors()); ?>
+
+<? $form = formFor($this->game); ?>
+<?= $form->start(createGamesPath(), 'POST', array('class' => 'form-horizontal')); ?>
+
+
+
+<div class="col-md-4 col-md-offset-4 text-center">
+    <button type="submit" class="btn btn-primary">Start</button>
+    <?= linkButton(array('name' => 'cancel', 'value' => 'Cancel', 'url' => indexGamesPath(), 'class' => "btn btn-default")); ?>
     <hr>
 
-    <div>
-        <? foreach ($game->possibleUsers() as $user): ?>
-            <form action="<?= addPlayerGamesPath($user->id) ?>" class="add-player" method="post">
-                <button type="submit" class="btn btn-primary">Add <?= $user->login ?></button>
-            </form>
-        <? endforeach; ?>
+    <div >
+        Type:
+
+        <div >
+            <?= $form->selectField('type', ['cricket' => 'cricket', '101' => '101']) ?>
+        </div>
     </div>
 
     <div>
-        Players:
-        <table class="table">
-            <thead>
-            <tr>
-                <td>Login</td>
-            </tr>
-            </thead>
-            <? foreach ($game->game_users as $gameUser): ?>
-                <tr>
-                    <td><?= $gameUser->user->login ?></td>
-                </tr>
+        Available Players:
+
+        <div >
+            <? foreach (User::all() as $user): ?>
+                <button class="btn btn-primary add-user" data-id="<?= $user->id ?>" data-login="<?= $user->login ?>">Add <?= $user->login ?></button>
+                <br/>
             <? endforeach; ?>
-        </table>
+        </div>
+    </div>
+    <div>
+        Selected Players:
+        <div class="players">
+        </div>
     </div>
 </div>
+<?php echo $form->end(); ?>
+
+<script>
+    $(function () {
+        $('.add-user').click(function () {
+            var login = $(this).data('login');
+            var id = $(this).data('id');
+            $('.players').append('<div class="player">' + login + '<input type="hidden" name="players[]" value="' + id + '"></div>');
+            $(this).hide();
+            return false;
+        });
+    });
+</script>

@@ -3,8 +3,8 @@ namespace Application\Controller;
 
 use Application\Model\Event;
 use Application\Model\Game;
+use Application\Model\GameFormObject;
 use Ouzo\Controller;
-use Ouzo\Utilities\Arrays;
 
 class GamesController extends Controller
 {
@@ -17,8 +17,7 @@ class GamesController extends Controller
     {
         $game = Game::currentGame();
         if ($game && $game->isStarted()) {
-            $this->view->game = $game;
-            $this->view->render('Games/game');
+            $this->redirect(gameGamesPath($game->id));
         } else {
             $this->view->render();
         }
@@ -40,12 +39,21 @@ class GamesController extends Controller
 
     public function new_game()
     {
-        $game = Game::currentGame();
-        if (!$game) {
-            $game = Game::create();
-        }
-        $this->view->game = $game;
+        $this->view->game = new GameFormObject();
         $this->view->render();
+    }
+
+    public function create()
+    {
+        $game = new GameFormObject();
+        $game->assignAttributes($this->params);
+        if ($game->isValid()) {
+            $game->save();
+            $this->redirect(gameGamesPath($game->game->id));
+        } else {
+            $this->view->game = $game;
+            $this->view->render('Games/new_game');
+        }
     }
 
     public function restart()
@@ -54,7 +62,6 @@ class GamesController extends Controller
         if ($unfinishedGame) {
             $unfinishedGame->delete();
         }
-        Game::create();
         $this->redirect(newGameGamesPath());
     }
 
@@ -64,26 +71,10 @@ class GamesController extends Controller
         $this->redirect(indexGamesPath());
     }
 
-    public function add_player()
-    {
-        $game = Game::currentGame();
-        $game->addPlayer($this->params['id']);
-        $this->redirect(newGameGamesPath());
-    }
-
     public function game()
     {
-        $type = Arrays::getValue($this->params, 'type');
-        $game = Game::currentGame();
-        if ($type) {
-            $game->setType($type);
-        }
-        if ($game->hasPlayers()) {
-            $this->view->game = $game;
-            $this->view->render();
-        } else {
-            $this->redirect(newGameGamesPath());
-        }
+        $this->view->game = Game::currentGame();
+        $this->view->render();
     }
 
     public function test()
