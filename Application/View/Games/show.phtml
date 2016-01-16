@@ -1,0 +1,28 @@
+<?
+use Application\Model\Game;
+use Ouzo\Config;
+
+/** @var Game $game */
+$game = $this->game;
+?>
+
+<div class="col-md-6 col-md-offset-3">
+    <?= linkButton(['name' => 'back', 'value' => 'Back', 'url' => indexGamesPath(), 'class' => "btn btn-primary"]); ?>
+
+    <hr>
+    <div>
+        <div class="bigger">
+            <div style="float: left;">
+                <div>Rounds: <?= $game->round ?></div>
+                <div>Winner: <?= $game->winner_game_user->user->login ?></div>
+            </div>
+
+            <div style="clear: both;"></div>
+            <hr>
+
+            <?= $game->getEngine()->renderView() ?>
+        </div>
+    </div>
+</div>
+    <div style="clear: both;"></div>
+<?= $game->getEngine()->renderStats() ?>

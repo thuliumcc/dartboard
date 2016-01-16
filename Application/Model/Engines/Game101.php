@@ -40,6 +40,11 @@ class Game101 implements GameEngine
         return $view->render();
     }
 
+    public function renderStats()
+    {
+        return '';
+    }
+
     /**
      * @return array
      */

@@ -9,6 +9,11 @@ interface GameEngine
     public function renderView();
 
     /**
+     * @return string
+     */
+    public function renderStats();
+
+    /**
      * @return bool
      */
     public function isWinner();

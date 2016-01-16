@@ -101,4 +101,17 @@ class GameUser extends Model
         return $closedInRound;
     }
 
+    public function getProgressByRoundForCricket()
+    {
+        $progress = 0;
+        $total = 7 * 3;
+        $progressByRound = [];
+        $closedInRound = $this->getClosedByRoundForCricket();
+        foreach ($closedInRound as $round => $hits) {
+            $progress += $hits;
+            $progressByRound[$round] = 100 * ($progress/$total);
+        }
+        return $progressByRound;
+    }
+
 }

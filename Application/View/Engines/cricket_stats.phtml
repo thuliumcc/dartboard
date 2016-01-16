@@ -1,0 +1,102 @@
+<?
+use Application\Model\GameUser;
+use Ouzo\Utilities\Arrays;
+use Ouzo\Utilities\Json;
+
+?>
+
+<?
+
+function toFlotData($game_users, $userDataFunction) {
+    $result = [];
+    foreach ($game_users as $game_user) {
+        $data = array_values(Arrays::mapEntries($userDataFunction($game_user), function ($round, $closed) use ($game_user) {
+            return [$round, $closed];
+        }));
+        $result[] = [
+            'label' => $game_user->user->login,
+            'data' => $data
+        ];
+    }
+    return $result;
+}
+
+$closedPerRound = toFlotData($this->game->game_users, function(GameUser $game_user) {
+    return $game_user->getClosedByRoundForCricket();
+});
+
+$progressPerRound = toFlotData($this->game->game_users, function(GameUser $game_user) {
+    return $game_user->getProgressByRoundForCricket();
+});
+
+?>
+
+<style>
+    .chart-placeholder
+    {
+        height: 300px;
+    }
+
+    .legendLabel {
+        color: #A6A1FF !important;
+    }
+
+    #progress-per-round div.flot-text,
+    #closed-per-round div.flot-text,
+    {
+        color: #A6A1FF !important;
+    }
+</style>
+
+Progress by round:
+<div id="progress-per-round" class="chart-placeholder"></div>
+<div id="progress-per-round-legend-container"></div>
+<br/>
+<br/>
+<br/>
+Closed by round:
+<div id="closed-per-round" class="chart-placeholder"></div>
+<div id="closed-per-round-legend-container"></div>
+
+<?= addFile(array('type' => 'script', 'params' => array('url' => '/public/js/jquery.flot.min.js'))); ?>
+
+<script type="text/javascript">
+
+    $(function () {
+        $.plot("#closed-per-round", <?= Json::encode($closedPerRound)?>, {
+            legend: {
+                container: $("#closed-per-round-legend-container"),
+                show: true
+            },
+            xaxis: {
+                ticks: 10,
+                min: 1,
+                tickDecimals: 0
+            },
+            yaxis: {
+                ticks: 10,
+                min: 0,
+                max : 9,
+                tickDecimals: 0
+            }
+        });
+
+        $.plot("#progress-per-round", <?= Json::encode($progressPerRound)?>, {
+            legend: {
+                container: $("#progress-per-round-legend-container"),
+                show: true
+            },
+            xaxis: {
+                ticks: 10,
+                min: 1,
+                tickDecimals: 0
+            },
+            yaxis: {
+                ticks: 10,
+                min: 0,
+                max : 100,
+                tickDecimals: 0
+            }
+        });
+    });
+</script>

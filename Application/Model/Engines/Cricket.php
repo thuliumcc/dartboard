@@ -33,6 +33,13 @@ class Cricket implements GameEngine
         return $view->render();
     }
 
+    public function renderStats()
+    {
+        $view = new View('Engines/cricket_stats');
+        $view->game = $this->game;
+        return $view->render();
+    }
+
     /**
      * @inheritdoc
      */

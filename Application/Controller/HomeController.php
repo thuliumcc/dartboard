@@ -17,7 +17,7 @@ class HomeController extends Controller
     {
         $game = Game::currentGame();
         if ($game && $game->isStarted()) {
-            $this->redirect(gameGamesPath($game->id));
+            $this->redirect(gameGamesPath());
         } else {
             $this->view->render();
         }

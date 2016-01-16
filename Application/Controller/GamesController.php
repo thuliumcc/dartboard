@@ -15,12 +15,8 @@ class GamesController extends Controller
 
     public function index()
     {
-        $game = Game::currentGame();
-        if ($game && $game->isStarted()) {
-            $this->redirect(gameGamesPath($game->id));
-        } else {
-            $this->view->render();
-        }
+        $this->view->games = Game::where(['finished' => true])->order('started_at desc')->fetchAll();
+        $this->view->render();
     }
 
     public function game_content()
@@ -49,7 +45,7 @@ class GamesController extends Controller
         $game->assignAttributes($this->params);
         if ($game->isValid()) {
             $game->save();
-            $this->redirect(gameGamesPath($game->game->id));
+            $this->redirect(gameGamesPath());
         } else {
             $this->view->game = $game;
             $this->view->render('Games/new_game');
@@ -77,6 +73,12 @@ class GamesController extends Controller
         $this->view->render();
     }
 
+    public function show()
+    {
+        $this->view->game = Game::findById($this->params['id']);
+        $this->view->render();
+    }
+
     public function test()
     {
         $this->view->render();
@@ -96,12 +98,6 @@ class GamesController extends Controller
         $game = Game::currentGame();
         $game->endedByCurrentGameUser();
         $this->view->game = $game;
-        $this->view->render();
-    }
-
-    public function stats()
-    {
-        $this->view->game = Game::findById($this->params['id']);
         $this->view->render();
     }
 }

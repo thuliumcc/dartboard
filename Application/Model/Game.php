@@ -4,7 +4,7 @@ namespace Application\Model;
 use Application\Model\Engines\GameEngine;
 use Application\Model\Engines\GameEngineStrategyMapper;
 use Ouzo\Model;
-use Ouzo\ValidationException;
+use Ouzo\Utilities\Clock;
 
 /**
  * @property int current_game_user_id
@@ -23,7 +23,7 @@ class Game extends Model
     {
         parent::__construct([
             'attributes' => $attributes,
-            'fields' => ['id', 'current_game_user_id', 'round' => 1, 'finished' => false, 'winner_game_user_id', 'type'],
+            'fields' => ['id', 'current_game_user_id', 'round' => 1, 'finished' => false, 'winner_game_user_id', 'type', 'started_at' => Clock::nowAsString()],
             'belongsTo' => [
                 'current_game_user' => ['class' => 'GameUser', 'foreignKey' => 'current_game_user_id', 'referencedColumn' => 'id'],
                 'winner_game_user' => ['class' => 'GameUser', 'foreignKey' => 'winner_game_user_id', 'referencedColumn' => 'id'],
