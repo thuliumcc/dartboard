@@ -1,20 +1,47 @@
-<?php echo showNotices(); ?>
+<?php
+use Application\Model\User;
 
+/** @var User $user */
+$user = $this->user;
+?>
+
+<?= showNotices(); ?>
 <div class="panel panel-default">
     <div class="panel-heading">User</div>
     <div class="panel-body">
-        <div>
-            <?php echo labelTag('login', 'login', array('class' => 'control-label col-lg-2')); ?>
-            <div class="col-lg-10">
-                <?php echo $this->user->login; ?>
+        <div class="col-md-3">
+            <div>
+                <img
+                    src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9InllcyI/PjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB3aWR0aD0iMjQyIiBoZWlnaHQ9IjIwMCIgdmlld0JveD0iMCAwIDI0MiAyMDAiIHByZXNlcnZlQXNwZWN0UmF0aW89Im5vbmUiPjwhLS0KU291cmNlIFVSTDogaG9sZGVyLmpzLzEwMCV4MjAwCkNyZWF0ZWQgd2l0aCBIb2xkZXIuanMgMi42LjAuCkxlYXJuIG1vcmUgYXQgaHR0cDovL2hvbGRlcmpzLmNvbQooYykgMjAxMi0yMDE1IEl2YW4gTWFsb3BpbnNreSAtIGh0dHA6Ly9pbXNreS5jbwotLT48ZGVmcz48c3R5bGUgdHlwZT0idGV4dC9jc3MiPjwhW0NEQVRBWyNob2xkZXJfMTUyNDljODRlN2MgdGV4dCB7IGZpbGw6I0FBQUFBQTtmb250LXdlaWdodDpib2xkO2ZvbnQtZmFtaWx5OkFyaWFsLCBIZWx2ZXRpY2EsIE9wZW4gU2Fucywgc2Fucy1zZXJpZiwgbW9ub3NwYWNlO2ZvbnQtc2l6ZToxMnB0IH0gXV0+PC9zdHlsZT48L2RlZnM+PGcgaWQ9ImhvbGRlcl8xNTI0OWM4NGU3YyI+PHJlY3Qgd2lkdGg9IjI0MiIgaGVpZ2h0PSIyMDAiIGZpbGw9IiNFRUVFRUUiLz48Zz48dGV4dCB4PSI4OS44NTE1NjI1IiB5PSIxMDUuMSI+MjQyeDIwMDwvdGV4dD48L2c+PC9nPjwvc3ZnPg==">
+            </div>
+            <div><h2><?= $user->login ?></h2></div>
+            <div>
+                <div class="form-group">
+                    <div class="col-lg-offset-2 col-lg-10">
+                        <?= linkButton(['name' => 'edit', 'value' => 'Edit', 'url' => editPlayerPath($user->id), 'class' => "btn btn-primary"]); ?>
+                        <?= linkButton(['name' => 'cancel', 'value' => 'Cancel', 'url' => playersPath(), 'class' => "btn btn-default"]); ?>
+                    </div>
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            <div class="col-lg-offset-2 col-lg-10">
-                <?php echo linkButton(array('name' => 'edit', 'value' => 'Edit', 'url' => editPlayerPath($this->user->id), 'class' => "btn btn-primary")); ?>
-                <?php echo linkButton(array('name' => 'cancel', 'value' => 'Cancel', 'url' => playersPath(), 'class' => "btn btn-default")); ?>
-            </div>
+        <div class="col-md-9">
+            <h3>Stats:</h3>
+
+            <table class="user-stats text-right">
+                <tr>
+                    <td>Games:</td>
+                    <td><?= $user->countGames() ?></td>
+                </tr>
+                <tr>
+                    <td>Won:</td>
+                    <td><?= $user->countWonGames() ?></td>
+                </tr>
+                <tr>
+                    <td>Max won streak:</td>
+                    <td><?= $user->maxWonStreak() ?></td>
+                </tr>
+            </table>
         </div>
     </div>
 </div>

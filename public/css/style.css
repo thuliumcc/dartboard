@@ -108,3 +108,7 @@ a.custom-link:hover {
 .table.score thead td {
     text-align: center;
 }
+
+.user-stats td {
+    padding-right: 20px;
+}

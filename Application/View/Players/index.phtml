@@ -1,5 +1,10 @@
-<?= showNotices(); ?>
+<?php
+use Application\Model\User;
 
+/** @var User[] $users */
+$users = $this->users
+?>
+<?= showNotices(); ?>
 <div class="panel panel-default">
     <div class="panel-heading">Players</div>
     <div class="panel-body">
@@ -12,14 +17,13 @@
             </tr>
             </thead>
             <tbody>
-            <?php foreach ($this->users as $index => $user): ?>
+            <? foreach ($users as $user): ?>
                 <tr>
-                    <td><?= linkTo($index, playerPath($user->id)); ?></td>
+                    <td><?= linkTo($user->id, playerPath($user->id)); ?></td>
                     <td><?= linkTo($user->login, playerPath($user->id)); ?></td>
                 </tr>
-            <?php endforeach ?>
+            <? endforeach ?>
             </tbody>
         </table>
     </div>
 </div>
-

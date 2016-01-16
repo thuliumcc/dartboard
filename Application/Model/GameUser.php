@@ -26,6 +26,9 @@ class GameUser extends Model
             'belongsTo' => [
                 'user' => ['class' => 'User', 'foreignKey' => 'user_id', 'referencedColumn' => 'id'],
                 'game' => ['class' => 'Game', 'foreignKey' => 'game_id', 'referencedColumn' => 'id']
+            ],
+            'hasOne' => [
+                'winner_game' => ['class' => 'Game', 'foreignKey' => 'winner_game_user_id']
             ]
         ]);
     }
