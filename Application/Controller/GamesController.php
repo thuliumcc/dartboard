@@ -68,7 +68,7 @@ class GamesController extends Controller
     public function cancel()
     {
         Game::findUnfinishedGame()->delete();
-        $this->redirect(indexGamesPath());
+        $this->redirect(indexHomePath());
     }
 
     public function game()

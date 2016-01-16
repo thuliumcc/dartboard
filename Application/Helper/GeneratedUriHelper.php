@@ -6,7 +6,7 @@ function checkParameter($parameter)
     }
 }
 
-function indexGamesPath()
+function indexHomePath()
 {
     return url("/");
 }
@@ -97,5 +97,5 @@ function playerPath($id)
 
 function allGeneratedUriNames()
 {
-    return array('indexGamesPath', 'newGameGamesPath', 'endGameGamesPath', 'testGamesPath', 'gameContentGamesPath', 'gameGamesPath', 'createGamesPath', 'restartGamesPath', 'cancelGamesPath', 'nextPlayerGamesPath', 'statsGamesPath', 'pollEventsPath', 'indexHitsPath', 'playersPath', 'freshPlayerPath', 'editPlayerPath', 'playerPath', 'playersPath', 'playerPath', 'playerPath', 'playerPath');
+    return array('indexHomePath', 'newGameGamesPath', 'endGameGamesPath', 'testGamesPath', 'gameContentGamesPath', 'gameGamesPath', 'createGamesPath', 'restartGamesPath', 'cancelGamesPath', 'nextPlayerGamesPath', 'statsGamesPath', 'pollEventsPath', 'indexHitsPath', 'playersPath', 'freshPlayerPath', 'editPlayerPath', 'playerPath', 'playersPath', 'playerPath', 'playerPath', 'playerPath');
 }

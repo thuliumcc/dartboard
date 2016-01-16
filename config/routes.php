@@ -1,7 +1,7 @@
 <?php
 use Ouzo\Routing\Route;
 
-Route::get('/', 'games#index');
+Route::get('/', 'home#index');
 Route::get('/new_game', 'games#new_game');
 Route::get('/end_game', 'games#end_game');
 Route::get('/test', 'games#test');
