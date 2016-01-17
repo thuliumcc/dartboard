@@ -1,6 +1,7 @@
 <?php
 use Application\Model\Game;
 use Application\Model\GameUser;
+use Application\Model\Hit;
 use Application\Model\User;
 use Ouzo\Tests\DbTransactionalTestCase;
 
@@ -87,5 +88,25 @@ class UserTest extends DbTransactionalTestCase
 
         //then
         $this->assertEquals(2, $maxWonStreak);
+    }
+
+    /**
+     * @test
+     */
+    public function shouldReturnMostFrequentlyHitField()
+    {
+        //given
+        $user = User::create(['login' => 'A']);
+        $game = Game::create(['type' => 'cricket']);
+        $gameUser = $game->addPlayer($user->getId());
+        Hit::createFor('15t', $gameUser);
+        Hit::createFor('16s', $gameUser);
+        Hit::createFor('16s', $gameUser);
+
+        //when
+        $field = $user->mostFrequentlyHitField();
+
+        //then
+        $this->assertEquals('16', $field);
     }
 }

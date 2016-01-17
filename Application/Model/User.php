@@ -68,4 +68,15 @@ class User extends Model
         }
         return $maxWonStreak;
     }
+
+    public function mostFrequentlyHitField()
+    {
+        return Hit::join('game_user')
+            ->where(['user_id' => $this->id])
+            ->select(['field', 'count(*)'])
+            ->groupBy('field')
+            ->order('count(*) DESC')
+            ->limit(1)
+            ->fetch()[0];
+    }
 }
