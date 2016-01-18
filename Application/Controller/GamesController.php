@@ -15,7 +15,7 @@ class GamesController extends Controller
 
     public function index()
     {
-        $this->view->games = Game::where(['finished' => true])->order('started_at desc')->fetchAll();
+        $this->view->games = Game::where(['finished' => true])->order('started_at desc, id desc')->fetchAll();
         $this->view->render();
     }
 
