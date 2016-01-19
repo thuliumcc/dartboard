@@ -52,7 +52,7 @@ class GamesController extends Controller
         }
     }
 
-    public function restart()
+    public function create_new()
     {
         $unfinishedGame = Game::findUnfinishedGame();
         if ($unfinishedGame) {

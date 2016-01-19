@@ -11,6 +11,7 @@ Route::get('/games', 'games#index');
 Route::get('/games/current', 'games#game');
 Route::get('/games/:id', 'games#show');
 Route::post('/games', 'games#create');
+Route::post('/games/new', 'games#create_new');
 Route::post('/games/restart', 'games#restart');
 Route::post('/games/cancel', 'games#cancel');
 Route::post('/games/next_player', 'games#next_player');
