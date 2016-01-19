@@ -4,9 +4,18 @@ if [ -z "$environment" ]; then
     export environment=prod
 fi
 
+if [ "$1" == "test" ]; then
+    export environment=test
+fi
+
 echo "==================================================================="
 echo "== Database migrations                                           =="
 echo "==================================================================="
+
+echo "Usage:"
+echo "$0 [test]"
+echo
+echo
 
 getopts ":y" noConfirmation;
 
