@@ -4,10 +4,12 @@ use Application\Model\Game;
 /** @var Game $game */
 $game = $this->game;
 ?>
-<div class="col-md-12 text-center">
-    <h1>And the winner is:</h1>
-</div>
+    <div class="col-md-12 text-center">
+        <h1>And the winner is:</h1>
+    </div>
 
-<div class="col-md-12 text-center highlight-player-name">
-    <h1><?= $game->winner_game_user->user->login ?></h1>
-</div>
+    <div class="col-md-12 text-center highlight-player-name">
+        <h1><?= $game->winner_game_user->user->login ?></h1>
+    </div>
+
+<?= renderPartial("Games/game_content", ['game' => $this->game]); ?>

@@ -67,10 +67,20 @@ class GamesController extends Controller
         $this->redirect(indexHomePath());
     }
 
+    public function restart()
+    {
+
+    }
+
     public function game()
     {
-        $this->view->game = Game::currentGame();
-        $this->view->render();
+        $game = Game::currentGame();
+        if ($game) {
+            $this->view->game = $game;
+            $this->view->render();
+        } else {
+            $this->redirect(indexGamesPath());
+        }
     }
 
     public function show()

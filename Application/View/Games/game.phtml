@@ -14,10 +14,15 @@ $game = $this->game;
     .bigger {
         font-size: 16pt;
     }
+
+    .hidden-button {
+        display: none;
+    }
 </style>
 
 <div class="col-md-6 col-md-offset-3">
     <?= postButton('New game', createNewGamesPath()) ?>
+    <?= postButton('Restart game', restartGamesPath(), ['class' => 'hidden-button', 'id' => 'restart-game']) ?>
     <? if (!$game->isFinished()): ?>
         <?= postButton('Cancel game', cancelGamesPath(), ['id' => 'cancel-game']) ?>
         <?= postButton('Next player', nextPlayerGamesPath(), ['class' => 'pull-right', 'id' => 'next_player']) ?>
@@ -29,6 +34,21 @@ $game = $this->game;
 <?= addFile(['type' => 'script', 'params' => ['url' => '/public/js/long-poll.js']]); ?>
 
 <script>
+    function loadGameContent() {
+        $.get('<?= gameContentGamesPath() ?>', function (content) {
+            $('#game_content').html(content);
+        });
+    }
+
+    function loadWinnerContent() {
+        $.get('<?= endGameGamesPath() ?>', function (content) {
+            $('#game_content').html(content);
+            $('#cancel-game').hide();
+            $('#next_player').hide();
+            $('#restart-game').css("display", "inline-block");
+        });
+    }
+
     $(function () {
         eventBus.bind('hit', function (event, hit) {
             playSoundsForHit(hit);
@@ -51,20 +71,6 @@ $game = $this->game;
             ev.preventDefault();
             $.post($(this).attr('action'));
         });
-
-        function loadGameContent() {
-            $.get('<?= gameContentGamesPath() ?>', function (content) {
-                $('#game_content').html(content);
-            });
-        }
-
-        function loadWinnerContent() {
-            $.get('<?= endGameGamesPath() ?>', function (content) {
-                $('#game_content').html(content);
-                $('#cancel-game').hide();
-                $('#next_player').hide();
-            });
-        }
 
         function playSoundsForHit(hit) {
             var files = [];
