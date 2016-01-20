@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-hg pull
-hg up
+git pull
+git up
 ./db_migrate.sh
 composer.phar install
