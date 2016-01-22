@@ -1,6 +1,6 @@
 #include <UIPEthernet.h>
 
-
+int led = 13;
 const int count = 8;
 int outputs[] = {23, 25, 27, 29, 31, 33, 35, 37};
 int inputs[] = {34, 36, 38, 40, 42, 44, 46, 48};
@@ -23,11 +23,12 @@ void setup() {
   for (int i = 0; i < count; ++i) {
     pinMode(outputs[i], OUTPUT);
   }
+  pinMode(led, OUTPUT);
   Serial.begin(9600);
 
 
   uint8_t mac[6] = {0x00,0x01,0x02,0x03,0x04,0x05};
-  Ethernet.begin(mac);
+  Ethernet.begin(mac, IPAddress(10,170,12,199));
 
   Serial.print("localIP: ");
   Serial.println(Ethernet.localIP());
@@ -37,8 +38,18 @@ void setup() {
   Serial.println(Ethernet.gatewayIP());
   Serial.print("dnsServerIP: ");
   Serial.println(Ethernet.dnsServerIP());
+
+  blink(4);
 }
 
+void blink(int count) {
+  for (int i = 0; i < count; ++i) {
+    digitalWrite(led, LOW);
+    delay(250);
+    digitalWrite(led, HIGH);
+    delay(250);
+  }
+}
 void handleHit(int x, int y) {
   Serial.println(x);
   Serial.println(y);
@@ -47,7 +58,7 @@ void handleHit(int x, int y) {
   EthernetClient client;
   Serial.println("Client connect");
 
-  if (client.connect(IPAddress(10,170,10,194),80))
+  if (client.connect(IPAddress(10,170,12,155),80))
   {
     Serial.println("Client connected");
 
@@ -70,6 +81,7 @@ void handleHit(int x, int y) {
   }
   else {
     Serial.println("Client connect failed");
+    blink(2);
   }
 }
 
