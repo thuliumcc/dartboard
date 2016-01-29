@@ -69,7 +69,7 @@ class GamesController extends Controller
 
     public function restart()
     {
-        Game::restartGame();
+        Game::restart();
         $this->redirect(indexHomePath());
     }
 

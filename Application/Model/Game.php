@@ -34,7 +34,7 @@ class Game extends Model
         ]);
     }
 
-    public static function restartGame()
+    public static function restart()
     {
         $lastGame = self::lastGame();
         /** @var GameUser[] */

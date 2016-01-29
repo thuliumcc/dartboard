@@ -2,6 +2,7 @@
 use Application\Model\Game;
 use Application\Model\GameUser;
 use Application\Model\User;
+use Ouzo\Tests\Assert;
 use Ouzo\Tests\DbTransactionalTestCase;
 
 class GameTest extends DbTransactionalTestCase
@@ -124,12 +125,15 @@ class GameTest extends DbTransactionalTestCase
         $game1->updateAttributes(['finished' => true]);
 
         //when
-        Game::restartGame();
+        Game::restart();
 
         //then
         $game = Game::findUnfinishedGame();
         $this->assertFalse($game->isFinished());
         $this->assertTrue($game->isStarted());
-
+        Assert::thatArray(GameUser::where(['game_id' => $game->getId()])->fetchAll())
+            ->hasSize(2)
+            ->onProperty('user_id')
+            ->containsExactly($user1->getId(), $user2->getId());
     }
 }
