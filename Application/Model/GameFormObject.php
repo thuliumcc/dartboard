@@ -40,7 +40,7 @@ class GameFormObject extends Validatable
     public function validate()
     {
         parent::validate();
-        $this->validateTrue(!empty($this->userIds), 'Select users');
+        $this->validateTrue(!empty($this->userIds), 'Select players');
     }
 
 }

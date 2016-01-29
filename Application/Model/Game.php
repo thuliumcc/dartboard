@@ -34,6 +34,33 @@ class Game extends Model
         ]);
     }
 
+    public static function restartGame()
+    {
+        $lastGame = self::lastGame();
+        /** @var GameUser[] */
+        $lastGameUsers = GameUser::where(['game_id' => $lastGame->getId()])
+            ->order(['score DESC', 'ordinal'])
+            ->fetchAll();
+        if (!$lastGame->isFinished()) {
+            $lastGame->delete();
+        }
+        $newGame = Game::create(['type' => $lastGame->type]);
+        foreach ($lastGameUsers as $lastGameUser) {
+            $newGame->addPlayer($lastGameUser->user_id);
+        }
+    }
+
+    /**
+     * @return Game
+     */
+    public static function lastGame()
+    {
+        return self::where()
+            ->order(['games.id DESC'])
+            ->limit(1)
+            ->fetch();
+    }
+
     /**
      * @return Game
      */
@@ -106,11 +133,11 @@ class Game extends Model
     }
 
     /**
-     * @return int
+     * @return boolean
      */
     public function isStarted()
     {
-        return $this->current_game_user_id;
+        return $this->current_game_user_id ? true : false;
     }
 
     /**

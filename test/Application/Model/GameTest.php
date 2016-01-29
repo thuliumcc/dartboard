@@ -107,4 +107,29 @@ class GameTest extends DbTransactionalTestCase
         $game2->reload();
         $this->assertEquals($gameUser2->getId(), $game2->current_game_user_id);
     }
+
+    /**
+     * @test
+     */
+    public function shouldRestartLastGame()
+    {
+        //given
+        /** @var User $user1 */
+        $user1 = User::create(['login' => 'A']);
+        /** @var User $user2 */
+        $user2 = User::create(['login' => 'B']);
+        $game1 = Game::create();
+        $game1->addPlayer($user1->getId());
+        $game1->addPlayer($user2->getId());
+        $game1->updateAttributes(['finished' => true]);
+
+        //when
+        Game::restartGame();
+
+        //then
+        $game = Game::findUnfinishedGame();
+        $this->assertFalse($game->isFinished());
+        $this->assertTrue($game->isStarted());
+
+    }
 }
