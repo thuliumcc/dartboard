@@ -83,7 +83,7 @@ class GameUser extends Model
 
     public function getClosedByRoundForCricket()
     {
-        $hits = Hit::join('game_user->user')->where(['game_user_id' => $this->id])->fetchAll();
+        $hits = Hit::join('game_user->user')->where(['game_user_id' => $this->id])->order('hits.id asc')->fetchAll();
         $byRound = Arrays::groupBy($hits, Functions::extract()->round);
         $closedInRound = [];
         $closed = [15 => 0, 16 => 0, 17 => 0, 18 => 0, 19 => 0, 20 => 0, 25 => 0];

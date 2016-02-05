@@ -9,21 +9,21 @@ $game = $this->game;
 
 <div>
     <div class="bigger">
-        <div style="float: left;">
-            <div>Round: <?= $game->round ?></div>
-            <div>User: <?= $game->current_game_user->user->login ?></div>
+        <div class="col-md-6 col-md-offset-3">
+            <div style="float: left;">
+                <div>Round: <?= $game->round ?></div>
+                <div>User: <?= $game->current_game_user->user->login ?></div>
+            </div>
+            <div style="float: right;">
+                <?= str_repeat('<img src="' . url('/public/images/arrow.png') . '">', $game->current_game_user->getLeftShoots()) ?>
+            </div>
+            <div style="clear: both;"></div>
+            <hr>
         </div>
-        <div style="float: right;">
-            <?= str_repeat('<img src="' . url('/public/images/arrow.png') . '">', $game->current_game_user->getLeftShoots()) ?>
-        </div>
-
-        <div style="clear: both;"></div>
-        <hr>
-
         <?= $game->getEngine()->renderView() ?>
     </div>
 
-    <div>
+    <div style="float: right;">
         Last hits:
         <? foreach (Hit::findForGame($game) as $hit): ?>
             <div><?= $hit->game_user->user->login ?> <?= $hit->field ?>x<?= $hit->multiplier ?></div>

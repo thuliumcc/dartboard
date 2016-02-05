@@ -28,8 +28,9 @@ $game = $this->game;
         <?= postButton('Next player', nextPlayerGamesPath(), ['class' => 'pull-right', 'id' => 'next_player']) ?>
     <? endif; ?>
     <hr>
-    <div id="game_content"></div>
 </div>
+<div style="clear: both"></div>
+<div id="game_content"></div>
 
 <?= addFile(['type' => 'script', 'params' => ['url' => '/public/js/long-poll.js']]); ?>
 
