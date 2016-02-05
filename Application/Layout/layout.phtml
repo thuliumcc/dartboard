@@ -13,6 +13,8 @@ use Ouzo\Config;
     <?= addFile(['type' => 'script', 'params' => ['url' => '/public/js/jquery-1.11.0.min.js']]); ?>
     <?= addFile(['type' => 'script', 'params' => ['url' => '/public/js/bootstrap.min.js']]); ?>
 
+    <?= addFile(array('type' => 'script', 'params' => array('url' => '/public/js/jquery.flot.min.js'))); ?>
+
     <link href="<?= url('/public/images/icon.png') ?>" rel="shortcut icon">
 </head>
 <body>

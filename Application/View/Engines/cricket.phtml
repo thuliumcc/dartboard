@@ -69,9 +69,6 @@ $progressPerRound = FlotHelper::toFlotData($this->game->game_users, function(Gam
     return $game_user->getProgressByRoundForCricket();
 });
 ?>
-
-<?= addFile(array('type' => 'script', 'params' => array('url' => '/public/js/jquery.flot.min.js'))); ?>
-
 <script type="text/javascript">
     $(function () {
         $.plot("#progress-per-round", <?= Json::encode($progressPerRound)?>, {
